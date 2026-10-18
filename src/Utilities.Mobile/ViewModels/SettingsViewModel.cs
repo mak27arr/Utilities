@@ -17,6 +17,7 @@ public sealed class SettingsViewModel : ViewModelBase
     private readonly IAppDiagnostics _diagnostics;
     private int _languageIndex;
     private int _themeIndex;
+    private bool _openCameraOnMeterTap;
 
     public SettingsViewModel(UtilitiesApplicationService application, ILocalReminderScheduler scheduler, IUserDialogs dialogs,
         IAppNavigation navigation, IUserPreferenceStore preferences, IAppAppearance appearance, IAppDiagnostics diagnostics)
@@ -30,6 +31,7 @@ public sealed class SettingsViewModel : ViewModelBase
         _diagnostics = diagnostics;
         _languageIndex = AppText.Culture.Name.StartsWith("uk", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
         _themeIndex = preferences.Get("theme", "system") switch { "light" => 1, "dark" => 2, _ => 0 };
+        _openCameraOnMeterTap = bool.TryParse(preferences.Get("openCameraOnMeterTap", "true"), out var openCamera) ? openCamera : true;
         SaveLanguageCommand = new Command(SaveLanguage);
         SaveThemeCommand = new Command(SaveTheme);
         ClearAllCommand = new Command(async () => await ConfirmClearAllAsync());
@@ -46,9 +48,21 @@ public sealed class SettingsViewModel : ViewModelBase
     public Command ExportDiagnosticsCommand { get; }
     public int LanguageIndex { get => _languageIndex; set => SetProperty(ref _languageIndex, value); }
     public int ThemeIndex { get => _themeIndex; set => SetProperty(ref _themeIndex, value); }
+    public bool OpenCameraOnMeterTap
+    {
+        get => _openCameraOnMeterTap;
+        set
+        {
+            if (!SetProperty(ref _openCameraOnMeterTap, value)) return;
+            _preferences.Set("openCameraOnMeterTap", value.ToString());
+        }
+    }
     public string TitleText => AppText.Get("Settings");
     public string LanguageText => AppText.Get("Language");
     public string ThemeText => AppText.Get("Theme");
+    public string MeterTapBehaviorText => AppText.Get("MeterTapBehavior");
+    public string OpenCameraOnMeterTapText => AppText.Get("OpenCameraOnMeterTap");
+    public string OpenCameraOnMeterTapDescription => AppText.Get("OpenCameraOnMeterTapDescription");
     public string EnglishText => AppText.Get("English");
     public string UkrainianText => AppText.Get("Ukrainian");
     public string SaveText => AppText.Get("Save");

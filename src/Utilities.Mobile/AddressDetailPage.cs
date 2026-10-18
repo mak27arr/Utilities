@@ -9,17 +9,20 @@ public partial class AddressDetailPage : ContentPage
     private readonly AddressDetailViewModel _viewModel;
     private readonly IUserDialogs _dialogs;
     private readonly IAppNavigation _navigation;
+    private readonly IUserPreferenceStore _preferences;
 
     public AddressDetailPage(
         UtilitiesApplicationService application,
         Guid addressId,
         IUserDialogs dialogs,
-        IAppNavigation navigation)
+        IAppNavigation navigation,
+        IUserPreferenceStore preferences)
     {
         InitializeComponent();
         _viewModel = new AddressDetailViewModel(application, addressId, dialogs, navigation);
         _dialogs = dialogs;
         _navigation = navigation;
+        _preferences = preferences;
         BindingContext = _viewModel;
         Title = AppText.Get("Address");
     }
@@ -51,8 +54,10 @@ public partial class AddressDetailPage : ContentPage
                 await _navigation.OpenMeterSettingsAsync(summary.Meter.Id);
             else if (summary.Meter.ReplacedAt.HasValue)
                 await _navigation.OpenMeterAsync(summary.Meter.Id);
-            else
+            else if (!bool.TryParse(_preferences.Get("openCameraOnMeterTap", "true"), out var openCamera) || openCamera)
                 await _navigation.OpenPhotoCropAsync(summary.Meter.Id);
+            else
+                await _navigation.OpenMeterForManualReadingAsync(summary.Meter.Id);
         }
         catch (Exception exception)
         {

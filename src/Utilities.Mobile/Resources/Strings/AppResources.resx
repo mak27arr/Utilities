@@ -232,6 +232,13 @@
   <data name="AddressFullAddressPlaceholder" xml:space="preserve"><value>Optional</value></data>
   <data name="AddressNameRequired" xml:space="preserve"><value>Enter a name for this address.</value></data>
   <data name="PreferencesSection" xml:space="preserve"><value>Preferences</value></data>
+  <data name="MeterTapBehavior" xml:space="preserve"><value>Meter card action</value></data>
+  <data name="OpenCameraOnMeterTap" xml:space="preserve"><value>Open photo reading</value></data>
+  <data name="OpenCameraOnMeterTapDescription" xml:space="preserve"><value>When enabled, tapping a meter opens the camera. When disabled, it opens manual reading entry.</value></data>
+  <data name="Rotation" xml:space="preserve"><value>Rotation</value></data>
+  <data name="RotateLeft90" xml:space="preserve"><value>Rotate left 90°</value></data>
+  <data name="RotateRight90" xml:space="preserve"><value>Rotate right 90°</value></data>
+  <data name="ResetRotation" xml:space="preserve"><value>Reset</value></data>
   <data name="DataManagementSection" xml:space="preserve"><value>Manage your data</value></data>
   <data name="PrivacySection" xml:space="preserve"><value>Privacy and storage</value></data>
   <data name="LocalDataDescription" xml:space="preserve"><value>Your addresses, readings, tariffs and reminders are stored locally on this device.</value></data>

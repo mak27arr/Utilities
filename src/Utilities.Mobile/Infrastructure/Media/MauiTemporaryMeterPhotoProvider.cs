@@ -48,26 +48,40 @@ public sealed class MauiTemporaryMeterPhotoProvider : ITemporaryMeterPhotoProvid
         return result is null ? null : await CopyToCacheAsync(result, cancellationToken);
     }
 
-    public async Task<TemporaryMeterPhoto> CropAsync(TemporaryMeterPhoto source, NormalizedReadingArea area, CancellationToken cancellationToken = default)
+    public async Task<TemporaryMeterPhoto> CropAsync(TemporaryMeterPhoto source, NormalizedReadingArea area,
+        double rotationDegrees, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
         using var bitmap = BitmapFactory.DecodeFile(source.FilePath) ?? throw new InvalidDataException("The selected image could not be decoded.");
-        var bounds = ReadingAreaGeometry.GetPixelBounds(area, bitmap.Width, bitmap.Height);
-        using var crop = Bitmap.CreateBitmap(bitmap, bounds.Left, bounds.Top, bounds.Width, bounds.Height);
-        var path = CreateTemporaryPath("crop");
-        try
+        Bitmap? rotatedBitmap = null;
+        var imageToCrop = bitmap;
+        if (Math.Abs(rotationDegrees) > 0.01)
         {
-            await using var output = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
-            cancellationToken.ThrowIfCancellationRequested();
-            var jpegFormat = Bitmap.CompressFormat.Jpeg ?? throw new InvalidOperationException("JPEG encoding is unavailable.");
-            if (!crop.Compress(jpegFormat, 95, output)) throw new IOException("The cropped image could not be written.");
-            await output.FlushAsync(cancellationToken);
-            return new TemporaryMeterPhoto(path, crop.Width, crop.Height);
+            using var matrix = new Matrix();
+            matrix.SetRotate((float)rotationDegrees);
+            rotatedBitmap = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, matrix, true);
+            imageToCrop = rotatedBitmap;
         }
-        catch
+
+        using (rotatedBitmap)
         {
-            TryDelete(path);
-            throw;
+            var bounds = ReadingAreaGeometry.GetPixelBounds(area, imageToCrop.Width, imageToCrop.Height);
+            using var crop = Bitmap.CreateBitmap(imageToCrop, bounds.Left, bounds.Top, bounds.Width, bounds.Height);
+            var path = CreateTemporaryPath("crop");
+            try
+            {
+                await using var output = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                cancellationToken.ThrowIfCancellationRequested();
+                var jpegFormat = Bitmap.CompressFormat.Jpeg ?? throw new InvalidOperationException("JPEG encoding is unavailable.");
+                if (!crop.Compress(jpegFormat, 95, output)) throw new IOException("The cropped image could not be written.");
+                await output.FlushAsync(cancellationToken);
+                return new TemporaryMeterPhoto(path, crop.Width, crop.Height);
+            }
+            catch
+            {
+                TryDelete(path);
+                throw;
+            }
         }
     }
 

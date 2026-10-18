@@ -34,6 +34,19 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="10">
+                <Label Text="{Binding MeterTapBehaviorText}" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#777282, Dark=#C3BDCD}" />
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="15">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                            <Label Text="{Binding OpenCameraOnMeterTapText}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" />
+                            <Label Text="{Binding OpenCameraOnMeterTapDescription}" FontSize="12" LineBreakMode="WordWrap" TextColor="{AppThemeBinding Light=#807C89, Dark=#B6B1C0}" />
+                        </VerticalStackLayout>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding OpenCameraOnMeterTap, Mode=TwoWay}" Color="#6238D5" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="10">
                 <Label Text="{Binding DataManagementSectionText}" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#777282, Dark=#C3BDCD}" />
                 <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="15">
                     <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenServiceTypesCommand}" /></Border.GestureRecognizers>

@@ -13,15 +13,18 @@ public partial class MeterDetailPage : ContentPage
     private readonly IAppNavigation _navigation;
     private readonly ILogger<MeterDetailViewModel> _logger;
     private CancellationTokenSource? _loadCancellation;
+    private bool _promptManualReadingOnLoad;
 
     public MeterDetailPage(UtilitiesApplicationService application, Guid meterId, IUserDialogs dialogs, IAppNavigation navigation,
-        IReadingHistoryFileTransfer historyFiles, ILogger<MeterDetailViewModel> logger, bool settingsOnly = false)
+        IReadingHistoryFileTransfer historyFiles, ILogger<MeterDetailViewModel> logger, bool settingsOnly = false,
+        bool promptManualReadingOnLoad = false)
     {
         InitializeComponent();
         _viewModel = new MeterDetailViewModel(application, meterId, dialogs, navigation, historyFiles, logger, settingsOnly);
         _dialogs = dialogs;
         _navigation = navigation;
         _logger = logger;
+        _promptManualReadingOnLoad = promptManualReadingOnLoad;
         BindingContext = _viewModel;
         Title = AppText.Get("Meter");
     }
@@ -35,6 +38,11 @@ public partial class MeterDetailPage : ContentPage
         {
             await _viewModel.LoadAsync(_loadCancellation.Token);
             if (_viewModel.Meter is null) await _navigation.GoBackAsync();
+            else if (_promptManualReadingOnLoad)
+            {
+                _promptManualReadingOnLoad = false;
+                _viewModel.AddReadingCommand.Execute(null);
+            }
         }
         catch (OperationCanceledException) { }
         catch (Exception exception)

@@ -27,22 +27,32 @@
         <Border x:Name="ImageFrame" Grid.Row="1" BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}"
                 Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1"
                 StrokeShape="RoundRectangle 20" Padding="8" IsVisible="{Binding HasPhoto}">
-            <Grid x:Name="ImageViewport">
-                <Image Source="{Binding CurrentImage}" Aspect="AspectFit" InputTransparent="True" />
-                <AbsoluteLayout x:Name="Overlay" InputTransparent="False">
+            <Grid x:Name="ImageViewport" Grid.RowDefinitions="*,Auto" RowSpacing="4">
+                <Image x:Name="PhotoImage" Source="{Binding CurrentImage}" Aspect="AspectFit" InputTransparent="False" />
+                <AbsoluteLayout x:Name="Overlay" Grid.Row="0" InputTransparent="False">
                     <Border x:Name="Selection" Stroke="#35B779" StrokeThickness="3" BackgroundColor="#3035B779"
                             Padding="0" IsVisible="True">
-                        <Grid RowDefinitions="*,36">
-                            <Border x:Name="MoveSurface" Grid.Row="0" BackgroundColor="Transparent" Padding="0" />
+                        <Grid RowDefinitions="*,56">
+                            <Border x:Name="MoveSurface" Grid.Row="0" BackgroundColor="Transparent" Padding="0"
+                                    InputTransparent="False" />
                             <Grid x:Name="ResizeSurface" Grid.Row="1" BackgroundColor="Transparent"
                                   HorizontalOptions="Fill" VerticalOptions="Fill">
-                                <Border WidthRequest="48" HeightRequest="5" Margin="0,0,8,5"
+                                <Border WidthRequest="64" HeightRequest="8" Margin="0,0,8,8"
                                         HorizontalOptions="End" VerticalOptions="End"
                                         BackgroundColor="#35B779" StrokeThickness="0" StrokeShape="RoundRectangle 3" />
                             </Grid>
                         </Grid>
                     </Border>
                 </AbsoluteLayout>
+                <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto,Auto,Auto" ColumnSpacing="6" VerticalOptions="Center">
+                    <Button Text="−90°" SemanticProperties.Hint="{Binding RotateLeftText}" Command="{Binding RotateLeftCommand}" Style="{StaticResource SecondaryActionButton}" Padding="9,4" HeightRequest="38" />
+                    <Slider Grid.Column="1" Minimum="-180" Maximum="180" Value="{Binding RotationDegrees, Mode=TwoWay}"
+                            VerticalOptions="Center" MinimumTrackColor="#6238D5" MaximumTrackColor="#C9C3D4" />
+                    <Label Grid.Column="2" Text="{Binding RotationText}" FontSize="12" VerticalTextAlignment="Center"
+                           TextColor="{AppThemeBinding Light=#4D4858, Dark=#D2CEDA}" />
+                    <Button Grid.Column="3" Text="90°" SemanticProperties.Hint="{Binding RotateRightText}" Command="{Binding RotateRightCommand}" Style="{StaticResource SecondaryActionButton}" Padding="9,4" HeightRequest="38" />
+                    <Button Grid.Column="4" Text="↺" SemanticProperties.Hint="{Binding ResetRotationText}" Command="{Binding ResetRotationCommand}" Style="{StaticResource SecondaryActionButton}" Padding="9,4" HeightRequest="38" />
+                </Grid>
             </Grid>
         </Border>
 

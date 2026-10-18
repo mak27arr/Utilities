@@ -8,6 +8,7 @@ public interface ITemporaryMeterPhotoProvider
 {
     Task<TemporaryMeterPhoto?> CaptureAsync(CancellationToken cancellationToken = default);
     Task<TemporaryMeterPhoto?> PickAsync(CancellationToken cancellationToken = default);
-    Task<TemporaryMeterPhoto> CropAsync(TemporaryMeterPhoto source, NormalizedReadingArea area, CancellationToken cancellationToken = default);
+    Task<TemporaryMeterPhoto> CropAsync(TemporaryMeterPhoto source, NormalizedReadingArea area, double rotationDegrees,
+        CancellationToken cancellationToken = default);
     Task DeleteAsync(TemporaryMeterPhoto photo, CancellationToken cancellationToken = default);
 }

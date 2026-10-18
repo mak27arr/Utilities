@@ -232,6 +232,13 @@
   <data name="AddressFullAddressPlaceholder" xml:space="preserve"><value>Необов’язково</value></data>
   <data name="AddressNameRequired" xml:space="preserve"><value>Введіть назву адреси.</value></data>
   <data name="PreferencesSection" xml:space="preserve"><value>Налаштування</value></data>
+  <data name="MeterTapBehavior" xml:space="preserve"><value>Дія при натисканні на лічильник</value></data>
+  <data name="OpenCameraOnMeterTap" xml:space="preserve"><value>Відкривати фотографування</value></data>
+  <data name="OpenCameraOnMeterTapDescription" xml:space="preserve"><value>Якщо ввімкнено, натискання на лічильник відкриває камеру. Якщо вимкнено — ручне введення показника.</value></data>
+  <data name="Rotation" xml:space="preserve"><value>Поворот</value></data>
+  <data name="RotateLeft90" xml:space="preserve"><value>Повернути вліво на 90°</value></data>
+  <data name="RotateRight90" xml:space="preserve"><value>Повернути вправо на 90°</value></data>
+  <data name="ResetRotation" xml:space="preserve"><value>Скинути</value></data>
   <data name="DataManagementSection" xml:space="preserve"><value>Керування даними</value></data>
   <data name="PrivacySection" xml:space="preserve"><value>Приватність і зберігання</value></data>
   <data name="LocalDataDescription" xml:space="preserve"><value>Адреси, показання, тарифи й нагадування зберігаються локально на цьому пристрої.</value></data>

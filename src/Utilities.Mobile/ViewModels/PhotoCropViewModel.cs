@@ -21,6 +21,7 @@ public sealed class PhotoCropViewModel : ViewModelBase
     private ImageSource? _currentImage;
     private ReadingRecognitionResult? _recognition;
     private string _readingValue = string.Empty;
+    private double _rotationDegrees;
     private bool _isWorking;
     private bool _initialized;
 
@@ -38,6 +39,9 @@ public sealed class PhotoCropViewModel : ViewModelBase
         RecognizeReadingCommand = new Command(async () => await RecognizeReadingAsync(), () => CanRecognize);
         SaveReadingCommand = new Command(async () => await SaveReadingAsync(), () => CanSaveReading);
         CancelCommand = new Command(async () => await CancelAsync(), () => !IsWorking);
+        RotateLeftCommand = new Command(() => RotationDegrees -= 90);
+        RotateRightCommand = new Command(() => RotationDegrees += 90);
+        ResetRotationCommand = new Command(() => RotationDegrees = 0);
     }
 
     public Command ChoosePhotoCommand { get; }
@@ -45,8 +49,25 @@ public sealed class PhotoCropViewModel : ViewModelBase
     public Command RecognizeReadingCommand { get; }
     public Command SaveReadingCommand { get; }
     public Command CancelCommand { get; }
+    public Command RotateLeftCommand { get; }
+    public Command RotateRightCommand { get; }
+    public Command ResetRotationCommand { get; }
 
     public NormalizedReadingArea Area => _area;
+    public double RotationDegrees
+    {
+        get => _rotationDegrees;
+        set
+        {
+            var normalized = NormalizeRotation(value);
+            if (!SetProperty(ref _rotationDegrees, normalized)) return;
+            OnPropertyChanged(nameof(RotationText));
+        }
+    }
+    public string RotationText => $"{AppText.Get("Rotation")}: {RotationDegrees:0}°";
+    public string RotateLeftText => AppText.Get("RotateLeft90");
+    public string RotateRightText => AppText.Get("RotateRight90");
+    public string ResetRotationText => AppText.Get("ResetRotation");
     public TemporaryMeterPhoto? CurrentPhoto => _original;
     public ImageSource? CurrentImage { get => _currentImage; private set => SetProperty(ref _currentImage, value); }
     public ReadingRecognitionResult? Recognition => _recognition;
@@ -107,10 +128,22 @@ public sealed class PhotoCropViewModel : ViewModelBase
     {
         var x = Math.Clamp(area.X, 0, 0.92);
         var y = Math.Clamp(area.Y, 0, 0.88);
-        var width = Math.Clamp(area.Width, 0.08, 1 - x);
-        var height = Math.Clamp(area.Height, 0.12, 1 - y);
+        var width = Math.Clamp(area.Width, 0.01, 1 - x);
+        var height = Math.Clamp(area.Height, 0.01, 1 - y);
         _area = new NormalizedReadingArea(x, y, width, height);
         OnPropertyChanged(nameof(Area));
+    }
+
+    public async Task SaveAreaAsync(CancellationToken token = default)
+    {
+        try
+        {
+            await _application.SetReadingAreaAsync(_meterId, _area, token);
+        }
+        catch (Exception exception)
+        {
+            await _dialogs.ReportErrorAsync(AppText.Get("ReadingArea"), exception);
+        }
     }
 
     private async Task LoadPhotoAsync(bool capture, CancellationToken token = default)
@@ -132,6 +165,7 @@ public sealed class PhotoCropViewModel : ViewModelBase
             _original = selected;
             _cropped = null;
             _recognition = null;
+            RotationDegrees = 0;
             ReadingValue = string.Empty;
             SetArea(await LoadAreaAsync(token));
             CurrentImage = ImageSource.FromFile(selected.FilePath);
@@ -162,7 +196,7 @@ public sealed class PhotoCropViewModel : ViewModelBase
         try
         {
             if (_cropped is not null) await _photos.DeleteAsync(_cropped);
-            _cropped = await _photos.CropAsync(_original, _area);
+            _cropped = await _photos.CropAsync(_original, _area, RotationDegrees);
             _recognition = null;
             ReadingValue = string.Empty;
             OnPropertyChanged(nameof(Recognition));
@@ -236,6 +270,14 @@ public sealed class PhotoCropViewModel : ViewModelBase
         _original = null;
         if (crop is not null) await _photos.DeleteAsync(crop);
         if (original is not null) await _photos.DeleteAsync(original);
+    }
+
+    private static double NormalizeRotation(double degrees)
+    {
+        var normalized = degrees % 360;
+        if (normalized > 180) normalized -= 360;
+        if (normalized < -180) normalized += 360;
+        return normalized;
     }
 
     private void NotifyState()

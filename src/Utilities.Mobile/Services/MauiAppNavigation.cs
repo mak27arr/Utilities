@@ -24,9 +24,10 @@ public sealed class MauiAppNavigation(
     private readonly Dictionary<Page, IServiceScope> _pageScopes = [];
     private NavigationPage? _navigationPage;
 
-    public Task OpenAddressAsync(Guid addressId) => PushScopedAsync(services => new AddressDetailPage(Application(services), addressId, dialogs, this));
+    public Task OpenAddressAsync(Guid addressId) => PushScopedAsync(services => new AddressDetailPage(Application(services), addressId, dialogs, this, preferences));
     public Task OpenNewAddressAsync() => PushScopedAsync(services => new NewAddressPage(Application(services), dialogs, this, loggerFactory.CreateLogger<NewAddressViewModel>()));
     public Task OpenMeterAsync(Guid meterId) => PushScopedAsync(services => new MeterDetailPage(Application(services), meterId, dialogs, this, historyFiles, loggerFactory.CreateLogger<MeterDetailViewModel>()));
+    public Task OpenMeterForManualReadingAsync(Guid meterId) => PushScopedAsync(services => new MeterDetailPage(Application(services), meterId, dialogs, this, historyFiles, loggerFactory.CreateLogger<MeterDetailViewModel>(), promptManualReadingOnLoad: true));
     public Task OpenMeterSettingsAsync(Guid meterId) => PushScopedAsync(services => new MeterDetailPage(Application(services), meterId, dialogs, this, historyFiles, loggerFactory.CreateLogger<MeterDetailViewModel>(), settingsOnly: true));
     public Task OpenMeterIdentifiersAsync(Guid meterId) => PushScopedAsync(services => new MeterIdentifiersPage(Application(services), meterId, dialogs, this));
     public Task OpenMeterReplacementAsync(Guid meterId) => PushScopedAsync(services => new MeterReplacementPage(Application(services), meterId, dialogs, this, loggerFactory.CreateLogger<MeterReplacementViewModel>()));
