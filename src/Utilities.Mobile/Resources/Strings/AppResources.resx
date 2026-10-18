@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="Utilities" xml:space="preserve"><value>Utilities</value></data>
+  <data name="LocalOnly" xml:space="preserve"><value>Your data stays on this device</value></data>
+  <data name="AddAddress" xml:space="preserve"><value>Add address</value></data>
+  <data name="ServiceTypes" xml:space="preserve"><value>Service types</value></data>
+  <data name="RecentlyDeleted" xml:space="preserve"><value>Recently deleted</value></data>
+  <data name="Settings" xml:space="preserve"><value>Settings</value></data>
+  <data name="ClearAllData" xml:space="preserve"><value>Clear all data</value></data>
+  <data name="YourAddresses" xml:space="preserve"><value>Your addresses</value></data>
+  <data name="NoAddresses" xml:space="preserve"><value>No addresses yet. Add one to get started.</value></data>
+  <data name="MetersSubscriptionsCount" xml:space="preserve"><value>{0} meters · {1} subscriptions</value></data>
+  <data name="DatabaseError" xml:space="preserve"><value>Database error</value></data>
+  <data name="UnexpectedError" xml:space="preserve"><value>The action could not be completed. Your existing data has not been changed.</value></data>
+  <data name="CsvImportCalculationOverflow" xml:space="preserve"><value>Line {0}: the consumption or amount is too large to calculate.</value></data>
+  <data name="CsvImportMalformedFile" xml:space="preserve"><value>The file is empty or does not contain valid reading rows.</value></data>
+  <data name="History" xml:space="preserve"><value>History</value></data>
+  <data name="TariffEffectiveFromValue" xml:space="preserve"><value>Effective from: {0}</value></data>
+  <data name="TariffEffectiveToValue" xml:space="preserve"><value>Effective to: {0}</value></data>
+  <data name="CurrentTariff" xml:space="preserve"><value>Current tariff</value></data>
+  <data name="ExportDiagnostics" xml:space="preserve"><value>Export diagnostics</value></data>
+  <data name="ExportDiagnosticsDescription" xml:space="preserve"><value>Share recent app logs when reporting a problem.</value></data>
+  <data name="DiagnosticsReadyToShare" xml:space="preserve"><value>The diagnostics file is ready to share.</value></data>
+  <data name="NewAddress" xml:space="preserve"><value>New address</value></data>
+  <data name="AddressNamePrompt" xml:space="preserve"><value>Give this address a name:</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="AddressDetails" xml:space="preserve"><value>Address details</value></data>
+  <data name="OptionalStreet" xml:space="preserve"><value>Optional street or location:</value></data>
+  <data name="Skip" xml:space="preserve"><value>Skip</value></data>
+  <data name="Meters" xml:space="preserve"><value>Meters</value></data>
+  <data name="Subscriptions" xml:space="preserve"><value>Subscriptions</value></data>
+  <data name="NoMeters" xml:space="preserve"><value>No meters at this address yet.</value></data>
+  <data name="NoSubscriptions" xml:space="preserve"><value>No subscriptions at this address yet.</value></data>
+  <data name="LatestReading" xml:space="preserve"><value>Latest: {0} on {1}</value></data>
+  <data name="NoReadings" xml:space="preserve"><value>No readings</value></data>
+  <data name="AddMeter" xml:space="preserve"><value>Add meter</value></data>
+  <data name="AddSubscription" xml:space="preserve"><value>Add fixed-fee subscription</value></data>
+  <data name="EditAddress" xml:space="preserve"><value>Edit address</value></data>
+  <data name="Name" xml:space="preserve"><value>Name</value></data>
+  <data name="StreetLocation" xml:space="preserve"><value>Street or location</value></data>
+  <data name="ArchiveAddress" xml:space="preserve"><value>Archive address</value></data>
+  <data name="ArchiveAddressTree" xml:space="preserve"><value>This will soft-delete the address, meters, readings, subscriptions, tariffs, and related settings. You can restore the tree from Recently deleted.</value></data>
+  <data name="Archive" xml:space="preserve"><value>Archive</value></data>
+  <data name="NewMeter" xml:space="preserve"><value>New meter</value></data>
+  <data name="MeterName" xml:space="preserve"><value>Meter name</value></data>
+  <data name="UnitPrompt" xml:space="preserve"><value>Unit (for example m³ or kWh)</value></data>
+  <data name="MeterDisplay" xml:space="preserve"><value>Meter display</value></data>
+  <data name="DigitalDisplay" xml:space="preserve"><value>Digital display</value></data>
+  <data name="MechanicalRollers" xml:space="preserve"><value>Mechanical numeric rollers</value></data>
+  <data name="InitialReading" xml:space="preserve"><value>Initial reading</value></data>
+  <data name="OptionalStartingValue" xml:space="preserve"><value>Optional starting value</value></data>
+  <data name="InvalidReading" xml:space="preserve"><value>Invalid reading</value></data>
+  <data name="NonNegativeNumber" xml:space="preserve"><value>Enter a non-negative number.</value></data>
+  <data name="NewSubscription" xml:space="preserve"><value>New subscription</value></data>
+  <data name="ServiceName" xml:space="preserve"><value>Service name</value></data>
+  <data name="MonthlyFee" xml:space="preserve"><value>Monthly fee</value></data>
+  <data name="FixedMonthlyAmount" xml:space="preserve"><value>Enter the fixed monthly amount</value></data>
+  <data name="InvalidAmount" xml:space="preserve"><value>Invalid amount</value></data>
+  <data name="EditSubscription" xml:space="preserve"><value>Edit subscription</value></data>
+  <data name="EditMonthlyFee" xml:space="preserve"><value>Edit monthly fee</value></data>
+  <data name="NewFeeStartsToday" xml:space="preserve"><value>New fee starts today</value></data>
+  <data name="DeleteSubscription" xml:space="preserve"><value>Delete subscription</value></data>
+  <data name="DeleteSubscriptionMessage" xml:space="preserve"><value>Its fee history and reminders will be recoverable from Recently deleted.</value></data>
+  <data name="EditNameMonthlyFee" xml:space="preserve"><value>Edit name and monthly fee</value></data>
+  <data name="NoActiveMonthlyFee" xml:space="preserve"><value>No active monthly fee</value></data>
+  <data name="CouldNotOpenAddress" xml:space="preserve"><value>Could not open address</value></data>
+  <data name="Meter" xml:space="preserve"><value>Meter</value></data>
+  <data name="EditMeter" xml:space="preserve"><value>Edit meter</value></data>
+  <data name="MeterIdentifiersDescription" xml:space="preserve"><value>Update the optional meter number and personal account number. Leave either field empty if you do not need it.</value></data>
+  <data name="MeterNotFound" xml:space="preserve"><value>This meter could not be found.</value></data>
+  <data name="PhotoReadingArea" xml:space="preserve"><value>Set up photo reading area</value></data>
+  <data name="PhotoReading" xml:space="preserve"><value>Take a meter reading photo</value></data>
+  <data name="PhotoReadingTitle" xml:space="preserve"><value>Reading from photo</value></data>
+  <data name="AddManualReading" xml:space="preserve"><value>Add manual reading</value></data>
+  <data name="AddTariffPeriod" xml:space="preserve"><value>Add tariff</value></data>
+  <data name="ReadingHistory" xml:space="preserve"><value>Reading history</value></data>
+  <data name="ViewAllReadings" xml:space="preserve"><value>View all</value></data>
+  <data name="ViewAllTariffs" xml:space="preserve"><value>View all</value></data>
+  <data name="NoReadingsYet" xml:space="preserve"><value>No readings yet.</value></data>
+  <data name="TariffHistory" xml:space="preserve"><value>Tariff history</value></data>
+  <data name="TariffPerUnitValue" xml:space="preserve"><value>Tariff per unit: {0} / {1} from {2}</value></data>
+  <data name="AddressSettings" xml:space="preserve"><value>Address settings</value></data>
+  <data name="NoTariffsYet" xml:space="preserve"><value>No tariff periods yet.</value></data>
+  <data name="DeleteMeterHistory" xml:space="preserve"><value>Delete meter and its history</value></data>
+  <data name="InvalidDate" xml:space="preserve"><value>Invalid date</value></data>
+  <data name="EnterValidDate" xml:space="preserve"><value>Enter a valid date.</value></data>
+  <data name="CouldNotAddTariff" xml:space="preserve"><value>Could not add tariff</value></data>
+  <data name="DeleteMeter" xml:space="preserve"><value>Delete meter</value></data>
+  <data name="DeleteMeterMessage" xml:space="preserve"><value>Its readings, tariff history, and related settings will be recoverable from Recently deleted.</value></data>
+  <data name="DeleteReading" xml:space="preserve"><value>Delete reading</value></data>
+  <data name="Reading" xml:space="preserve"><value>Reading</value></data>
+  <data name="EditValue" xml:space="preserve"><value>Edit value</value></data>
+  <data name="ReadingMovesToDeleted" xml:space="preserve"><value>The reading will move to Recently deleted.</value></data>
+  <data name="EditReading" xml:space="preserve"><value>Edit reading</value></data>
+  <data name="MeasuredAt" xml:space="preserve"><value>Measured {0}</value></data>
+  <data name="CheckReading" xml:space="preserve"><value>Check this reading</value></data>
+  <data name="LowerReadingWarning" xml:space="preserve"><value>This is lower than the previous value. Confirm if the meter was replaced, reset, or the previous value needs correction.</value></data>
+  <data name="SaveAnyway" xml:space="preserve"><value>Save anyway</value></data>
+  <data name="Review" xml:space="preserve"><value>Review</value></data>
+  <data name="NewReading" xml:space="preserve"><value>New reading</value></data>
+  <data name="NoPreviousReading" xml:space="preserve"><value>No previous reading.</value></data>
+  <data name="PreviousReading" xml:space="preserve"><value>Previous reading: {0} on {1}.</value></data>
+  <data name="ConfirmedMeterValue" xml:space="preserve"><value>{0}Enter the confirmed meter value:</value></data>
+  <data name="SubscriptionFeeSummary" xml:space="preserve"><value>{0} · {1} / month</value></data>
+  <data name="ReadingSnapshot" xml:space="preserve"><value> · Used {0} · Est. {1}</value></data>
+  <data name="TariffRateFrom" xml:space="preserve"><value>{0} / {1} from {2}</value></data>
+  <data name="ReminderMustBeFuture" xml:space="preserve"><value>Select a future date and time.</value></data>
+  <data name="SubscriptionEntity" xml:space="preserve"><value>Subscription</value></data>
+  <data name="ServiceTypeEntity" xml:space="preserve"><value>Service type</value></data>
+  <data name="MeterTariffPeriod" xml:space="preserve"><value>Tariff period</value></data>
+  <data name="SubscriptionRate" xml:space="preserve"><value>Subscription rate</value></data>
+  <data name="NewTariff" xml:space="preserve"><value>New tariff</value></data>
+  <data name="PricePerUnit" xml:space="preserve"><value>Tariff per unit</value></data>
+  <data name="EffectiveDate" xml:space="preserve"><value>Effective date</value></data>
+  <data name="TariffPeriod" xml:space="preserve"><value>Tariff period</value></data>
+  <data name="DeleteHistoricalTariff" xml:space="preserve"><value>Move this historical period to Recently deleted? Saved reading snapshots will remain unchanged.</value></data>
+  <data name="ServiceTypesTitle" xml:space="preserve"><value>Service types</value></data>
+  <data name="AddCustomType" xml:space="preserve"><value>Add custom type</value></data>
+  <data name="Active" xml:space="preserve"><value>Active</value></data>
+  <data name="Inactive" xml:space="preserve"><value>Inactive</value></data>
+  <data name="BuiltIn" xml:space="preserve"><value>Built in</value></data>
+  <data name="Deactivate" xml:space="preserve"><value>Deactivate</value></data>
+  <data name="Activate" xml:space="preserve"><value>Activate</value></data>
+  <data name="DeleteRestoreLater" xml:space="preserve"><value>Delete and restore later</value></data>
+  <data name="DeleteServiceType" xml:space="preserve"><value>Delete service type</value></data>
+  <data name="ServiceTypeDeleteMessage" xml:space="preserve"><value>The type will be hidden and can be restored later.</value></data>
+  <data name="CustomServiceType" xml:space="preserve"><value>Custom service type</value></data>
+  <data name="NothingToRestore" xml:space="preserve"><value>Nothing to restore.</value></data>
+  <data name="RestoreItem" xml:space="preserve"><value>Restore {0}: {1} · {2}</value></data>
+  <data name="ReadingArea" xml:space="preserve"><value>Reading area</value></data>
+  <data name="ChoosePhotoInstructions" xml:space="preserve"><value>Drag the frame over the meter digits. Pull its lower edge to change the frame height, then recognize and save the reading.</value></data>
+  <data name="TakeOrChoosePhoto" xml:space="preserve"><value>Take photo</value></data>
+  <data name="RetakePhoto" xml:space="preserve"><value>Retake photo</value></data>
+  <data name="PreviewCrop" xml:space="preserve"><value>Preview selected crop</value></data>
+  <data name="AdjustSelection" xml:space="preserve"><value>Adjust selection</value></data>
+  <data name="SaveArea" xml:space="preserve"><value>Save area for this meter</value></data>
+  <data name="ChoosePhoto" xml:space="preserve"><value>Choose a photo</value></data>
+  <data name="PhotoFirst" xml:space="preserve"><value>Take or select a photo first.</value></data>
+  <data name="CropFailed" xml:space="preserve"><value>Crop failed</value></data>
+  <data name="PhotoUnavailable" xml:space="preserve"><value>Photo unavailable</value></data>
+  <data name="CameraPermission" xml:space="preserve"><value>Camera permission</value></data>
+  <data name="CameraPermissionInfo" xml:space="preserve"><value>Camera access is used only to take a temporary meter photo for on-device reading. The image is kept in cache and deleted when you leave this screen.</value></data>
+  <data name="CameraPermissionRationale" xml:space="preserve"><value>Allow camera access to capture the meter digits. You can choose a photo from the gallery instead.</value></data>
+  <data name="CameraUnavailable" xml:space="preserve"><value>Camera unavailable</value></data>
+  <data name="CameraDenied" xml:space="preserve"><value>Camera permission was not granted. You can still choose a photo from the gallery.</value></data>
+  <data name="ReadingAreaSaved" xml:space="preserve"><value>Reading area saved</value></data>
+  <data name="ReadingAreaSavedMessage" xml:space="preserve"><value>The normalized rectangle is saved in this meter profile. The photo and crop will be deleted.</value></data>
+  <data name="Saved" xml:space="preserve"><value>Saved</value></data>
+  <data name="ReminderSettings" xml:space="preserve"><value>Reminder settings</value></data>
+  <data name="ReadingReminder" xml:space="preserve"><value>Meter reading reminder</value></data>
+  <data name="PaymentReminder" xml:space="preserve"><value>Payment reminder</value></data>
+  <data name="ReadingReminderMessage" xml:space="preserve"><value>It is time to submit a meter reading.</value></data>
+  <data name="PaymentReminderMessage" xml:space="preserve"><value>It is time to check or make a payment.</value></data>
+  <data name="ReminderNamedMessage" xml:space="preserve"><value>Reminder for {0}</value></data>
+  <data name="ReminderChannel" xml:space="preserve"><value>Local reminders</value></data>
+  <data name="ReminderChannelDescription" xml:space="preserve"><value>Reading submission and payment reminders</value></data>
+  <data name="ReminderDateTime" xml:space="preserve"><value>Reminder date and time</value></data>
+  <data name="ReminderDayOfMonthLabel" xml:space="preserve"><value>Day of month</value></data>
+  <data name="ReminderTimeLabel" xml:space="preserve"><value>Reminder time</value></data>
+  <data name="RepeatRule" xml:space="preserve"><value>Repeat</value></data>
+  <data name="Never" xml:space="preserve"><value>Never</value></data>
+  <data name="Daily" xml:space="preserve"><value>Daily</value></data>
+  <data name="Weekly" xml:space="preserve"><value>Weekly</value></data>
+  <data name="EveryTwoWeeks" xml:space="preserve"><value>Every 2 weeks</value></data>
+  <data name="EveryThirtyDays" xml:space="preserve"><value>Every 30 days</value></data>
+  <data name="Monthly" xml:space="preserve"><value>Monthly</value></data>
+  <data name="Quarterly" xml:space="preserve"><value>Quarterly</value></data>
+  <data name="Yearly" xml:space="preserve"><value>Yearly</value></data>
+  <data name="Theme" xml:space="preserve"><value>Theme</value></data>
+  <data name="SystemTheme" xml:space="preserve"><value>Use device setting</value></data>
+  <data name="LightTheme" xml:space="preserve"><value>Light</value></data>
+  <data name="DarkTheme" xml:space="preserve"><value>Dark</value></data>
+  <data name="DefaultMeterUnit" xml:space="preserve"><value>units</value></data>
+  <data name="MeterNumber" xml:space="preserve"><value>Meter number (optional)</value></data>
+  <data name="AccountNumber" xml:space="preserve"><value>Account number (optional)</value></data>
+  <data name="OptionalMeterNumberValue" xml:space="preserve"><value>Meter number: {0}</value></data>
+  <data name="OptionalAccountNumberValue" xml:space="preserve"><value>Account number: {0}</value></data>
+  <data name="NotSet" xml:space="preserve"><value>Not set</value></data>
+  <data name="ReplaceMeter" xml:space="preserve"><value>Replace meter</value></data>
+  <data name="ReminderDayOfMonth" xml:space="preserve"><value>Day of month: {0}</value></data>
+  <data name="FinalMeterReading" xml:space="preserve"><value>Final reading on the old meter</value></data>
+  <data name="NewMeterInitialReading" xml:space="preserve"><value>Initial reading on the new meter</value></data>
+  <data name="MeterReplacementSaved" xml:space="preserve"><value>Replacement saved. Old and new readings remain in their histories.</value></data>
+  <data name="MeterReplacedSummary" xml:space="preserve"><value>Replaced on {0}. Tap to view its history.</value></data>
+  <data name="MeterReplacedOn" xml:space="preserve"><value>This meter was replaced on {0}.</value></data>
+  <data name="ReplacesPreviousMeter" xml:space="preserve"><value>Replaces meter number {0}. Replacement date: {1}.</value></data>
+  <data name="EnableReminder" xml:space="preserve"><value>Enable reminder</value></data>
+  <data name="ReminderDisabled" xml:space="preserve"><value>Reminder disabled</value></data>
+  <data name="NotificationPermission" xml:space="preserve"><value>Notification permission</value></data>
+  <data name="NotificationPermissionInfo" xml:space="preserve"><value>Allow notifications so this device can show your local reminder at the selected time.</value></data>
+  <data name="NotificationsDenied" xml:space="preserve"><value>Notifications are disabled. You can enable them in Android settings.</value></data>
+  <data name="Language" xml:space="preserve"><value>Language</value></data>
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="Ukrainian" xml:space="preserve"><value>Українська</value></data>
+  <data name="LanguageChanged" xml:space="preserve"><value>Language changed</value></data>
+  <data name="LanguageChangedMessage" xml:space="preserve"><value>The interface language has been changed.</value></data>
+  <data name="ClearAllDataMessage" xml:space="preserve"><value>This permanently removes local addresses, meters, subscriptions, readings, tariffs, reminders, and custom service types.</value></data>
+  <data name="Clear" xml:space="preserve"><value>Clear</value></data>
+  <data name="ChooseServiceType" xml:space="preserve"><value>Choose service type</value></data>
+  <data name="NoActiveServiceTypes" xml:space="preserve"><value>No active service types. Add or activate one in Service types.</value></data>
+  <data name="Continue" xml:space="preserve"><value>Continue</value></data>
+  <data name="Address" xml:space="preserve"><value>Address</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="NonNegativeAmount" xml:space="preserve"><value>Enter a non-negative amount.</value></data>
+  <data name="LowerReadingCorrection" xml:space="preserve"><value>This is lower than the previous value. Save this correction?</value></data>
+  <data name="InvalidTariff" xml:space="preserve"><value>Invalid tariff</value></data>
+  <data name="TariffStartDatePrompt" xml:space="preserve"><value>Enter the start date (for example 2026-10-14):</value></data>
+  <data name="NoServiceTypes" xml:space="preserve"><value>No service types</value></data>
+  <data name="SelectTemporaryPhoto" xml:space="preserve"><value>Select a temporary meter photo</value></data>
+  <data name="TakePhoto" xml:space="preserve"><value>Take a photo</value></data>
+  <data name="ChooseFromGallery" xml:space="preserve"><value>Choose from gallery</value></data>
+  <data name="PaymentReminderSettings" xml:space="preserve"><value>Payment reminder settings</value></data>
+  <data name="ReadingReminderSettings" xml:space="preserve"><value>Reading reminder settings</value></data>
+  <data name="Unit" xml:space="preserve"><value>Unit</value></data>
+  <data name="RecognizeReading" xml:space="preserve"><value>Recognize reading</value></data>
+  <data name="RecognizingReading" xml:space="preserve"><value>Recognizing…</value></data>
+  <data name="RecognitionConfidence" xml:space="preserve"><value>Confidence</value></data>
+  <data name="RecognizedText" xml:space="preserve"><value>Recognized text</value></data>
+  <data name="OcrNoNumericSuggestion" xml:space="preserve"><value>No numeric value was recognized. Enter the reading manually.</value></data>
+  <data name="OcrReadingSaved" xml:space="preserve"><value>The confirmed reading was saved.</value></data>
+  <data name="HomeHeadline" xml:space="preserve"><value>Keep home utilities in one place</value></data>
+  <data name="AddAddressHint" xml:space="preserve"><value>Add an address to start tracking meters and monthly services.</value></data>
+  <data name="AddressNameLabel" xml:space="preserve"><value>Address name</value></data>
+  <data name="AddressNamePlaceholder" xml:space="preserve"><value>For example: Home or Summer house</value></data>
+  <data name="AddressFullAddressLabel" xml:space="preserve"><value>Street or location</value></data>
+  <data name="AddressFullAddressPlaceholder" xml:space="preserve"><value>Optional</value></data>
+  <data name="AddressNameRequired" xml:space="preserve"><value>Enter a name for this address.</value></data>
+  <data name="PreferencesSection" xml:space="preserve"><value>Preferences</value></data>
+  <data name="DataManagementSection" xml:space="preserve"><value>Manage your data</value></data>
+  <data name="PrivacySection" xml:space="preserve"><value>Privacy and storage</value></data>
+  <data name="LocalDataDescription" xml:space="preserve"><value>Your addresses, readings, tariffs and reminders are stored locally on this device.</value></data>
+  <data name="ServiceTypesSettingsSubtitle" xml:space="preserve"><value>Configure utility categories and default meter units</value></data>
+  <data name="RecentlyDeletedSettingsSubtitle" xml:space="preserve"><value>Restore addresses, meters and other removed data</value></data>
+  <data name="ClearAllDataDescription" xml:space="preserve"><value>Permanently remove local records and custom service types</value></data>
+  <data name="ServiceTypesDescription" xml:space="preserve"><value>Built-in and custom utility categories</value></data>
+  <data name="ServiceTypeNameLabel" xml:space="preserve"><value>Service name</value></data>
+  <data name="ServiceTypeNamePlaceholder" xml:space="preserve"><value>For example: Building maintenance</value></data>
+  <data name="ServiceTypeNameRequired" xml:space="preserve"><value>Enter a name for this service type.</value></data>
+  <data name="ServiceTypeCategory" xml:space="preserve"><value>How will you use it?</value></data>
+  <data name="ServiceTypeIcon" xml:space="preserve"><value>Choose an icon</value></data>
+  <data name="MeterBased" xml:space="preserve"><value>Metered service</value></data>
+  <data name="FixedSubscription" xml:space="preserve"><value>Fixed monthly service</value></data>
+  <data name="MeterAndSubscription" xml:space="preserve"><value>Metered and fixed monthly</value></data>
+  <data name="DefaultUnit" xml:space="preserve"><value>Default meter unit</value></data>
+  <data name="OptionalDefaultUnit" xml:space="preserve"><value>Optional, for example m³ or kWh</value></data>
+  <data name="ServiceColdWater" xml:space="preserve"><value>Cold water</value></data>
+  <data name="ServiceHotWater" xml:space="preserve"><value>Hot water</value></data>
+  <data name="ServiceWater" xml:space="preserve"><value>Water</value></data>
+  <data name="ServiceGas" xml:space="preserve"><value>Gas</value></data>
+  <data name="ServiceElectricity" xml:space="preserve"><value>Electricity</value></data>
+  <data name="ServiceHeating" xml:space="preserve"><value>Heating</value></data>
+  <data name="ServiceHousingUtilities" xml:space="preserve"><value>Housing and utilities</value></data>
+  <data name="ServiceInternet" xml:space="preserve"><value>Internet</value></data>
+  <data name="ServiceWasteCollection" xml:space="preserve"><value>Waste collection</value></data>
+  <data name="ServiceCategoryAndUnit" xml:space="preserve"><value>{0}{1}</value></data>
+  <data name="ServiceStatus" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="EditCustomServiceType" xml:space="preserve"><value>Edit service type</value></data>
+  <data name="CustomServiceTypeUnavailable" xml:space="preserve"><value>This custom service type is no longer available.</value></data>
+  <data name="BuiltInServiceTypeInfo" xml:space="preserve"><value>Category: {0}{1}</value></data>
+  <data name="DefaultUnitSummary" xml:space="preserve"><value>Default unit: {0}</value></data>
+  <data name="NoMeterServiceTypes" xml:space="preserve"><value>No active service types are configured for meters. Add or activate one in Settings &gt; Service types.</value></data>
+  <data name="NoSubscriptionServiceTypes" xml:space="preserve"><value>No active service types are configured for fixed monthly services. Add or activate one in Settings &gt; Service types.</value></data>
+  <data name="CouldNotOpenMeter" xml:space="preserve"><value>Could not open meter</value></data>
+  <data name="ConsumptionValue" xml:space="preserve"><value>Used: {0}</value></data>
+  <data name="EstimatedAmountValue" xml:space="preserve"><value>Estimated amount: {0}</value></data>
+  <data name="ShowChart" xml:space="preserve"><value>Chart</value></data>
+  <data name="HideChart" xml:space="preserve"><value>Hide chart</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>Export CSV</value></data>
+  <data name="ExportHistory" xml:space="preserve"><value>Export history</value></data>
+  <data name="NoChartData" xml:space="preserve"><value>Not enough data to chart</value></data>
+  <data name="ConsumptionChartLabel" xml:space="preserve"><value>Consumption between readings ({0})</value></data>
+  <data name="TariffChartLabel" xml:space="preserve"><value>Rate per unit ({0})</value></data>
+  <data name="ImportReadingsCsv" xml:space="preserve"><value>Import readings from CSV</value></data>
+  <data name="ImportReadingsCsvTitle" xml:space="preserve"><value>Import readings</value></data>
+  <data name="ImportReadingsCsvHelp" xml:space="preserve"><value>CSV must have a date in dd/MM/yyyy format in the first column and a meter reading in the second. Comma or semicolon delimiters are supported.</value></data>
+  <data name="ImportCsvSuccess" xml:space="preserve"><value>Imported readings: {0}.</value></data>
+  <data name="InvalidCsv" xml:space="preserve"><value>Invalid CSV file</value></data>
+  <data name="CsvImportOnlyBeforeFirstReading" xml:space="preserve"><value>Import is available only before the first reading is saved.</value></data>
+  <data name="CsvImportInvalidColumns" xml:space="preserve"><value>Line {0}: expected exactly two columns, date and reading.</value></data>
+  <data name="CsvImportInvalidDate" xml:space="preserve"><value>Line {0}: invalid date. Use dd/MM/yyyy.</value></data>
+  <data name="CsvImportInvalidValue" xml:space="preserve"><value>Line {0}: reading must be a non-negative number.</value></data>
+  <data name="CsvImportDuplicateDate" xml:space="preserve"><value>Line {0}: a reading for this date already exists in the file.</value></data>
+  <data name="CsvImportFutureDate" xml:space="preserve"><value>Line {0}: a reading cannot be dated in the future.</value></data>
+  <data name="CsvImportAfterReplacement" xml:space="preserve"><value>Line {0}: the date is later than this meter's replacement date.</value></data>
+  <data name="CsvImportLowerThanPrevious" xml:space="preserve"><value>Line {0}: reading is lower than the previous one. Check the date or value.</value></data>
+  <data name="CsvImportMalformedRow" xml:space="preserve"><value>Line {0}: malformed CSV row or an unclosed quote.</value></data>
+  <data name="CsvImportFailedNoChanges" xml:space="preserve"><value>No readings were imported. {0}</value></data>
+  <data name="CsvMeasuredAt" xml:space="preserve"><value>Reading date</value></data>
+  <data name="CsvReading" xml:space="preserve"><value>Reading</value></data>
+  <data name="CsvConsumption" xml:space="preserve"><value>Consumption</value></data>
+  <data name="CsvAmount" xml:space="preserve"><value>Amount</value></data>
+  <data name="CsvEffectiveFrom" xml:space="preserve"><value>Effective from</value></data>
+  <data name="CsvEffectiveTo" xml:space="preserve"><value>Effective to</value></data>
+  <data name="CsvRate" xml:space="preserve"><value>Rate</value></data>
+  <data name="CsvUnit" xml:space="preserve"><value>Unit</value></data>
+  <data name="MeterReplacementHelp" xml:space="preserve"><value>Enter the final value from the old meter, the initial value on the new meter, and the replacement date. Both meter histories will be preserved.</value></data>
+  <data name="ReplacementDate" xml:space="preserve"><value>Replacement date</value></data>
+  <data name="ReplacementDateCannotBeFuture" xml:space="preserve"><value>The replacement date and time cannot be in the future.</value></data>
+</root>

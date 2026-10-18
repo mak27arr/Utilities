@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
+             x:Class="Utilities.Mobile.MeterDetailPage"
+             x:DataType="viewModels:MeterDetailViewModel"
+             Title="Meter"
+             BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 22" Padding="18">
+                <Grid ColumnDefinitions="56,*" ColumnSpacing="14">
+                    <Border WidthRequest="52" HeightRequest="52" BackgroundColor="{AppThemeBinding Light=#EEEAF8, Dark=#343142}" StrokeThickness="0" StrokeShape="RoundRectangle 17" Padding="11">
+                        <Image Source="ic_meter.png" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                        <Label Text="{Binding MeterTitle}" FontSize="24" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" />
+                        <Label Text="{Binding MeterDetails}" FontSize="14" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+            <Label Text="{Binding ReplacementSummary}" IsVisible="{Binding HasReplacementSummary}" FontSize="13" TextColor="{AppThemeBinding Light=#777282, Dark=#C3BDCD}" />
+
+            <Button Text="{Binding PhotoReadingText}" ImageSource="ic_camera.png" Command="{Binding PhotoReadingAreaCommand}" Style="{StaticResource PrimaryActionButton}" HeightRequest="56" IsVisible="{Binding ShowReadingActions}" />
+            <Button Text="{Binding AddManualReadingText}" ImageSource="ic_add.png" Command="{Binding AddReadingCommand}" Style="{StaticResource SecondaryActionButton}" HeightRequest="56" IsVisible="{Binding ShowReadingActions}" />
+            <Button Text="{Binding ReplaceMeterText}" Command="{Binding ReplaceMeterCommand}" Style="{StaticResource SecondaryActionButton}" IsVisible="{Binding CanReplaceMeter}" />
+
+            <Grid ColumnDefinitions="*,Auto" Margin="0,10,0,0">
+                <Label Text="{Binding ReadingHistoryText}" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" VerticalOptions="Center" />
+                <Button Grid.Column="1" Text="{Binding AllReadingsText}" Command="{Binding OpenReadingHistoryCommand}" Style="{StaticResource LinkActionButton}" />
+            </Grid>
+            <Label Text="{Binding NoReadingsText}" IsVisible="{Binding IsReadingsEmpty}" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+            <Border IsVisible="{Binding HasLatestReading}" BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ReadingActionsCommand}" CommandParameter="{Binding LatestReading}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="40,*" ColumnSpacing="12">
+                    <Image Source="ic_meter.png" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="3">
+                        <Label Text="{Binding LatestReading.ConfirmedValue, StringFormat='{0:0.####}'}" FontSize="19" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" />
+                        <Label Text="{Binding LatestReading.MeasuredAt, StringFormat='{0:g}'}" FontSize="13" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                        <Label Text="{Binding LatestReading.ConsumptionText}" IsVisible="{Binding LatestReading.HasConsumptionSnapshot}" FontSize="13" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                <Label Text="{Binding TariffHistoryText}" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" VerticalOptions="Center" />
+                <Button Grid.Column="1" Text="{Binding AllTariffsText}" Command="{Binding OpenTariffHistoryCommand}" Style="{StaticResource LinkActionButton}" />
+            </Grid>
+            <Button Text="{Binding AddTariffText}" ImageSource="ic_add.png" Command="{Binding AddTariffCommand}" Style="{StaticResource SecondaryActionButton}" HeightRequest="56" />
+            <Label Text="{Binding NoTariffsText}" IsVisible="{Binding IsTariffsEmpty}" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+            <Border IsVisible="{Binding HasLatestTariff}" BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenTariffHistoryCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="40,*" ColumnSpacing="12">
+                    <Image Source="ic_services.png" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="{Binding LatestTariff.DisplayText}" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <Label Text="{Binding EditMeterText}" FontSize="20" FontAttributes="Bold" Margin="0,12,0,0" TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" />
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding MeterNumberSummary}" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                    <Label Text="{Binding AccountNumberSummary}" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                </VerticalStackLayout>
+            </Border>
+            <Border IsVisible="{Binding CanImportReadings}" BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding ImportReadingsCsvHelpText}" FontSize="13" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                    <Button Text="{Binding ImportReadingsCsvText}" ImageSource="ic_import.png" Command="{Binding ImportReadingsCommand}" Style="{StaticResource SecondaryActionButton}" HeightRequest="54" />
+                </VerticalStackLayout>
+            </Border>
+            <Button Text="{Binding EditMeterText}" ImageSource="ic_settings.png" Command="{Binding EditMeterCommand}" Style="{StaticResource SecondaryActionButton}" HeightRequest="54" />
+            <Button Text="{Binding ReadingReminderText}" ImageSource="ic_settings.png" Command="{Binding ReadingReminderCommand}" Style="{StaticResource SecondaryActionButton}" HeightRequest="54" />
+            <Button Text="{Binding PaymentReminderText}" ImageSource="ic_settings.png" Command="{Binding PaymentReminderCommand}" Style="{StaticResource SecondaryActionButton}" HeightRequest="54" />
+            <Button Text="{Binding DeleteMeterText}" TextColor="{AppThemeBinding Light=#A3323D, Dark=#FF9099}" Command="{Binding DeleteMeterCommand}" Style="{StaticResource SecondaryActionButton}" HeightRequest="54" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
+             x:Class="Utilities.Mobile.RecentlyDeletedPage"
+             x:DataType="viewModels:RecentlyDeletedViewModel"
+             Title="Recently deleted"
+             BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
+    <ScrollView>
+        <VerticalStackLayout Padding="22,18,22,28" Spacing="14">
+            <Label Text="{Binding TitleText}" FontSize="30" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#211B31, Dark=#F4F1FA}" />
+            <Label Text="{Binding EmptyText}" IsVisible="{Binding IsEmpty}" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}" Spacing="10">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RestoreCommand}" CommandParameter="{Binding .}" /></Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="42,*,Auto" ColumnSpacing="12">
+                                <Image Source="{Binding Icon}" HeightRequest="34" WidthRequest="34" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="{Binding DisplayText}" VerticalTextAlignment="Center" TextColor="{AppThemeBinding Light=#393544, Dark=#E3DFEA}" />
+                                <Label Grid.Column="2" Text="›" FontSize="26" VerticalTextAlignment="Center" TextColor="{AppThemeBinding Light=#8A7AB8, Dark=#BCAAEF}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

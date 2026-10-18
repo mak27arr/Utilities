@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
+             x:Class="Utilities.Mobile.AddressDetailPage"
+             x:DataType="viewModels:AddressDetailViewModel"
+             Title="Address">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+            <Label Text="{Binding Address.Name}" FontSize="28" FontAttributes="Bold" />
+            <Label Text="{Binding Address.FullAddress}" IsVisible="{Binding HasFullAddress}" />
+            <Label Text="{Binding MetersText}" FontSize="22" FontAttributes="Bold" Margin="0,12,0,0" />
+            <Label Text="{Binding NoMetersText}" IsVisible="{Binding IsMetersEmpty}" />
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Meters}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:MeterSummary">
+                        <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                            <Grid ColumnDefinitions="48,*,48" ColumnSpacing="12" VerticalOptions="Center">
+                                <Grid Grid.ColumnSpan="2" ColumnDefinitions="48,*" ColumnSpacing="12">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnMeterTapped" />
+                                    </Grid.GestureRecognizers>
+                                    <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{AppThemeBinding Light=#F0EDFA, Dark=#343142}" StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="10">
+                                        <Grid>
+                                            <Image Source="{Binding Icon}" IsVisible="{Binding UsesImageIcon}" />
+                                            <Label Text="{Binding IconGlyph}" IsVisible="{Binding UsesCustomIcon}" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Grid>
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="16" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" />
+                                        <Label Text="{Binding Summary}" FontSize="12" TextColor="{AppThemeBinding Light=#807C89, Dark=#B6B1C0}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                                <ImageButton Grid.Column="2" Source="ic_settings.png" WidthRequest="44" HeightRequest="44" Padding="10" BackgroundColor="{AppThemeBinding Light=#F0EDFA, Dark=#343142}"
+                                             Clicked="OnMeterSettingsClicked" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+            <Label Text="{Binding SubscriptionsText}" FontSize="22" FontAttributes="Bold" Margin="0,12,0,0" />
+            <Label Text="{Binding NoSubscriptionsText}" IsVisible="{Binding IsSubscriptionsEmpty}" />
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Subscriptions}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:SubscriptionSummary">
+                        <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                            <Grid ColumnDefinitions="48,*,48" ColumnSpacing="12" VerticalOptions="Center">
+                                <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{AppThemeBinding Light=#F0EDFA, Dark=#343142}" StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="10">
+                                    <Grid>
+                                        <Image Source="{Binding Icon}" IsVisible="{Binding UsesImageIcon}" />
+                                        <Label Text="{Binding IconGlyph}" IsVisible="{Binding UsesCustomIcon}" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" VerticalOptions="Center" />
+                                <ImageButton Grid.Column="2" Source="ic_settings.png" WidthRequest="44" HeightRequest="44" Padding="10" BackgroundColor="{AppThemeBinding Light=#F0EDFA, Dark=#343142}"
+                                             Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SubscriptionActionsCommand}"
+                                             CommandParameter="{Binding .}" />
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SubscriptionActionsCommand}" CommandParameter="{Binding .}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+            <Label Text="{Binding AddressSettingsText}" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#777282, Dark=#C3BDCD}" Margin="0,22,0,0" />
+            <Button Text="{Binding AddMeterText}" Command="{Binding AddMeterCommand}" Style="{StaticResource PrimaryActionButton}" />
+            <Button Text="{Binding AddSubscriptionText}" Command="{Binding AddSubscriptionCommand}" Style="{StaticResource SecondaryActionButton}" />
+            <Button Text="{Binding EditAddressText}" Command="{Binding EditAddressCommand}" Style="{StaticResource SecondaryActionButton}" />
+            <Button Text="{Binding ArchiveAddressText}" TextColor="{AppThemeBinding Light=#A3323D, Dark=#FF9099}" Command="{Binding ArchiveCommand}" Style="{StaticResource SecondaryActionButton}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

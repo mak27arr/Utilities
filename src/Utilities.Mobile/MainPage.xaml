@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
+             x:Class="Utilities.Mobile.MainPage"
+             x:DataType="viewModels:HomeViewModel"
+             Title="Utilities"
+             BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
+    <ScrollView>
+        <VerticalStackLayout Padding="22,18,22,28" Spacing="22">
+            <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                    <Border WidthRequest="46" HeightRequest="46" BackgroundColor="{AppThemeBinding Light=#EAE5FA, Dark=#343142}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="9">
+                        <Image Source="ic_address.png" />
+                    </Border>
+                    <VerticalStackLayout Spacing="1" VerticalOptions="Center">
+                        <Label Text="Utilities" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#332664, Dark=#D5CAFA}" />
+                        <Label Text="{Binding LocalOnlyText}" FontSize="11" LineBreakMode="TailTruncation" MaxLines="1" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+                <ImageButton Grid.Column="1" Source="ic_settings.png" WidthRequest="44" HeightRequest="44" Padding="5" BackgroundColor="Transparent" BorderColor="Transparent" BorderWidth="0" CornerRadius="0" Command="{Binding OpenSettingsCommand}" />
+            </Grid>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="{Binding YourAddressesText}" FontSize="16" TextColor="{AppThemeBinding Light=#706C7A, Dark=#C3BDCD}" />
+            </VerticalStackLayout>
+
+            <Border IsVisible="{Binding IsEmpty}" BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 22" Padding="20">
+                <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                    <Image Source="ic_address.png" HeightRequest="54" WidthRequest="54" />
+                    <Label Text="{Binding EmptyState}" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=#777282, Dark=#C3BDCD}" />
+                    <Label Text="{Binding AddAddressHint}" HorizontalTextAlignment="Center" FontSize="13" TextColor="{AppThemeBinding Light=#9692A0, Dark=#B6B1C0}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Addresses}" Spacing="10">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:AddressListItem">
+                        <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="15">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenCommand}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="52,*,Auto" ColumnSpacing="13" VerticalOptions="Center">
+                                <Border WidthRequest="48" HeightRequest="48" BackgroundColor="{AppThemeBinding Light=#F0EDFA, Dark=#343142}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="11">
+                                    <Image Source="ic_address.png" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                    <Label Text="{Binding Name}" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="›" FontSize="28" TextColor="{AppThemeBinding Light=#8A7AB8, Dark=#BCAAEF}" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Button Text="{Binding AddAddressText}" ImageSource="ic_address.png" Command="{Binding AddAddressCommand}" Style="{StaticResource PrimaryActionButton}" Margin="0,8,0,0" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

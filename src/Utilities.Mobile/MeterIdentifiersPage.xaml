@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
+             x:Class="Utilities.Mobile.MeterIdentifiersPage"
+             x:DataType="viewModels:MeterIdentifiersViewModel"
+             Title="Edit meter"
+             BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="20">
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#ECEAF2, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 24" Padding="22">
+                <VerticalStackLayout Spacing="18">
+                    <Image Source="ic_meter.png" HeightRequest="52" HorizontalOptions="Start" />
+                    <Label Text="{Binding TitleText}" FontSize="28" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#201B2B, Dark=#F4F1FA}" />
+                    <Label Text="{Binding MeterName}" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#454150, Dark=#E3DFEA}" />
+                    <Label Text="{Binding DescriptionText}" TextColor="{AppThemeBinding Light=#777382, Dark=#AAA5B4}" />
+                    <VerticalStackLayout Spacing="7">
+                        <Label Text="{Binding MeterNumberLabel}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#454150, Dark=#E3DFEA}" />
+                        <Entry Text="{Binding MeterNumber}" MaxLength="80" ReturnType="Next" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="7">
+                        <Label Text="{Binding AccountNumberLabel}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#454150, Dark=#E3DFEA}" />
+                        <Entry Text="{Binding AccountNumber}" MaxLength="80" ReturnType="Done" />
+                    </VerticalStackLayout>
+                    <Button Text="{Binding SaveText}" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryActionButton}" />
+                    <Button Text="{Binding CancelText}" Command="{Binding CancelCommand}" Style="{StaticResource SecondaryActionButton}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

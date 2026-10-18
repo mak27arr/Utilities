@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
+             x:Class="Utilities.Mobile.SettingsPage"
+             x:DataType="viewModels:SettingsViewModel"
+             Title="Settings"
+             BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
+    <ScrollView>
+        <VerticalStackLayout Padding="22,18,22,28" Spacing="22">
+            <Label Text="{Binding TitleText}" FontSize="30" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#211B31, Dark=#F4F1FA}" />
+            <VerticalStackLayout Spacing="10">
+                <Label Text="{Binding PreferencesSectionText}" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#777282, Dark=#C3BDCD}" />
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="15">
+                    <Grid ColumnDefinitions="48,*,Auto" ColumnSpacing="13">
+                        <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{AppThemeBinding Light=#F0EDFA, Dark=#343142}" StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="10"><Image Source="{Binding LanguageIcon}" /></Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                            <Label Text="{Binding LanguageText}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" />
+                            <Picker ItemsSource="{Binding Languages}" SelectedIndex="{Binding LanguageIndex}" HeightRequest="42" />
+                            <Button Text="{Binding SaveText}" Command="{Binding SaveLanguageCommand}" Style="{StaticResource SecondaryActionButton}" WidthRequest="220" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="15">
+                    <Grid ColumnDefinitions="48,*" ColumnSpacing="13">
+                        <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{AppThemeBinding Light=#F0EDFA, Dark=#343142}" StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="10"><Image Source="ic_settings.png" /></Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                            <Label Text="{Binding ThemeText}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" />
+                            <Picker ItemsSource="{Binding Themes}" SelectedIndex="{Binding ThemeIndex}" HeightRequest="42" />
+                            <Button Text="{Binding SaveText}" Command="{Binding SaveThemeCommand}" Style="{StaticResource SecondaryActionButton}" WidthRequest="220" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="{Binding DataManagementSectionText}" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#777282, Dark=#C3BDCD}" />
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="15">
+                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenServiceTypesCommand}" /></Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="48,*,Auto" ColumnSpacing="13">
+                        <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{AppThemeBinding Light=#F0EDFA, Dark=#343142}" StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="10"><Image Source="{Binding ServiceTypesIcon}" /></Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center"><Label Text="{Binding ServiceTypesText}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" /><Label Text="{Binding ServiceTypesDescription}" FontSize="12" TextColor="{AppThemeBinding Light=#807C89, Dark=#B6B1C0}" /></VerticalStackLayout>
+                        <Label Grid.Column="2" Text="›" FontSize="28" TextColor="{AppThemeBinding Light=#8A7AB8, Dark=#BCAAEF}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="15">
+                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenRecentlyDeletedCommand}" /></Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="48,*,Auto" ColumnSpacing="13">
+                        <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{AppThemeBinding Light=#F0EDFA, Dark=#343142}" StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="10"><Image Source="{Binding RecentlyDeletedIcon}" /></Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center"><Label Text="{Binding RecentlyDeletedText}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" /><Label Text="{Binding RecentlyDeletedDescription}" FontSize="12" TextColor="{AppThemeBinding Light=#807C89, Dark=#B6B1C0}" /></VerticalStackLayout>
+                        <Label Grid.Column="2" Text="›" FontSize="28" TextColor="{AppThemeBinding Light=#8A7AB8, Dark=#BCAAEF}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="{Binding PrivacySectionText}" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#777282, Dark=#C3BDCD}" />
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="15">
+                    <Grid ColumnDefinitions="48,*" ColumnSpacing="13">
+                        <Border WidthRequest="44" HeightRequest="44" BackgroundColor="{AppThemeBinding Light=#E9F4EF, Dark=#263B32}" StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="10"><Image Source="{Binding StorageIcon}" /></Border>
+                        <Label Grid.Column="1" Text="{Binding LocalDataDescription}" VerticalTextAlignment="Center" TextColor="{AppThemeBinding Light=#55515F, Dark=#D5D1DD}" />
+                    </Grid>
+                </Border>
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="15">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding ExportDiagnosticsText}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" />
+                        <Label Text="{Binding ExportDiagnosticsDescription}" FontSize="12" TextColor="{AppThemeBinding Light=#807C89, Dark=#B6B1C0}" />
+                        <Button Text="{Binding ExportDiagnosticsText}" ImageSource="ic_export.png" Command="{Binding ExportDiagnosticsCommand}" Style="{StaticResource SecondaryActionButton}" WidthRequest="260" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#F0DFDF, Dark=#59363B}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="15">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding ClearAllText}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#A3323D, Dark=#FF9099}" />
+                        <Label Text="{Binding ClearAllDescription}" FontSize="12" TextColor="{AppThemeBinding Light=#807C89, Dark=#B6B1C0}" />
+                        <Button Text="{Binding ClearAllText}" Command="{Binding ClearAllCommand}" BackgroundColor="{AppThemeBinding Light=#A3323D, Dark=#7A2630}" TextColor="White" CornerRadius="13" WidthRequest="260" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

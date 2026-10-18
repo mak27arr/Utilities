@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
+             x:Class="Utilities.Mobile.MeterHistoryPage"
+             x:DataType="viewModels:MeterDetailViewModel"
+             BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
+    <CollectionView ItemsSource="{Binding HistoryRows}"
+                    SelectionMode="None"
+                    ItemSizingStrategy="MeasureAllItems">
+        <CollectionView.Header>
+            <VerticalStackLayout Padding="20" Spacing="14">
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 22" Padding="18">
+                    <Grid ColumnDefinitions="52,*" ColumnSpacing="14">
+                        <Border WidthRequest="48" HeightRequest="48" BackgroundColor="{AppThemeBinding Light=#EEEAF8, Dark=#343142}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="10">
+                            <Image Source="{Binding HistoryIcon}" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Label Text="{Binding HistoryTitle}" FontSize="21" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" />
+                            <Label Text="{Binding MeterTitle}" FontSize="14" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <Button Text="{Binding ChartButtonText}" ImageSource="ic_chart.png" Command="{Binding ToggleChartCommand}" WidthRequest="156" HeightRequest="46" Style="{StaticResource SecondaryActionButton}" />
+                    <Button Text="{Binding ExportHistoryText}" ImageSource="ic_export.png" Command="{Binding ExportHistoryCommand}" WidthRequest="156" HeightRequest="46" Style="{StaticResource SecondaryActionButton}" />
+                </HorizontalStackLayout>
+                <Border IsVisible="{Binding ShowChart}" BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="12">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding ChartDescription}" FontSize="13" FontAttributes="Bold" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                        <GraphicsView x:Name="HistoryGraph" HeightRequest="230" />
+                    </VerticalStackLayout>
+                </Border>
+                <Button IsVisible="{Binding IsTariffHistory}" Text="{Binding AddTariffText}" Command="{Binding AddTariffCommand}" ImageSource="ic_add.png" Style="{StaticResource PrimaryActionButton}" HeightRequest="56" />
+            </VerticalStackLayout>
+        </CollectionView.Header>
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="viewModels:HistoryRow">
+                <Border Margin="20,0,20,10" BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.HistoryRowActionsCommand}" CommandParameter="{Binding .}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="40,*" ColumnSpacing="12">
+                        <Image Source="{Binding IconSource}" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="3">
+                            <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" />
+                            <Label Text="{Binding Subtitle}" FontSize="13" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                            <Label Text="{Binding Detail}" IsVisible="{Binding HasDetail}" FontSize="13" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+        <CollectionView.EmptyView>
+            <ContentView Padding="20,40">
+                <Label Text="{Binding EmptyHistoryText}" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+            </ContentView>
+        </CollectionView.EmptyView>
+    </CollectionView>
+</ContentPage>

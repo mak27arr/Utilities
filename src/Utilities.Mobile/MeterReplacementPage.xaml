@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
+             x:Class="Utilities.Mobile.MeterReplacementPage"
+             x:DataType="viewModels:MeterReplacementViewModel"
+             Title="Replace meter"
+             BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 22" Padding="18">
+                <Grid ColumnDefinitions="52,*" ColumnSpacing="14">
+                    <Border WidthRequest="48" HeightRequest="48" BackgroundColor="{AppThemeBinding Light=#EEEAF8, Dark=#343142}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="10"><Image Source="ic_meter.png" /></Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                        <Label Text="{Binding TitleText}" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" />
+                        <Label Text="{Binding MeterName}" FontSize="14" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+            <Label Text="{Binding HelpText}" FontSize="14" LineBreakMode="WordWrap" TextColor="{AppThemeBinding Light=#777282, Dark=#C3BDCD}" />
+
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding FinalReadingLabel}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" />
+                    <Entry Text="{Binding FinalReading}" Keyboard="Numeric" Placeholder="0" />
+                    <Label Text="{Binding InitialReadingLabel}" FontAttributes="Bold" Margin="0,8,0,0" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" />
+                    <Entry Text="{Binding InitialReading}" Keyboard="Numeric" Placeholder="0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}" Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding DateLabel}" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" />
+                    <DatePicker Date="{Binding ReplacementDate}" />
+                    <Label Text="{Binding TimeLabel}" FontAttributes="Bold" Margin="0,8,0,0" TextColor="{AppThemeBinding Light=#292535, Dark=#F4F1FA}" />
+                    <TimePicker Time="{Binding ReplacementTime}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="{Binding SaveText}" ImageSource="ic_add.png" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryActionButton}" HorizontalOptions="Center" WidthRequest="280" />
+            <Button Text="{Binding CancelText}" Command="{Binding CancelCommand}" Style="{StaticResource LinkActionButton}" HorizontalOptions="Center" WidthRequest="240" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

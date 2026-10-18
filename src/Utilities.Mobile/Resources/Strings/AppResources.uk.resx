@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="Utilities" xml:space="preserve"><value>Комунальні послуги</value></data>
+  <data name="LocalOnly" xml:space="preserve"><value>Дані зберігаються на пристрої</value></data>
+  <data name="AddAddress" xml:space="preserve"><value>Додати адресу</value></data>
+  <data name="ServiceTypes" xml:space="preserve"><value>Типи послуг</value></data>
+  <data name="RecentlyDeleted" xml:space="preserve"><value>Нещодавно видалені</value></data>
+  <data name="Settings" xml:space="preserve"><value>Налаштування</value></data>
+  <data name="ClearAllData" xml:space="preserve"><value>Очистити всі дані</value></data>
+  <data name="YourAddresses" xml:space="preserve"><value>Ваші адреси</value></data>
+  <data name="NoAddresses" xml:space="preserve"><value>Адрес ще немає. Додайте першу адресу.</value></data>
+  <data name="MetersSubscriptionsCount" xml:space="preserve"><value>Лічильників: {0} · підписок: {1}</value></data>
+  <data name="DatabaseError" xml:space="preserve"><value>Помилка бази даних</value></data>
+  <data name="UnexpectedError" xml:space="preserve"><value>Не вдалося виконати дію. Наявні дані не змінено.</value></data>
+  <data name="CsvImportCalculationOverflow" xml:space="preserve"><value>Рядок {0}: споживання або суму неможливо обчислити через завелике значення.</value></data>
+  <data name="CsvImportMalformedFile" xml:space="preserve"><value>Файл порожній або не містить коректних рядків показань.</value></data>
+  <data name="History" xml:space="preserve"><value>Історія</value></data>
+  <data name="TariffEffectiveFromValue" xml:space="preserve"><value>Діє з: {0}</value></data>
+  <data name="TariffEffectiveToValue" xml:space="preserve"><value>Діє до: {0}</value></data>
+  <data name="CurrentTariff" xml:space="preserve"><value>Поточний тариф</value></data>
+  <data name="ExportDiagnostics" xml:space="preserve"><value>Експортувати діагностику</value></data>
+  <data name="ExportDiagnosticsDescription" xml:space="preserve"><value>Надішліть недавні журнали застосунку, щоб повідомити про проблему.</value></data>
+  <data name="DiagnosticsReadyToShare" xml:space="preserve"><value>Файл діагностики готовий до надсилання.</value></data>
+  <data name="NewAddress" xml:space="preserve"><value>Нова адреса</value></data>
+  <data name="AddressNamePrompt" xml:space="preserve"><value>Вкажіть назву адреси:</value></data>
+  <data name="Save" xml:space="preserve"><value>Зберегти</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Скасувати</value></data>
+  <data name="AddressDetails" xml:space="preserve"><value>Деталі адреси</value></data>
+  <data name="OptionalStreet" xml:space="preserve"><value>Вулиця або місце (необов’язково):</value></data>
+  <data name="Skip" xml:space="preserve"><value>Пропустити</value></data>
+  <data name="Meters" xml:space="preserve"><value>Лічильники</value></data>
+  <data name="Subscriptions" xml:space="preserve"><value>Підписки</value></data>
+  <data name="NoMeters" xml:space="preserve"><value>За цією адресою ще немає лічильників.</value></data>
+  <data name="NoSubscriptions" xml:space="preserve"><value>За цією адресою ще немає підписок.</value></data>
+  <data name="LatestReading" xml:space="preserve"><value>Останнє: {0}, дата {1}</value></data>
+  <data name="NoReadings" xml:space="preserve"><value>Немає показань</value></data>
+  <data name="AddMeter" xml:space="preserve"><value>Додати лічильник</value></data>
+  <data name="AddSubscription" xml:space="preserve"><value>Додати підписку з фіксованою оплатою</value></data>
+  <data name="EditAddress" xml:space="preserve"><value>Змінити адресу</value></data>
+  <data name="Name" xml:space="preserve"><value>Назва</value></data>
+  <data name="StreetLocation" xml:space="preserve"><value>Вулиця або місце</value></data>
+  <data name="ArchiveAddress" xml:space="preserve"><value>Архівувати адресу</value></data>
+  <data name="ArchiveAddressTree" xml:space="preserve"><value>Адресу, лічильники, показання, підписки, тарифи та пов’язані налаштування буде м’яко видалено. Дерево можна відновити через «Нещодавно видалені».</value></data>
+  <data name="Archive" xml:space="preserve"><value>Архівувати</value></data>
+  <data name="NewMeter" xml:space="preserve"><value>Новий лічильник</value></data>
+  <data name="MeterName" xml:space="preserve"><value>Назва лічильника</value></data>
+  <data name="UnitPrompt" xml:space="preserve"><value>Одиниця (наприклад, м³ або кВт·год)</value></data>
+  <data name="MeterDisplay" xml:space="preserve"><value>Тип дисплея лічильника</value></data>
+  <data name="DigitalDisplay" xml:space="preserve"><value>Цифровий дисплей</value></data>
+  <data name="MechanicalRollers" xml:space="preserve"><value>Механічні цифрові барабани</value></data>
+  <data name="InitialReading" xml:space="preserve"><value>Початкове показання</value></data>
+  <data name="OptionalStartingValue" xml:space="preserve"><value>Початкове значення (необов’язково)</value></data>
+  <data name="InvalidReading" xml:space="preserve"><value>Некоректне показання</value></data>
+  <data name="NonNegativeNumber" xml:space="preserve"><value>Введіть невід’ємне число.</value></data>
+  <data name="NewSubscription" xml:space="preserve"><value>Нова підписка</value></data>
+  <data name="ServiceName" xml:space="preserve"><value>Назва послуги</value></data>
+  <data name="MonthlyFee" xml:space="preserve"><value>Щомісячна оплата</value></data>
+  <data name="FixedMonthlyAmount" xml:space="preserve"><value>Введіть фіксовану суму за місяць</value></data>
+  <data name="InvalidAmount" xml:space="preserve"><value>Некоректна сума</value></data>
+  <data name="EditSubscription" xml:space="preserve"><value>Змінити підписку</value></data>
+  <data name="EditMonthlyFee" xml:space="preserve"><value>Змінити щомісячну оплату</value></data>
+  <data name="NewFeeStartsToday" xml:space="preserve"><value>Нова сума діє з сьогоднішнього дня</value></data>
+  <data name="DeleteSubscription" xml:space="preserve"><value>Видалити підписку</value></data>
+  <data name="DeleteSubscriptionMessage" xml:space="preserve"><value>Історію оплат і нагадування можна буде відновити через «Нещодавно видалені».</value></data>
+  <data name="EditNameMonthlyFee" xml:space="preserve"><value>Змінити назву й щомісячну оплату</value></data>
+  <data name="NoActiveMonthlyFee" xml:space="preserve"><value>Немає чинної щомісячної оплати</value></data>
+  <data name="CouldNotOpenAddress" xml:space="preserve"><value>Не вдалося відкрити адресу</value></data>
+  <data name="Meter" xml:space="preserve"><value>Лічильник</value></data>
+  <data name="EditMeter" xml:space="preserve"><value>Змінити лічильник</value></data>
+  <data name="MeterIdentifiersDescription" xml:space="preserve"><value>Змініть необов’язкові номери лічильника й особового рахунку. Непотрібне поле можна залишити порожнім.</value></data>
+  <data name="MeterNotFound" xml:space="preserve"><value>Не вдалося знайти цей лічильник.</value></data>
+  <data name="PhotoReadingArea" xml:space="preserve"><value>Налаштувати рамку цифр на фото</value></data>
+  <data name="PhotoReading" xml:space="preserve"><value>Зняти показання на фото</value></data>
+  <data name="PhotoReadingTitle" xml:space="preserve"><value>Показання з фото</value></data>
+  <data name="AddManualReading" xml:space="preserve"><value>Додати показання вручну</value></data>
+  <data name="AddTariffPeriod" xml:space="preserve"><value>Додати тариф</value></data>
+  <data name="ReadingHistory" xml:space="preserve"><value>Історія показань</value></data>
+  <data name="ViewAllReadings" xml:space="preserve"><value>Уся історія</value></data>
+  <data name="ViewAllTariffs" xml:space="preserve"><value>Усі тарифи</value></data>
+  <data name="NoReadingsYet" xml:space="preserve"><value>Показань ще немає.</value></data>
+  <data name="TariffHistory" xml:space="preserve"><value>Історія тарифів</value></data>
+  <data name="TariffPerUnitValue" xml:space="preserve"><value>Тариф за одиницю: {0} / {1}, з {2}</value></data>
+  <data name="AddressSettings" xml:space="preserve"><value>Налаштування адреси</value></data>
+  <data name="NoTariffsYet" xml:space="preserve"><value>Періодів тарифу ще немає.</value></data>
+  <data name="DeleteMeterHistory" xml:space="preserve"><value>Видалити лічильник та його історію</value></data>
+  <data name="InvalidDate" xml:space="preserve"><value>Некоректна дата</value></data>
+  <data name="EnterValidDate" xml:space="preserve"><value>Введіть коректну дату.</value></data>
+  <data name="CouldNotAddTariff" xml:space="preserve"><value>Не вдалося додати тариф</value></data>
+  <data name="DeleteMeter" xml:space="preserve"><value>Видалити лічильник</value></data>
+  <data name="DeleteMeterMessage" xml:space="preserve"><value>Показання, історію тарифів і пов’язані налаштування можна буде відновити через «Нещодавно видалені».</value></data>
+  <data name="DeleteReading" xml:space="preserve"><value>Видалити показання</value></data>
+  <data name="Reading" xml:space="preserve"><value>Показання</value></data>
+  <data name="EditValue" xml:space="preserve"><value>Змінити значення</value></data>
+  <data name="ReadingMovesToDeleted" xml:space="preserve"><value>Показання буде переміщено до «Нещодавно видалені».</value></data>
+  <data name="EditReading" xml:space="preserve"><value>Змінити показання</value></data>
+  <data name="MeasuredAt" xml:space="preserve"><value>Дата вимірювання: {0}</value></data>
+  <data name="CheckReading" xml:space="preserve"><value>Перевірте показання</value></data>
+  <data name="LowerReadingWarning" xml:space="preserve"><value>Значення нижче за попереднє. Підтвердьте, якщо лічильник замінили, скинули або попереднє значення треба виправити.</value></data>
+  <data name="SaveAnyway" xml:space="preserve"><value>Зберегти попри це</value></data>
+  <data name="Review" xml:space="preserve"><value>Перевірити</value></data>
+  <data name="NewReading" xml:space="preserve"><value>Нове показання</value></data>
+  <data name="NoPreviousReading" xml:space="preserve"><value>Попередніх показань немає.</value></data>
+  <data name="PreviousReading" xml:space="preserve"><value>Попереднє показання: {0}, дата {1}.</value></data>
+  <data name="ConfirmedMeterValue" xml:space="preserve"><value>{0}Введіть підтверджене значення лічильника:</value></data>
+  <data name="SubscriptionFeeSummary" xml:space="preserve"><value>{0} · {1} на місяць</value></data>
+  <data name="ReadingSnapshot" xml:space="preserve"><value> · Спожито {0} · Орієнтовно {1}</value></data>
+  <data name="TariffRateFrom" xml:space="preserve"><value>{0} / {1}, з {2}</value></data>
+  <data name="ReminderMustBeFuture" xml:space="preserve"><value>Виберіть майбутню дату й час.</value></data>
+  <data name="SubscriptionEntity" xml:space="preserve"><value>Підписка</value></data>
+  <data name="ServiceTypeEntity" xml:space="preserve"><value>Тип послуги</value></data>
+  <data name="MeterTariffPeriod" xml:space="preserve"><value>Період тарифу</value></data>
+  <data name="SubscriptionRate" xml:space="preserve"><value>Тариф підписки</value></data>
+  <data name="NewTariff" xml:space="preserve"><value>Новий тариф</value></data>
+  <data name="PricePerUnit" xml:space="preserve"><value>Тариф за одиницю</value></data>
+  <data name="EffectiveDate" xml:space="preserve"><value>Дата початку дії</value></data>
+  <data name="TariffPeriod" xml:space="preserve"><value>Період тарифу</value></data>
+  <data name="DeleteHistoricalTariff" xml:space="preserve"><value>Перемістити цей історичний період до «Нещодавно видалені»? Збережені розрахунки показань не зміняться.</value></data>
+  <data name="ServiceTypesTitle" xml:space="preserve"><value>Типи послуг</value></data>
+  <data name="AddCustomType" xml:space="preserve"><value>Додати власний тип</value></data>
+  <data name="Active" xml:space="preserve"><value>Активний</value></data>
+  <data name="Inactive" xml:space="preserve"><value>Неактивний</value></data>
+  <data name="BuiltIn" xml:space="preserve"><value>Вбудований</value></data>
+  <data name="Deactivate" xml:space="preserve"><value>Деактивувати</value></data>
+  <data name="Activate" xml:space="preserve"><value>Активувати</value></data>
+  <data name="DeleteRestoreLater" xml:space="preserve"><value>Видалити з можливістю відновлення</value></data>
+  <data name="DeleteServiceType" xml:space="preserve"><value>Видалити тип послуги</value></data>
+  <data name="ServiceTypeDeleteMessage" xml:space="preserve"><value>Тип буде приховано, його можна буде відновити.</value></data>
+  <data name="CustomServiceType" xml:space="preserve"><value>Власний тип послуги</value></data>
+  <data name="NothingToRestore" xml:space="preserve"><value>Немає даних для відновлення.</value></data>
+  <data name="RestoreItem" xml:space="preserve"><value>Відновити {0}: {1} · {2}</value></data>
+  <data name="ReadingArea" xml:space="preserve"><value>Ділянка показань</value></data>
+  <data name="ChoosePhotoInstructions" xml:space="preserve"><value>Перетягніть рамку на цифри лічильника. Потягніть за нижній край, щоб змінити висоту, потім розпізнайте й збережіть показання.</value></data>
+  <data name="TakeOrChoosePhoto" xml:space="preserve"><value>Зробити фото</value></data>
+  <data name="RetakePhoto" xml:space="preserve"><value>Перезняти фото</value></data>
+  <data name="PreviewCrop" xml:space="preserve"><value>Переглянути обрізану ділянку</value></data>
+  <data name="AdjustSelection" xml:space="preserve"><value>Змінити рамку</value></data>
+  <data name="SaveArea" xml:space="preserve"><value>Зберегти ділянку для цього лічильника</value></data>
+  <data name="ChoosePhoto" xml:space="preserve"><value>Виберіть фото</value></data>
+  <data name="PhotoFirst" xml:space="preserve"><value>Спочатку зробіть або виберіть фото.</value></data>
+  <data name="CropFailed" xml:space="preserve"><value>Не вдалося обрізати фото</value></data>
+  <data name="PhotoUnavailable" xml:space="preserve"><value>Фото недоступне</value></data>
+  <data name="CameraPermission" xml:space="preserve"><value>Дозвіл на камеру</value></data>
+  <data name="CameraPermissionInfo" xml:space="preserve"><value>Камера потрібна лише для тимчасового фото лічильника й обробки на пристрої. Фото зберігається в кеші та видаляється після виходу з екрана.</value></data>
+  <data name="CameraPermissionRationale" xml:space="preserve"><value>Дозвольте доступ до камери, щоб сфотографувати цифри. Також можна вибрати фото з галереї.</value></data>
+  <data name="CameraUnavailable" xml:space="preserve"><value>Камера недоступна</value></data>
+  <data name="CameraDenied" xml:space="preserve"><value>Доступ до камери не надано. Ви все ще можете вибрати фото з галереї.</value></data>
+  <data name="ReadingAreaSaved" xml:space="preserve"><value>Ділянку показань збережено</value></data>
+  <data name="ReadingAreaSavedMessage" xml:space="preserve"><value>Координати рамки збережено в профілі лічильника. Фото й обрізаний фрагмент буде видалено.</value></data>
+  <data name="Saved" xml:space="preserve"><value>Збережено</value></data>
+  <data name="ReminderSettings" xml:space="preserve"><value>Налаштування нагадування</value></data>
+  <data name="ReadingReminder" xml:space="preserve"><value>Нагадування про показання</value></data>
+  <data name="PaymentReminder" xml:space="preserve"><value>Нагадування про оплату</value></data>
+  <data name="ReadingReminderMessage" xml:space="preserve"><value>Час передати показання лічильника.</value></data>
+  <data name="PaymentReminderMessage" xml:space="preserve"><value>Час перевірити або здійснити оплату.</value></data>
+  <data name="ReminderNamedMessage" xml:space="preserve"><value>Нагадування: {0}</value></data>
+  <data name="ReminderChannel" xml:space="preserve"><value>Локальні нагадування</value></data>
+  <data name="ReminderChannelDescription" xml:space="preserve"><value>Нагадування про показання й оплату</value></data>
+  <data name="ReminderDateTime" xml:space="preserve"><value>Дата й час нагадування</value></data>
+  <data name="ReminderDayOfMonthLabel" xml:space="preserve"><value>Число місяця</value></data>
+  <data name="ReminderTimeLabel" xml:space="preserve"><value>Час нагадування</value></data>
+  <data name="RepeatRule" xml:space="preserve"><value>Повторювати</value></data>
+  <data name="Never" xml:space="preserve"><value>Не повторювати</value></data>
+  <data name="Daily" xml:space="preserve"><value>Щодня</value></data>
+  <data name="Weekly" xml:space="preserve"><value>Щотижня</value></data>
+  <data name="EveryTwoWeeks" xml:space="preserve"><value>Раз на 2 тижні</value></data>
+  <data name="EveryThirtyDays" xml:space="preserve"><value>Раз на 30 днів</value></data>
+  <data name="Monthly" xml:space="preserve"><value>Щомісяця</value></data>
+  <data name="Quarterly" xml:space="preserve"><value>Щокварталу</value></data>
+  <data name="Yearly" xml:space="preserve"><value>Щороку</value></data>
+  <data name="Theme" xml:space="preserve"><value>Тема</value></data>
+  <data name="SystemTheme" xml:space="preserve"><value>Як на пристрої</value></data>
+  <data name="LightTheme" xml:space="preserve"><value>Світла</value></data>
+  <data name="DarkTheme" xml:space="preserve"><value>Темна</value></data>
+  <data name="DefaultMeterUnit" xml:space="preserve"><value>од.</value></data>
+  <data name="MeterNumber" xml:space="preserve"><value>Номер лічильника (необов’язково)</value></data>
+  <data name="AccountNumber" xml:space="preserve"><value>Номер особового рахунку (необов’язково)</value></data>
+  <data name="OptionalMeterNumberValue" xml:space="preserve"><value>Номер лічильника: {0}</value></data>
+  <data name="OptionalAccountNumberValue" xml:space="preserve"><value>Особовий рахунок: {0}</value></data>
+  <data name="NotSet" xml:space="preserve"><value>Не вказано</value></data>
+  <data name="ReplaceMeter" xml:space="preserve"><value>Замінити лічильник</value></data>
+  <data name="ReminderDayOfMonth" xml:space="preserve"><value>Число місяця: {0}</value></data>
+  <data name="FinalMeterReading" xml:space="preserve"><value>Останнє показання старого лічильника</value></data>
+  <data name="NewMeterInitialReading" xml:space="preserve"><value>Початкове показання нового лічильника</value></data>
+  <data name="MeterReplacementSaved" xml:space="preserve"><value>Заміна збережена. Історію старого й нового лічильників збережено.</value></data>
+  <data name="MeterReplacedSummary" xml:space="preserve"><value>Замінено {0}. Натисніть, щоб переглянути історію.</value></data>
+  <data name="MeterReplacedOn" xml:space="preserve"><value>Цей лічильник замінено {0}.</value></data>
+  <data name="ReplacesPreviousMeter" xml:space="preserve"><value>Замінює лічильник №{0}. Дата заміни: {1}.</value></data>
+  <data name="EnableReminder" xml:space="preserve"><value>Увімкнути нагадування</value></data>
+  <data name="ReminderDisabled" xml:space="preserve"><value>Нагадування вимкнено</value></data>
+  <data name="NotificationPermission" xml:space="preserve"><value>Дозвіл на сповіщення</value></data>
+  <data name="NotificationPermissionInfo" xml:space="preserve"><value>Дозвольте сповіщення, щоб пристрій показав локальне нагадування у вибраний час.</value></data>
+  <data name="NotificationsDenied" xml:space="preserve"><value>Сповіщення вимкнено. Їх можна дозволити в налаштуваннях Android.</value></data>
+  <data name="Language" xml:space="preserve"><value>Мова</value></data>
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="Ukrainian" xml:space="preserve"><value>Українська</value></data>
+  <data name="LanguageChanged" xml:space="preserve"><value>Мову змінено</value></data>
+  <data name="LanguageChangedMessage" xml:space="preserve"><value>Мову інтерфейсу змінено.</value></data>
+  <data name="ClearAllDataMessage" xml:space="preserve"><value>Адреси, лічильники, підписки, показання, тарифи, нагадування та власні типи послуг буде видалено без можливості відновлення.</value></data>
+  <data name="Clear" xml:space="preserve"><value>Очистити</value></data>
+  <data name="ChooseServiceType" xml:space="preserve"><value>Виберіть тип послуги</value></data>
+  <data name="NoActiveServiceTypes" xml:space="preserve"><value>Немає активних типів послуг. Додайте або активуйте тип у розділі «Типи послуг».</value></data>
+  <data name="Continue" xml:space="preserve"><value>Продовжити</value></data>
+  <data name="Address" xml:space="preserve"><value>Адреса</value></data>
+  <data name="OK" xml:space="preserve"><value>Гаразд</value></data>
+  <data name="Delete" xml:space="preserve"><value>Видалити</value></data>
+  <data name="NonNegativeAmount" xml:space="preserve"><value>Введіть невід’ємну суму.</value></data>
+  <data name="LowerReadingCorrection" xml:space="preserve"><value>Значення нижче за попереднє. Зберегти це виправлення?</value></data>
+  <data name="InvalidTariff" xml:space="preserve"><value>Некоректний тариф</value></data>
+  <data name="TariffStartDatePrompt" xml:space="preserve"><value>Введіть дату початку дії (наприклад, 2026-10-14):</value></data>
+  <data name="NoServiceTypes" xml:space="preserve"><value>Немає типів послуг</value></data>
+  <data name="SelectTemporaryPhoto" xml:space="preserve"><value>Виберіть тимчасове фото лічильника</value></data>
+  <data name="TakePhoto" xml:space="preserve"><value>Зробити фото</value></data>
+  <data name="ChooseFromGallery" xml:space="preserve"><value>Вибрати з галереї</value></data>
+  <data name="PaymentReminderSettings" xml:space="preserve"><value>Налаштування нагадування про оплату</value></data>
+  <data name="ReadingReminderSettings" xml:space="preserve"><value>Налаштування нагадування про показання</value></data>
+  <data name="Unit" xml:space="preserve"><value>Одиниця виміру</value></data>
+  <data name="RecognizeReading" xml:space="preserve"><value>Розпізнати показання</value></data>
+  <data name="RecognizingReading" xml:space="preserve"><value>Розпізнавання…</value></data>
+  <data name="RecognitionConfidence" xml:space="preserve"><value>Точність</value></data>
+  <data name="RecognizedText" xml:space="preserve"><value>Розпізнаний текст</value></data>
+  <data name="OcrNoNumericSuggestion" xml:space="preserve"><value>Числове значення не розпізнано. Введіть показання вручну.</value></data>
+  <data name="OcrReadingSaved" xml:space="preserve"><value>Підтверджене показання збережено.</value></data>
+  <data name="HomeHeadline" xml:space="preserve"><value>Усі комунальні послуги в одному місці</value></data>
+  <data name="AddAddressHint" xml:space="preserve"><value>Додайте адресу, щоб вести облік лічильників і щомісячних послуг.</value></data>
+  <data name="AddressNameLabel" xml:space="preserve"><value>Назва адреси</value></data>
+  <data name="AddressNamePlaceholder" xml:space="preserve"><value>Наприклад: Дім або Дача</value></data>
+  <data name="AddressFullAddressLabel" xml:space="preserve"><value>Вулиця або місце</value></data>
+  <data name="AddressFullAddressPlaceholder" xml:space="preserve"><value>Необов’язково</value></data>
+  <data name="AddressNameRequired" xml:space="preserve"><value>Введіть назву адреси.</value></data>
+  <data name="PreferencesSection" xml:space="preserve"><value>Налаштування</value></data>
+  <data name="DataManagementSection" xml:space="preserve"><value>Керування даними</value></data>
+  <data name="PrivacySection" xml:space="preserve"><value>Приватність і зберігання</value></data>
+  <data name="LocalDataDescription" xml:space="preserve"><value>Адреси, показання, тарифи й нагадування зберігаються локально на цьому пристрої.</value></data>
+  <data name="ServiceTypesSettingsSubtitle" xml:space="preserve"><value>Налаштуйте категорії послуг і одиниці лічильників</value></data>
+  <data name="RecentlyDeletedSettingsSubtitle" xml:space="preserve"><value>Відновіть адреси, лічильники та інші видалені дані</value></data>
+  <data name="ClearAllDataDescription" xml:space="preserve"><value>Безповоротно видалити локальні записи й власні типи послуг</value></data>
+  <data name="ServiceTypesDescription" xml:space="preserve"><value>Вбудовані та власні категорії комунальних послуг</value></data>
+  <data name="ServiceTypeNameLabel" xml:space="preserve"><value>Назва послуги</value></data>
+  <data name="ServiceTypeNamePlaceholder" xml:space="preserve"><value>Наприклад: Утримання будинку</value></data>
+  <data name="ServiceTypeNameRequired" xml:space="preserve"><value>Введіть назву типу послуги.</value></data>
+  <data name="ServiceTypeCategory" xml:space="preserve"><value>Як використовуватиметься послуга?</value></data>
+  <data name="ServiceTypeIcon" xml:space="preserve"><value>Виберіть іконку</value></data>
+  <data name="MeterBased" xml:space="preserve"><value>Послуга за лічильником</value></data>
+  <data name="FixedSubscription" xml:space="preserve"><value>Фіксована щомісячна оплата</value></data>
+  <data name="MeterAndSubscription" xml:space="preserve"><value>За лічильником і фіксована оплата</value></data>
+  <data name="DefaultUnit" xml:space="preserve"><value>Одиниця лічильника за замовчуванням</value></data>
+  <data name="OptionalDefaultUnit" xml:space="preserve"><value>Необов’язково, наприклад м³ або кВт·год</value></data>
+  <data name="ServiceColdWater" xml:space="preserve"><value>Холодна вода</value></data>
+  <data name="ServiceHotWater" xml:space="preserve"><value>Гаряча вода</value></data>
+  <data name="ServiceWater" xml:space="preserve"><value>Вода</value></data>
+  <data name="ServiceGas" xml:space="preserve"><value>Газ</value></data>
+  <data name="ServiceElectricity" xml:space="preserve"><value>Електроенергія</value></data>
+  <data name="ServiceHeating" xml:space="preserve"><value>Опалення</value></data>
+  <data name="ServiceHousingUtilities" xml:space="preserve"><value>ЖКГ і утримання будинку</value></data>
+  <data name="ServiceInternet" xml:space="preserve"><value>Інтернет</value></data>
+  <data name="ServiceWasteCollection" xml:space="preserve"><value>Вивезення сміття</value></data>
+  <data name="ServiceCategoryAndUnit" xml:space="preserve"><value>{0}{1}</value></data>
+  <data name="ServiceStatus" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="EditCustomServiceType" xml:space="preserve"><value>Змінити тип послуги</value></data>
+  <data name="CustomServiceTypeUnavailable" xml:space="preserve"><value>Цей власний тип послуги більше недоступний.</value></data>
+  <data name="BuiltInServiceTypeInfo" xml:space="preserve"><value>Категорія: {0}{1}</value></data>
+  <data name="DefaultUnitSummary" xml:space="preserve"><value>Одиниця за замовчуванням: {0}</value></data>
+  <data name="NoMeterServiceTypes" xml:space="preserve"><value>Немає активних типів послуг для лічильників. Додайте або активуйте їх у налаштуваннях → Типи послуг.</value></data>
+  <data name="NoSubscriptionServiceTypes" xml:space="preserve"><value>Немає активних типів послуг із фіксованою щомісячною оплатою. Додайте або активуйте їх у налаштуваннях → Типи послуг.</value></data>
+  <data name="CouldNotOpenMeter" xml:space="preserve"><value>Не вдалося відкрити лічильник</value></data>
+  <data name="ConsumptionValue" xml:space="preserve"><value>Спожито: {0}</value></data>
+  <data name="EstimatedAmountValue" xml:space="preserve"><value>Орієнтовна сума: {0}</value></data>
+  <data name="ShowChart" xml:space="preserve"><value>Графік</value></data>
+  <data name="HideChart" xml:space="preserve"><value>Сховати графік</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>Експорт CSV</value></data>
+  <data name="ExportHistory" xml:space="preserve"><value>Експорт історії</value></data>
+  <data name="NoChartData" xml:space="preserve"><value>Недостатньо даних для графіка</value></data>
+  <data name="ConsumptionChartLabel" xml:space="preserve"><value>Споживання між показаннями ({0})</value></data>
+  <data name="TariffChartLabel" xml:space="preserve"><value>Тариф за одиницю ({0})</value></data>
+  <data name="ImportReadingsCsv" xml:space="preserve"><value>Імпортувати показання з CSV</value></data>
+  <data name="ImportReadingsCsvTitle" xml:space="preserve"><value>Імпорт показань</value></data>
+  <data name="ImportReadingsCsvHelp" xml:space="preserve"><value>CSV має містити дату у форматі dd/MM/yyyy у першій колонці та показання у другій. Можна використати кому або крапку з комою як роздільник.</value></data>
+  <data name="ImportCsvSuccess" xml:space="preserve"><value>Імпортовано показань: {0}.</value></data>
+  <data name="InvalidCsv" xml:space="preserve"><value>Некоректний CSV-файл</value></data>
+  <data name="CsvImportOnlyBeforeFirstReading" xml:space="preserve"><value>Імпорт доступний лише до збереження першого показання.</value></data>
+  <data name="CsvImportInvalidColumns" xml:space="preserve"><value>Рядок {0}: очікуються рівно дві колонки — дата та показання.</value></data>
+  <data name="CsvImportInvalidDate" xml:space="preserve"><value>Рядок {0}: некоректна дата. Використайте формат dd/MM/yyyy.</value></data>
+  <data name="CsvImportInvalidValue" xml:space="preserve"><value>Рядок {0}: показання має бути невід’ємним числом.</value></data>
+  <data name="CsvImportDuplicateDate" xml:space="preserve"><value>Рядок {0}: для цієї дати вже є показання у файлі.</value></data>
+  <data name="CsvImportFutureDate" xml:space="preserve"><value>Рядок {0}: дата показання не може бути в майбутньому.</value></data>
+  <data name="CsvImportAfterReplacement" xml:space="preserve"><value>Рядок {0}: дата пізніше за дату заміни цього лічильника.</value></data>
+  <data name="CsvImportLowerThanPrevious" xml:space="preserve"><value>Рядок {0}: показання менше за попереднє. Перевірте дату або значення.</value></data>
+  <data name="CsvImportMalformedRow" xml:space="preserve"><value>Рядок {0}: некоректний CSV-формат або незакриті лапки.</value></data>
+  <data name="CsvImportFailedNoChanges" xml:space="preserve"><value>Жодне показання не імпортовано. {0}</value></data>
+  <data name="CsvMeasuredAt" xml:space="preserve"><value>Дата показання</value></data>
+  <data name="CsvReading" xml:space="preserve"><value>Показання</value></data>
+  <data name="CsvConsumption" xml:space="preserve"><value>Споживання</value></data>
+  <data name="CsvAmount" xml:space="preserve"><value>Сума</value></data>
+  <data name="CsvEffectiveFrom" xml:space="preserve"><value>Діє з</value></data>
+  <data name="CsvEffectiveTo" xml:space="preserve"><value>Діє до</value></data>
+  <data name="CsvRate" xml:space="preserve"><value>Тариф</value></data>
+  <data name="CsvUnit" xml:space="preserve"><value>Одиниця</value></data>
+  <data name="MeterReplacementHelp" xml:space="preserve"><value>Введіть фінальне значення старого лічильника, початкове значення нового та дату заміни. Історії обох лічильників буде збережено.</value></data>
+  <data name="ReplacementDate" xml:space="preserve"><value>Дата заміни</value></data>
+  <data name="ReplacementDateCannotBeFuture" xml:space="preserve"><value>Дата та час заміни не можуть бути в майбутньому.</value></data>
+</root>

@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0-android</TargetFramework>
+		<RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+		<AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>Utilities.Mobile</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Display name -->
+		<ApplicationTitle>Utilities</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.utilities.meterapp</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+		<SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<AndroidEnableFastDeployment>false</AndroidEnableFastDeployment>
+		<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+		<MauiXamlInflator>SourceGen</MauiXamlInflator>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.png" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\AppIcon\appicon.png" Color="#F7F8FC" BaseSize="256,256" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Utilities.Core\Utilities.Core.csproj" />
+		<ProjectReference Include="..\Utilities.Infrastructure\Utilities.Infrastructure.csproj" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
+		<PackageReference Include="TesseractOcrMaui" Version="1.5.2" />
+	</ItemGroup>
+
+</Project>
