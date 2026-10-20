@@ -11,9 +11,10 @@ public partial class App : Application
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<App> _logger;
     private readonly IUserPreferenceStore _preferences;
+    private readonly IAddressListCache _addressCache;
     private readonly Dictionary<Window, IServiceScope> _windowScopes = [];
 
-    public App(IServiceScopeFactory scopeFactory, ILogger<App> logger, IUserPreferenceStore preferences)
+    public App(IServiceScopeFactory scopeFactory, ILogger<App> logger, IUserPreferenceStore preferences, IAddressListCache addressCache)
     {
         var constructorTimer = Stopwatch.StartNew();
         var xamlTimer = Stopwatch.StartNew();
@@ -22,6 +23,7 @@ public partial class App : Application
         _scopeFactory = scopeFactory;
         _logger = logger;
         _preferences = preferences;
+        _addressCache = addressCache;
         UserAppTheme = preferences.Get("theme", "system") switch
         {
             "light" => AppTheme.Light,
@@ -47,6 +49,18 @@ public partial class App : Application
     private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs args) =>
         _logger.LogError(args.Exception, "Unobserved task exception.");
 
+    protected override void OnSleep()
+    {
+        base.OnSleep();
+        _ = SaveAddressCacheOnSleepAsync();
+    }
+
+    private async Task SaveAddressCacheOnSleepAsync()
+    {
+        try { await _addressCache.SaveLastSnapshotAsync(); }
+        catch (Exception exception) { _logger.LogWarning(exception, "Could not save the home address cache when the app entered the background."); }
+    }
+
     protected override Window CreateWindow(IActivationState? activationState)
     {
         StartupTiming.LogMilestone("CreateWindow started");
@@ -64,6 +78,7 @@ public partial class App : Application
             _windowScopes.Add(window, scope);
             window.Destroying += (_, _) =>
             {
+                _ = SaveAddressCacheOnSleepAsync();
                 _windowScopes.Remove(window);
                 scope.Dispose();
             };

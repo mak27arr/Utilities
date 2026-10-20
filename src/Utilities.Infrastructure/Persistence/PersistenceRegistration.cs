@@ -13,6 +13,7 @@ public static class PersistenceRegistration
             .AddInterceptors(serviceProvider.GetRequiredService<HomeAddressCommandTimingInterceptor>())
             .UseSqlite($"Data Source={databasePath}"));
         services.AddScoped<IUtilitiesStore, EfUtilitiesStore>();
+        services.AddScoped<IDatabaseConnectionWarmup, EfDatabaseConnectionWarmup>();
         return services;
     }
 }

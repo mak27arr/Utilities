@@ -103,6 +103,7 @@
   <data name="SaveAnyway" xml:space="preserve"><value>Save anyway</value></data>
   <data name="Review" xml:space="preserve"><value>Review</value></data>
   <data name="NewReading" xml:space="preserve"><value>New reading</value></data>
+  <data name="CurrentReadingValue" xml:space="preserve"><value>Current meter value</value></data>
   <data name="NoPreviousReading" xml:space="preserve"><value>No previous reading.</value></data>
   <data name="PreviousReading" xml:space="preserve"><value>Previous reading: {0} on {1}.</value></data>
   <data name="ConfirmedMeterValue" xml:space="preserve"><value>{0}Enter the confirmed meter value:</value></data>
@@ -133,7 +134,7 @@
   <data name="NothingToRestore" xml:space="preserve"><value>Nothing to restore.</value></data>
   <data name="RestoreItem" xml:space="preserve"><value>Restore {0}: {1} · {2}</value></data>
   <data name="ReadingArea" xml:space="preserve"><value>Reading area</value></data>
-  <data name="ChoosePhotoInstructions" xml:space="preserve"><value>Drag the frame over the meter digits. Pull its lower edge to change the frame height, then recognize and save the reading.</value></data>
+  <data name="ChoosePhotoInstructions" xml:space="preserve"><value>After loading a photo, the frame is placed around the largest numeric line. Drag or resize it manually; you can run automatic detection again at any time.</value></data>
   <data name="TakeOrChoosePhoto" xml:space="preserve"><value>Take photo</value></data>
   <data name="RetakePhoto" xml:space="preserve"><value>Retake photo</value></data>
   <data name="PreviewCrop" xml:space="preserve"><value>Preview selected crop</value></data>
@@ -219,6 +220,8 @@
   <data name="ReadingReminderSettings" xml:space="preserve"><value>Reading reminder settings</value></data>
   <data name="Unit" xml:space="preserve"><value>Unit</value></data>
   <data name="RecognizeReading" xml:space="preserve"><value>Recognize reading</value></data>
+  <data name="AutoSelectReadingArea" xml:space="preserve"><value>Find digits</value></data>
+  <data name="AutoSelectReadingAreaNoCandidate" xml:space="preserve"><value>No numeric line was found. Select the digits manually.</value></data>
   <data name="RecognizingReading" xml:space="preserve"><value>Recognizing…</value></data>
   <data name="RecognitionConfidence" xml:space="preserve"><value>Confidence</value></data>
   <data name="RecognizedText" xml:space="preserve"><value>Recognized text</value></data>

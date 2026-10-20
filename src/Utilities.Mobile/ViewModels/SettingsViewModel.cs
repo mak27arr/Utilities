@@ -15,12 +15,13 @@ public sealed class SettingsViewModel : ViewModelBase
     private readonly IUserPreferenceStore _preferences;
     private readonly IAppAppearance _appearance;
     private readonly IAppDiagnostics _diagnostics;
+    private readonly IAddressListCache _addressCache;
     private int _languageIndex;
     private int _themeIndex;
     private bool _openCameraOnMeterTap;
 
     public SettingsViewModel(UtilitiesApplicationService application, ILocalReminderScheduler scheduler, IUserDialogs dialogs,
-        IAppNavigation navigation, IUserPreferenceStore preferences, IAppAppearance appearance, IAppDiagnostics diagnostics)
+        IAppNavigation navigation, IUserPreferenceStore preferences, IAppAppearance appearance, IAppDiagnostics diagnostics, IAddressListCache addressCache)
     {
         _application = application;
         _scheduler = scheduler;
@@ -29,6 +30,7 @@ public sealed class SettingsViewModel : ViewModelBase
         _preferences = preferences;
         _appearance = appearance;
         _diagnostics = diagnostics;
+        _addressCache = addressCache;
         _languageIndex = AppText.Culture.Name.StartsWith("uk", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
         _themeIndex = preferences.Get("theme", "system") switch { "light" => 1, "dark" => 2, _ => 0 };
         _openCameraOnMeterTap = bool.TryParse(preferences.Get("openCameraOnMeterTap", "true"), out var openCamera) ? openCamera : true;
@@ -90,6 +92,7 @@ public sealed class SettingsViewModel : ViewModelBase
         foreach (var reminder in await _application.GetEnabledRemindersAsync(token))
             await _scheduler.CancelAsync(reminder.Id, token);
         await _application.ClearAllDataAsync(token);
+        await _addressCache.SaveAsync([], token);
     }
 
     private void SaveLanguage()

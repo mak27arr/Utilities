@@ -67,15 +67,16 @@ public sealed class MauiTemporaryMeterPhotoProvider : ITemporaryMeterPhotoProvid
         {
             var bounds = ReadingAreaGeometry.GetPixelBounds(area, imageToCrop.Width, imageToCrop.Height);
             using var crop = Bitmap.CreateBitmap(imageToCrop, bounds.Left, bounds.Top, bounds.Width, bounds.Height);
+            using var prepared = PrepareForRecognition(crop);
             var path = CreateTemporaryPath("crop");
             try
             {
                 await using var output = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
                 cancellationToken.ThrowIfCancellationRequested();
                 var jpegFormat = Bitmap.CompressFormat.Jpeg ?? throw new InvalidOperationException("JPEG encoding is unavailable.");
-                if (!crop.Compress(jpegFormat, 95, output)) throw new IOException("The cropped image could not be written.");
+                if (!prepared.Compress(jpegFormat, 98, output)) throw new IOException("The OCR image could not be written.");
                 await output.FlushAsync(cancellationToken);
-                return new TemporaryMeterPhoto(path, crop.Width, crop.Height);
+                return new TemporaryMeterPhoto(path, prepared.Width, prepared.Height);
             }
             catch
             {
@@ -83,6 +84,33 @@ public sealed class MauiTemporaryMeterPhotoProvider : ITemporaryMeterPhotoProvid
                 throw;
             }
         }
+    }
+
+    private static Bitmap PrepareForRecognition(Bitmap crop)
+    {
+        const int targetCharacterImageHeight = 160;
+        const float maxScale = 4;
+        var scale = Math.Clamp(targetCharacterImageHeight / (float)crop.Height, 1, maxScale);
+        var scaledWidth = Math.Max(1, (int)Math.Round(crop.Width * scale));
+        var scaledHeight = Math.Max(1, (int)Math.Round(crop.Height * scale));
+        using var scaled = Bitmap.CreateScaledBitmap(crop, scaledWidth, scaledHeight, filter: true);
+        var prepared = Bitmap.CreateBitmap(scaledWidth, scaledHeight, Bitmap.Config.Argb8888!)
+            ?? throw new InvalidOperationException("Could not allocate the OCR image.");
+        using var canvas = new Canvas(prepared);
+        using var paint = new Paint(PaintFlags.AntiAlias | PaintFlags.FilterBitmap);
+        // Convert the red and black meter wheels to one high-contrast grayscale image.
+        const float contrast = 1.35f;
+        const float offset = -45f;
+        using var filter = new ColorMatrixColorFilter(new ColorMatrix(
+        [
+            0.299f * contrast, 0.587f * contrast, 0.114f * contrast, 0, offset,
+            0.299f * contrast, 0.587f * contrast, 0.114f * contrast, 0, offset,
+            0.299f * contrast, 0.587f * contrast, 0.114f * contrast, 0, offset,
+            0, 0, 0, 1, 0
+        ]));
+        paint.SetColorFilter(filter);
+        canvas.DrawBitmap(scaled, 0, 0, paint);
+        return prepared;
     }
 
     public Task DeleteAsync(TemporaryMeterPhoto photo, CancellationToken cancellationToken = default)

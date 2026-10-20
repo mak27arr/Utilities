@@ -32,10 +32,10 @@ public partial class RecentlyDeletedPage : ContentPage
     private readonly RecentlyDeletedViewModel _viewModel;
     private readonly IUserDialogs _dialogs;
 
-    public RecentlyDeletedPage(UtilitiesApplicationService application, IUserDialogs dialogs, IReminderSynchronizer reminderSynchronizer)
+    public RecentlyDeletedPage(UtilitiesApplicationService application, IUserDialogs dialogs, IReminderSynchronizer reminderSynchronizer, IAddressListCache addressCache)
     {
         InitializeComponent();
-        _viewModel = new RecentlyDeletedViewModel(application, dialogs, reminderSynchronizer);
+        _viewModel = new RecentlyDeletedViewModel(application, dialogs, reminderSynchronizer, addressCache);
         _dialogs = dialogs;
         BindingContext = _viewModel;
         Title = AppText.Get("RecentlyDeleted");

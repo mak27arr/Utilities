@@ -12,16 +12,18 @@ public sealed class NewAddressViewModel : ViewModelBase
     private readonly UtilitiesApplicationService _application;
     private readonly IUserDialogs _dialogs;
     private readonly IAppNavigation _navigation;
+    private readonly IAddressListCache _addressCache;
     private readonly List<SafeAsyncCommandBase> _commands = [];
     private string _name = string.Empty;
     private string _fullAddress = string.Empty;
 
     public NewAddressViewModel(UtilitiesApplicationService application, IUserDialogs dialogs, IAppNavigation navigation,
-        ILogger<NewAddressViewModel> logger)
+        ILogger<NewAddressViewModel> logger, IAddressListCache addressCache)
     {
         _application = application;
         _dialogs = dialogs;
         _navigation = navigation;
+        _addressCache = addressCache;
         SaveCommand = Track(new SafeAsyncCommand(SaveAsync, dialogs, logger, "save address", AppText.Get("NewAddress")));
         CancelCommand = Track(new SafeAsyncCommand(_ => _navigation.GoBackAsync(), dialogs, logger, "cancel address creation", AppText.Get("NewAddress")));
     }
@@ -57,6 +59,7 @@ public sealed class NewAddressViewModel : ViewModelBase
             return;
         }
         await _application.CreateAddressAsync(Name, FullAddress, token);
+        await _addressCache.SaveAsync((await _application.GetAddressesAsync(token)).Select(address => new CachedAddress(address.Id, address.Name)), token);
         await _navigation.GoBackAsync();
     }
 }

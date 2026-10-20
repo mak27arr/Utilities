@@ -103,6 +103,7 @@
   <data name="SaveAnyway" xml:space="preserve"><value>Зберегти попри це</value></data>
   <data name="Review" xml:space="preserve"><value>Перевірити</value></data>
   <data name="NewReading" xml:space="preserve"><value>Нове показання</value></data>
+  <data name="CurrentReadingValue" xml:space="preserve"><value>Поточне значення лічильника</value></data>
   <data name="NoPreviousReading" xml:space="preserve"><value>Попередніх показань немає.</value></data>
   <data name="PreviousReading" xml:space="preserve"><value>Попереднє показання: {0}, дата {1}.</value></data>
   <data name="ConfirmedMeterValue" xml:space="preserve"><value>{0}Введіть підтверджене значення лічильника:</value></data>
@@ -133,7 +134,7 @@
   <data name="NothingToRestore" xml:space="preserve"><value>Немає даних для відновлення.</value></data>
   <data name="RestoreItem" xml:space="preserve"><value>Відновити {0}: {1} · {2}</value></data>
   <data name="ReadingArea" xml:space="preserve"><value>Ділянка показань</value></data>
-  <data name="ChoosePhotoInstructions" xml:space="preserve"><value>Перетягніть рамку на цифри лічильника. Потягніть за нижній край, щоб змінити висоту, потім розпізнайте й збережіть показання.</value></data>
+  <data name="ChoosePhotoInstructions" xml:space="preserve"><value>Після завантаження фото рамка стане навколо найбільшого рядка цифр. Перетягніть або змініть її розмір вручну; кнопку автоматичного пошуку можна натиснути повторно.</value></data>
   <data name="TakeOrChoosePhoto" xml:space="preserve"><value>Зробити фото</value></data>
   <data name="RetakePhoto" xml:space="preserve"><value>Перезняти фото</value></data>
   <data name="PreviewCrop" xml:space="preserve"><value>Переглянути обрізану ділянку</value></data>
@@ -219,6 +220,8 @@
   <data name="ReadingReminderSettings" xml:space="preserve"><value>Налаштування нагадування про показання</value></data>
   <data name="Unit" xml:space="preserve"><value>Одиниця виміру</value></data>
   <data name="RecognizeReading" xml:space="preserve"><value>Розпізнати показання</value></data>
+  <data name="AutoSelectReadingArea" xml:space="preserve"><value>Знайти цифри</value></data>
+  <data name="AutoSelectReadingAreaNoCandidate" xml:space="preserve"><value>Не вдалося знайти числовий рядок. Виділіть цифри вручну.</value></data>
   <data name="RecognizingReading" xml:space="preserve"><value>Розпізнавання…</value></data>
   <data name="RecognitionConfidence" xml:space="preserve"><value>Точність</value></data>
   <data name="RecognizedText" xml:space="preserve"><value>Розпізнаний текст</value></data>

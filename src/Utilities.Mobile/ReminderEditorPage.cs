@@ -36,10 +36,10 @@ public partial class SettingsPage : ContentPage
     private readonly SettingsViewModel _viewModel;
 
     public SettingsPage(UtilitiesApplicationService application, ILocalReminderScheduler scheduler, IUserDialogs dialogs,
-        IAppNavigation navigation, IUserPreferenceStore preferences, IAppAppearance appearance, IAppDiagnostics diagnostics)
+        IAppNavigation navigation, IUserPreferenceStore preferences, IAppAppearance appearance, IAppDiagnostics diagnostics, IAddressListCache addressCache)
     {
         InitializeComponent();
-        _viewModel = new SettingsViewModel(application, scheduler, dialogs, navigation, preferences, appearance, diagnostics);
+        _viewModel = new SettingsViewModel(application, scheduler, dialogs, navigation, preferences, appearance, diagnostics, addressCache);
         BindingContext = _viewModel;
         Title = AppText.Get("Settings");
     }

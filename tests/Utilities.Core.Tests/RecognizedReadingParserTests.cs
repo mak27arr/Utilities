@@ -26,4 +26,33 @@ public sealed class RecognizedReadingParserTests
     {
         Assert.False(RecognizedReadingParser.TryParse(text, out _));
     }
+
+    [Fact]
+    public void TrySelectLargestNumericLine_SkipsRowsContainingLettersAndUsesLargestValidNumber()
+    {
+        var selected = RecognizedReadingParser.TrySelectLargestNumericLine(
+        [
+            new NumericTextLineCandidate("METER 999999", 0, 0, 900, 100),
+            new NumericTextLineCandidate("12345678", 0, 120, 500, 60),
+            new NumericTextLineCandidate("0000528", 0, 220, 700, 80)
+        ], out var text, out var value);
+
+        Assert.True(selected);
+        Assert.Equal("0000528", text);
+        Assert.Equal(528d, value);
+    }
+
+    [Fact]
+    public void TrySelectLargestNumericLine_ReturnsFalseWhenEveryRowContainsLetters()
+    {
+        var selected = RecognizedReadingParser.TrySelectLargestNumericLine(
+        [
+            new NumericTextLineCandidate("METER 12345", 0, 0, 500, 50),
+            new NumericTextLineCandidate("G4", 0, 60, 300, 40)
+        ], out var text, out var value);
+
+        Assert.False(selected);
+        Assert.Empty(text);
+        Assert.Equal(0d, value);
+    }
 }

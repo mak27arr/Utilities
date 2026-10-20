@@ -10,10 +10,10 @@ public partial class NewAddressPage : ContentPage
     private readonly NewAddressViewModel _viewModel;
 
     public NewAddressPage(UtilitiesApplicationService application, IUserDialogs dialogs, IAppNavigation navigation,
-        ILogger<NewAddressViewModel> logger)
+        ILogger<NewAddressViewModel> logger, IAddressListCache addressCache)
     {
         InitializeComponent();
-        _viewModel = new NewAddressViewModel(application, dialogs, navigation, logger);
+        _viewModel = new NewAddressViewModel(application, dialogs, navigation, logger, addressCache);
         BindingContext = _viewModel;
         Title = AppText.Get("NewAddress");
     }

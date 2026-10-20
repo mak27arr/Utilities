@@ -16,10 +16,11 @@ public partial class AddressDetailPage : ContentPage
         Guid addressId,
         IUserDialogs dialogs,
         IAppNavigation navigation,
-        IUserPreferenceStore preferences)
+        IUserPreferenceStore preferences,
+        IAddressListCache addressCache)
     {
         InitializeComponent();
-        _viewModel = new AddressDetailViewModel(application, addressId, dialogs, navigation);
+        _viewModel = new AddressDetailViewModel(application, addressId, dialogs, navigation, addressCache);
         _dialogs = dialogs;
         _navigation = navigation;
         _preferences = preferences;
@@ -57,7 +58,7 @@ public partial class AddressDetailPage : ContentPage
             else if (!bool.TryParse(_preferences.Get("openCameraOnMeterTap", "true"), out var openCamera) || openCamera)
                 await _navigation.OpenPhotoCropAsync(summary.Meter.Id);
             else
-                await _navigation.OpenMeterForManualReadingAsync(summary.Meter.Id);
+                await _navigation.OpenManualReadingAsync(summary.Meter.Id);
         }
         catch (Exception exception)
         {

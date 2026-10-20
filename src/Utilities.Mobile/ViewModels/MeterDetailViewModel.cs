@@ -45,7 +45,7 @@ public sealed class MeterDetailViewModel : ViewModelBase
             return Meter is not null ? navigation.OpenReminderEditorAsync(ReminderOwnerType.Meter, Meter.Id, Meter.Name, ReminderKind.Payment) : Task.CompletedTask;
         }, dialogs, logger, "open payment reminder settings", AppText.Get("PaymentReminderSettings")));
         PhotoReadingAreaCommand = Track(new SafeAsyncCommand(_ => navigation.OpenPhotoCropAsync(meterId), dialogs, logger, "open photo capture", AppText.Get("ReadingArea")));
-        AddReadingCommand = Track(new SafeAsyncCommand(AddReadingFromPromptAsync, dialogs, logger, "add manual reading", AppText.Get("NewReading")));
+        AddReadingCommand = Track(new SafeAsyncCommand(_ => navigation.OpenManualReadingAsync(meterId), dialogs, logger, "open manual reading", AppText.Get("NewReading")));
         AddTariffCommand = Track(new SafeAsyncCommand(AddTariffFromPromptAsync, dialogs, logger, "add tariff", AppText.Get("NewTariff")));
         ReplaceMeterCommand = Track(new SafeAsyncCommand(_ =>
         {
@@ -258,30 +258,6 @@ public sealed class MeterDetailViewModel : ViewModelBase
 
     public Task DeleteAsync(string entityType, Guid id, CancellationToken token = default) => application.DeleteAsync(entityType, id, token);
     public Task DeleteMeterAsync(CancellationToken token = default) => application.DeleteAsync(nameof(Meter), meterId, token);
-
-    private async Task AddReadingFromPromptAsync(CancellationToken token)
-    {
-        var previous = Readings.OrderByDescending(item => item.MeasuredAt).FirstOrDefault()?.Reading;
-        var previousText = previous is null ? AppText.Get("NoPreviousReading") :
-            AppText.Get("PreviousReading", previous.ConfirmedValue.ToString("0.####", CultureInfo.CurrentCulture), previous.MeasuredAt.ToLocalTime().ToString("g", CultureInfo.CurrentCulture));
-        var input = await dialogs.PromptAsync(AppText.Get("NewReading"), $"{previousText}\n{AppText.Get("ConfirmedMeterValue", string.Empty)}", AppText.Get("Continue"), AppText.Get("Cancel"), numeric: true);
-        if (string.IsNullOrWhiteSpace(input)) return;
-        if (!NumericInputParser.TryDouble(input, out var value) || !double.IsFinite(value) || value < 0)
-        {
-            await dialogs.AlertAsync(AppText.Get("InvalidReading"), AppText.Get("NonNegativeNumber"), AppText.Get("OK"));
-            return;
-        }
-        var at = DateTimeOffset.Now;
-        var assessment = await PreviewReadingAsync(value, at, token: token);
-        var confirmLower = false;
-        if (assessment.RequiresReview)
-        {
-            confirmLower = await dialogs.ConfirmAsync(AppText.Get("CheckReading"), AppText.Get("LowerReadingWarning"), AppText.Get("SaveAnyway"), AppText.Get("Review"));
-            if (!confirmLower) return;
-        }
-        try { await AddReadingAsync(value, at, confirmLower, token); await LoadAsync(token); }
-        catch (Exception exception) { await ReportErrorAsync(AppText.Get("NewReading"), exception); }
-    }
 
     private async Task ReadingActionsAsync(Reading reading, CancellationToken token)
     {

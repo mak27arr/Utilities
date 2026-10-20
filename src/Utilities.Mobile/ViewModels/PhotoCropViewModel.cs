@@ -9,12 +9,14 @@ using Utilities.Mobile.Services;
 
 public sealed class PhotoCropViewModel : ViewModelBase
 {
+    private static readonly NormalizedReadingArea NoCandidateFallbackArea = new(0.15, 0.3, 0.7, 0.4);
     private readonly UtilitiesApplicationService _application;
     private readonly Guid _meterId;
     private readonly ITemporaryMeterPhotoProvider _photos;
     private readonly ICameraPermissionService _cameraPermission;
     private readonly IUserDialogs _dialogs;
     private readonly IAppNavigation _navigation;
+    private readonly IReadingAreaSuggester _areaSuggester;
     private TemporaryMeterPhoto? _original;
     private TemporaryMeterPhoto? _cropped;
     private NormalizedReadingArea _area = new(0.25, 0.35, 0.5, 0.3);
@@ -26,7 +28,8 @@ public sealed class PhotoCropViewModel : ViewModelBase
     private bool _initialized;
 
     public PhotoCropViewModel(UtilitiesApplicationService application, Guid meterId, ITemporaryMeterPhotoProvider photos,
-        ICameraPermissionService cameraPermission, IUserDialogs dialogs, IAppNavigation navigation)
+        ICameraPermissionService cameraPermission, IUserDialogs dialogs, IAppNavigation navigation,
+        IReadingAreaSuggester areaSuggester)
     {
         _application = application;
         _meterId = meterId;
@@ -34,6 +37,7 @@ public sealed class PhotoCropViewModel : ViewModelBase
         _cameraPermission = cameraPermission;
         _dialogs = dialogs;
         _navigation = navigation;
+        _areaSuggester = areaSuggester;
         ChoosePhotoCommand = new Command(async () => await LoadPhotoAsync(capture: true), () => !IsWorking);
         ChooseGalleryPhotoCommand = new Command(async () => await LoadPhotoAsync(capture: false), () => !IsWorking && !HasPhoto);
         RecognizeReadingCommand = new Command(async () => await RecognizeReadingAsync(), () => CanRecognize);
@@ -42,6 +46,8 @@ public sealed class PhotoCropViewModel : ViewModelBase
         RotateLeftCommand = new Command(() => RotationDegrees -= 90);
         RotateRightCommand = new Command(() => RotationDegrees += 90);
         ResetRotationCommand = new Command(() => RotationDegrees = 0);
+        FindReadingAreaCommand = new Command(async () => await FindReadingAreaAsync(showNoCandidate: true),
+            () => HasPhoto && !IsWorking);
     }
 
     public Command ChoosePhotoCommand { get; }
@@ -52,6 +58,7 @@ public sealed class PhotoCropViewModel : ViewModelBase
     public Command RotateLeftCommand { get; }
     public Command RotateRightCommand { get; }
     public Command ResetRotationCommand { get; }
+    public Command FindReadingAreaCommand { get; }
 
     public NormalizedReadingArea Area => _area;
     public double RotationDegrees
@@ -86,6 +93,7 @@ public sealed class PhotoCropViewModel : ViewModelBase
     public bool HasRecognition => _recognition is not null;
     public bool ShowPhotoChoices => !HasPhoto;
     public bool IsRecognitionVisible => HasRecognition;
+    public bool IsRecognitionNotVisible => !HasRecognition;
     public bool CanRecognize => HasPhoto && !IsWorking;
     public bool CanSaveReading => HasRecognition && !IsWorking && !string.IsNullOrWhiteSpace(ReadingValue);
     public string CameraActionText => AppText.Get(HasPhoto ? "RetakePhoto" : "TakePhoto");
@@ -93,6 +101,7 @@ public sealed class PhotoCropViewModel : ViewModelBase
     public string InstructionsTitle => AppText.Get("PhotoReadingTitle");
     public string ChooseGalleryPhotoText => AppText.Get("ChooseFromGallery");
     public string RecognizeText => AppText.Get("RecognizeReading");
+    public string AutoSelectReadingAreaText => AppText.Get("AutoSelectReadingArea");
     public string SaveReadingText => AppText.Get("Save");
     public string CancelText => AppText.Get("Cancel");
     public string WorkingText => AppText.Get("RecognizingReading");
@@ -170,6 +179,7 @@ public sealed class PhotoCropViewModel : ViewModelBase
             SetArea(await LoadAreaAsync(token));
             CurrentImage = ImageSource.FromFile(selected.FilePath);
             NotifyState();
+            await FindReadingAreaAsync(showNoCandidate: false, token);
         }
         catch (Exception exception)
         {
@@ -189,6 +199,39 @@ public sealed class PhotoCropViewModel : ViewModelBase
         return false;
     }
 
+    private async Task FindReadingAreaAsync(bool showNoCandidate, CancellationToken token = default)
+    {
+        if (_original is null || (showNoCandidate && IsWorking)) return;
+        var wasAlreadyWorking = IsWorking;
+        if (!wasAlreadyWorking) IsWorking = true;
+        try
+        {
+            var suggestion = await _areaSuggester.SuggestAsync(_original.FilePath, RotationDegrees, token);
+            if (suggestion is null)
+            {
+                SetArea(NoCandidateFallbackArea);
+                await SaveAreaAsync(token);
+                if (showNoCandidate)
+                    await _dialogs.AlertAsync(AppText.Get("AutoSelectReadingArea"),
+                        AppText.Get("AutoSelectReadingAreaNoCandidate"), AppText.Get("OK"));
+                return;
+            }
+
+            SetArea(suggestion);
+            await SaveAreaAsync(token);
+        }
+        catch (OperationCanceledException) { throw; }
+        catch (Exception exception)
+        {
+            if (showNoCandidate)
+                await _dialogs.ReportErrorAsync(AppText.Get("AutoSelectReadingArea"), exception);
+        }
+        finally
+        {
+            if (!wasAlreadyWorking) IsWorking = false;
+        }
+    }
+
     private async Task RecognizeReadingAsync()
     {
         if (_original is null || IsWorking) return;
@@ -205,7 +248,7 @@ public sealed class PhotoCropViewModel : ViewModelBase
             var result = await _application.RecognizeReadingAsync(_meterId,
                 await File.ReadAllBytesAsync(_cropped.FilePath));
             _recognition = result;
-            ReadingValue = result.SuggestedValue?.ToString(AppText.Culture) ?? string.Empty;
+            ReadingValue = result.SuggestedValue?.ToString(AppText.Culture) ?? result.RecognizedText;
             OnPropertyChanged(nameof(Recognition));
             OnPropertyChanged(nameof(RecognitionSummaryText));
         }
@@ -286,6 +329,7 @@ public sealed class PhotoCropViewModel : ViewModelBase
         OnPropertyChanged(nameof(HasRecognition));
         OnPropertyChanged(nameof(ShowPhotoChoices));
         OnPropertyChanged(nameof(IsRecognitionVisible));
+        OnPropertyChanged(nameof(IsRecognitionNotVisible));
         OnPropertyChanged(nameof(CanRecognize));
         OnPropertyChanged(nameof(CanSaveReading));
         OnPropertyChanged(nameof(CameraActionText));
@@ -297,6 +341,7 @@ public sealed class PhotoCropViewModel : ViewModelBase
     {
         ChoosePhotoCommand.ChangeCanExecute();
         ChooseGalleryPhotoCommand.ChangeCanExecute();
+        FindReadingAreaCommand.ChangeCanExecute();
         RecognizeReadingCommand.ChangeCanExecute();
         SaveReadingCommand.ChangeCanExecute();
         CancelCommand.ChangeCanExecute();

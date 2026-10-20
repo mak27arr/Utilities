@@ -19,15 +19,16 @@ public sealed class MauiAppNavigation(
     IReadingHistoryFileTransfer historyFiles,
     IUserPreferenceStore preferences,
     IAppAppearance appearance,
-    IAppDiagnostics diagnostics) : IAppNavigation, IDisposable
+    IAppDiagnostics diagnostics,
+    IAddressListCache addressCache) : IAppNavigation, IDisposable
 {
     private readonly Dictionary<Page, IServiceScope> _pageScopes = [];
     private NavigationPage? _navigationPage;
 
-    public Task OpenAddressAsync(Guid addressId) => PushScopedAsync(services => new AddressDetailPage(Application(services), addressId, dialogs, this, preferences));
-    public Task OpenNewAddressAsync() => PushScopedAsync(services => new NewAddressPage(Application(services), dialogs, this, loggerFactory.CreateLogger<NewAddressViewModel>()));
+    public Task OpenAddressAsync(Guid addressId) => PushScopedAsync(services => new AddressDetailPage(Application(services), addressId, dialogs, this, preferences, addressCache));
+    public Task OpenNewAddressAsync() => PushScopedAsync(services => new NewAddressPage(Application(services), dialogs, this, loggerFactory.CreateLogger<NewAddressViewModel>(), addressCache));
     public Task OpenMeterAsync(Guid meterId) => PushScopedAsync(services => new MeterDetailPage(Application(services), meterId, dialogs, this, historyFiles, loggerFactory.CreateLogger<MeterDetailViewModel>()));
-    public Task OpenMeterForManualReadingAsync(Guid meterId) => PushScopedAsync(services => new MeterDetailPage(Application(services), meterId, dialogs, this, historyFiles, loggerFactory.CreateLogger<MeterDetailViewModel>(), promptManualReadingOnLoad: true));
+    public Task OpenManualReadingAsync(Guid meterId) => PushScopedAsync(services => new ManualReadingPage(Application(services), meterId, dialogs, this));
     public Task OpenMeterSettingsAsync(Guid meterId) => PushScopedAsync(services => new MeterDetailPage(Application(services), meterId, dialogs, this, historyFiles, loggerFactory.CreateLogger<MeterDetailViewModel>(), settingsOnly: true));
     public Task OpenMeterIdentifiersAsync(Guid meterId) => PushScopedAsync(services => new MeterIdentifiersPage(Application(services), meterId, dialogs, this));
     public Task OpenMeterReplacementAsync(Guid meterId) => PushScopedAsync(services => new MeterReplacementPage(Application(services), meterId, dialogs, this, loggerFactory.CreateLogger<MeterReplacementViewModel>()));
@@ -36,11 +37,12 @@ public sealed class MauiAppNavigation(
     public Task OpenNewServiceTypeAsync() => PushScopedAsync(services => new ServiceTypeEditorPage(Application(services), dialogs, this));
     public Task OpenEditServiceTypeAsync(Guid serviceTypeId) => PushScopedAsync(services => new ServiceTypeEditorPage(Application(services), dialogs, this, serviceTypeId));
     public Task OpenRecentlyDeletedAsync() => PushScopedAsync(services => new RecentlyDeletedPage(Application(services), dialogs,
-        services.GetRequiredService<IReminderSynchronizer>()));
-    public Task OpenSettingsAsync() => PushScopedAsync(services => new SettingsPage(Application(services), reminders, dialogs, this, preferences, appearance, diagnostics));
+        services.GetRequiredService<IReminderSynchronizer>(), addressCache));
+    public Task OpenSettingsAsync() => PushScopedAsync(services => new SettingsPage(Application(services), reminders, dialogs, this, preferences, appearance, diagnostics, addressCache));
     public Task OpenReminderEditorAsync(ReminderOwnerType ownerType, Guid ownerId, string ownerName, ReminderKind kind) =>
         PushScopedAsync(services => new ReminderEditorPage(Application(services), reminders, permissions, dialogs, this, ownerType, ownerId, ownerName, kind));
-    public Task OpenPhotoCropAsync(Guid meterId) => PushScopedAsync(services => new PhotoCropPage(Application(services), meterId, photos, cameraPermission, dialogs, this));
+    public Task OpenPhotoCropAsync(Guid meterId) => PushScopedAsync(services => new PhotoCropPage(Application(services), meterId,
+        photos, cameraPermission, dialogs, this, services.GetRequiredService<IReadingAreaSuggester>()));
     public Task GoBackAsync() => CurrentNavigation.PopAsync();
 
     public void ShowHome()

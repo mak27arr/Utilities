@@ -27,10 +27,12 @@ public partial class PhotoCropPage : ContentPage
     private double _photoPanStartY;
 
     public PhotoCropPage(UtilitiesApplicationService application, Guid meterId, ITemporaryMeterPhotoProvider photos,
-        ICameraPermissionService cameraPermission, IUserDialogs dialogs, IAppNavigation navigation)
+        ICameraPermissionService cameraPermission, IUserDialogs dialogs, IAppNavigation navigation,
+        IReadingAreaSuggester areaSuggester)
     {
         InitializeComponent();
-        _viewModel = new PhotoCropViewModel(application, meterId, photos, cameraPermission, dialogs, navigation);
+        _viewModel = new PhotoCropViewModel(application, meterId, photos, cameraPermission, dialogs, navigation,
+            areaSuggester);
         BindingContext = _viewModel;
         Title = AppText.Get("PhotoReadingTitle");
 
@@ -140,6 +142,9 @@ public partial class PhotoCropPage : ContentPage
         var (rotatedWidth, rotatedHeight) = GetRotatedPixelSize(photo.PixelWidth, photo.PixelHeight);
         var bounds = ReadingAreaGeometry.GetDisplayBounds(_viewModel.Area, rotatedWidth, rotatedHeight,
             imageBounds.Width, imageBounds.Height);
+        var resizeHandleSize = Math.Min(48, Math.Min(bounds.Width, bounds.Height) * 0.6);
+        ResizeSurface.WidthRequest = resizeHandleSize;
+        ResizeSurface.HeightRequest = resizeHandleSize;
         AbsoluteLayout.SetLayoutBounds(Selection,
             new Rect(imageBounds.X + bounds.X, imageBounds.Y + bounds.Y, bounds.Width, bounds.Height));
         AbsoluteLayout.SetLayoutFlags(Selection, AbsoluteLayoutFlags.None);
@@ -299,12 +304,14 @@ public partial class PhotoCropPage : ContentPage
         return new Rect((width - imageWidth) / 2, (height - imageHeight) / 2, imageWidth, imageHeight);
     }
 
-    private (double Width, double Height) GetRotatedPixelSize(double width, double height)
+    private (int Width, int Height) GetRotatedPixelSize(double width, double height)
     {
         var radians = _viewModel.RotationDegrees * Math.PI / 180;
         var cosine = Math.Abs(Math.Cos(radians));
         var sine = Math.Abs(Math.Sin(radians));
-        return (width * cosine + height * sine, width * sine + height * cosine);
+        var rotatedWidth = width * cosine + height * sine;
+        var rotatedHeight = width * sine + height * cosine;
+        return ((int)Math.Ceiling(rotatedWidth - 1e-9), (int)Math.Ceiling(rotatedHeight - 1e-9));
     }
 
     private double GetPhotoScaleCorrection()

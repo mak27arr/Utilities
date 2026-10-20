@@ -13,14 +13,16 @@ public sealed class HomeViewModel : ViewModelBase
     private readonly IAppNavigation _navigation;
     private readonly IUserDialogs _dialogs;
     private readonly ILogger<HomeViewModel> _logger;
+    private readonly IAddressListCache _addressCache;
     private bool _initialized;
 
-    public HomeViewModel(UtilitiesApplicationService application, IAppNavigation navigation, IUserDialogs dialogs, ILogger<HomeViewModel> logger)
+    public HomeViewModel(UtilitiesApplicationService application, IAppNavigation navigation, IUserDialogs dialogs, ILogger<HomeViewModel> logger, IAddressListCache addressCache)
     {
         _application = application;
         _navigation = navigation;
         _dialogs = dialogs;
         _logger = logger;
+        _addressCache = addressCache;
         AddAddressCommand = new Command(async () => await _navigation.OpenNewAddressAsync());
         OpenSettingsCommand = new Command(async () => await _navigation.OpenSettingsAsync());
         OpenAddressCommand = new Command<AddressListItem>(async address =>
@@ -62,26 +64,34 @@ public sealed class HomeViewModel : ViewModelBase
         IsBusy = true;
         try
         {
-            if (!_initialized)
+            var cacheReadTimer = Stopwatch.StartNew();
+            var cachedAddresses = await _addressCache.ReadAsync(cancellationToken);
+            StartupTiming.LogDuration("HomeViewModel.AddressCache.ReadAsync", cacheReadTimer,
+                cachedAddresses is null ? "cache miss" : $"cache hit; address count: {cachedAddresses.Count}");
+            if (cachedAddresses is not null)
             {
-                var initializeTimer = Stopwatch.StartNew();
-                await _application.InitializeAsync(cancellationToken);
-                StartupTiming.LogDuration("HomeViewModel.Application.InitializeAsync", initializeTimer);
-                _initialized = true;
+                var populateTimer = Stopwatch.StartNew();
+                Addresses.Clear();
+                foreach (var address in cachedAddresses)
+                    Addresses.Add(new AddressListItem(address.Id, address.Name, OpenAddressCommand));
+                StartupTiming.LogDuration("HomeViewModel.PopulateCachedAddresses", populateTimer, $"added {Addresses.Count} addresses");
             }
-            var clearTimer = Stopwatch.StartNew();
-            Addresses.Clear();
-            StartupTiming.LogDuration("HomeViewModel.Addresses.Clear", clearTimer);
-            var queryTimer = Stopwatch.StartNew();
-            var fileLoggerBeforeQuery = StartupTiming.CaptureFileLoggerMetrics();
-            var addresses = await _application.GetAddressesAsync(cancellationToken);
-            var fileLoggerAfterQuery = StartupTiming.CaptureFileLoggerMetrics();
-            StartupTiming.LogDuration("HomeViewModel.GetAddressesAsync", queryTimer, $"returned {addresses.Count} addresses");
-            StartupTiming.LogFileLoggerMetrics("HomeViewModel.GetAddressesAsync interval", fileLoggerBeforeQuery, fileLoggerAfterQuery);
-            var populateTimer = Stopwatch.StartNew();
-            foreach (var address in addresses)
-                Addresses.Add(new AddressListItem(address.Id, address.Name, OpenAddressCommand));
-            StartupTiming.LogDuration("HomeViewModel.PopulateAddressCollection", populateTimer, $"added {Addresses.Count} addresses");
+            else
+            {
+                if (!_initialized)
+                {
+                    var initializeTimer = Stopwatch.StartNew();
+                    await _application.InitializeAsync(cancellationToken);
+                    StartupTiming.LogDuration("HomeViewModel.Application.InitializeAsync", initializeTimer);
+                    _initialized = true;
+                }
+                var addresses = await _application.GetAddressesAsync(cancellationToken);
+                Addresses.Clear();
+                foreach (var address in addresses)
+                    Addresses.Add(new AddressListItem(address.Id, address.Name, OpenAddressCommand));
+                _addressCache.RememberSnapshot(addresses.Select(address => new CachedAddress(address.Id, address.Name)));
+            }
+            StartupTiming.LogDuration("HomeViewModel.LoadAddressList", loadTimer, $"source: {(cachedAddresses is null ? "database" : "cache")}; count: {Addresses.Count}");
             var notifyTimer = Stopwatch.StartNew();
             OnPropertyChanged(nameof(HasAddresses));
             OnPropertyChanged(nameof(IsEmpty));

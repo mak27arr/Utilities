@@ -12,12 +12,14 @@ public sealed class RecentlyDeletedViewModel : ViewModelBase
     private readonly UtilitiesApplicationService _application;
     private readonly IUserDialogs _dialogs;
     private readonly IReminderSynchronizer _reminderSynchronizer;
+    private readonly IAddressListCache _addressCache;
 
-    public RecentlyDeletedViewModel(UtilitiesApplicationService application, IUserDialogs dialogs, IReminderSynchronizer reminderSynchronizer)
+    public RecentlyDeletedViewModel(UtilitiesApplicationService application, IUserDialogs dialogs, IReminderSynchronizer reminderSynchronizer, IAddressListCache addressCache)
     {
         _application = application;
         _dialogs = dialogs;
         _reminderSynchronizer = reminderSynchronizer;
+        _addressCache = addressCache;
         RestoreCommand = new Command<RecentlyDeletedSummary>(async summary => { if (summary is not null) await RestoreCommandAsync(summary); });
     }
 
@@ -54,6 +56,8 @@ public sealed class RecentlyDeletedViewModel : ViewModelBase
     public async Task RestoreAsync(RecentlyDeletedItem item, CancellationToken token = default)
     {
         await _application.RestoreAsync(item, token);
+        if (item.EntityType == "Address")
+            await _addressCache.SaveAsync((await _application.GetAddressesAsync(token)).Select(address => new CachedAddress(address.Id, address.Name)), token);
         await _reminderSynchronizer.SynchronizeAsync(token);
         var summary = Items.FirstOrDefault(row => row.Item.Id == item.Id);
         if (summary is not null) Items.Remove(summary);

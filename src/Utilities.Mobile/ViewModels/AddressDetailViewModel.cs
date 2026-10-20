@@ -14,13 +14,15 @@ public sealed class AddressDetailViewModel : ViewModelBase
     private readonly Guid _addressId;
     private readonly IUserDialogs _dialogs;
     private readonly IAppNavigation _navigation;
+    private readonly IAddressListCache _addressCache;
 
-    public AddressDetailViewModel(UtilitiesApplicationService application, Guid addressId, IUserDialogs dialogs, IAppNavigation navigation)
+    public AddressDetailViewModel(UtilitiesApplicationService application, Guid addressId, IUserDialogs dialogs, IAppNavigation navigation, IAddressListCache addressCache)
     {
         _application = application;
         _addressId = addressId;
         _dialogs = dialogs;
         _navigation = navigation;
+        _addressCache = addressCache;
         EditAddressCommand = new Command(async () => await EditAddressAsync());
         ArchiveCommand = new Command(async () => await ArchiveAsync());
         AddMeterCommand = new Command(async () => await AddMeterAsync());
@@ -82,10 +84,20 @@ public sealed class AddressDetailViewModel : ViewModelBase
         OnPropertyChanged(nameof(HasFullAddress));
     }
 
-    public Task UpdateAddressAsync(string name, string? fullAddress, CancellationToken token = default) =>
-        _application.UpdateAddressAsync(_addressId, name, fullAddress, token);
+    public async Task UpdateAddressAsync(string name, string? fullAddress, CancellationToken token = default)
+    {
+        await _application.UpdateAddressAsync(_addressId, name, fullAddress, token);
+        await SaveAddressCacheAsync(token);
+    }
 
-    public Task ArchiveAsync(CancellationToken token = default) => _application.DeleteAsync(nameof(Address), _addressId, token);
+    public async Task ArchiveAsync(CancellationToken token = default)
+    {
+        await _application.DeleteAsync(nameof(Address), _addressId, token);
+        await SaveAddressCacheAsync(token);
+    }
+
+    private async Task SaveAddressCacheAsync(CancellationToken token) =>
+        await _addressCache.SaveAsync((await _application.GetAddressesAsync(token)).Select(address => new CachedAddress(address.Id, address.Name)), token);
 
     public Task CreateMeterAsync(Guid serviceTypeId, string name, string unit, MeterDisplayType displayType, double? initial, CancellationToken token = default) =>
         _application.CreateMeterAsync(_addressId, serviceTypeId, name, unit, displayType, initial, token);

@@ -6,41 +6,26 @@
              x:DataType="viewModels:PhotoCropViewModel"
              Title="Reading area"
              BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
-    <Grid Padding="16" RowDefinitions="Auto,*,Auto" RowSpacing="10">
-        <Border Grid.Row="0" BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}"
+    <Grid Padding="8" RowDefinitions="*,Auto" RowSpacing="8">
+        <Border x:Name="ImageFrame" Grid.Row="0" BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}"
                 Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1"
-                StrokeShape="RoundRectangle 18" Padding="14">
-            <Grid ColumnDefinitions="42,*" ColumnSpacing="12">
-                <Border WidthRequest="40" HeightRequest="40" BackgroundColor="{AppThemeBinding Light=#EEEAF8, Dark=#343142}"
-                        StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="8">
-                    <Image Source="ic_meter.png" />
-                </Border>
-                <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
-                    <Label Text="{Binding InstructionsTitle}" FontSize="18" FontAttributes="Bold"
-                           TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" />
-                    <Label Text="{Binding InstructionsText}" FontSize="12" LineBreakMode="WordWrap"
-                           TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
-                </VerticalStackLayout>
-            </Grid>
-        </Border>
-
-        <Border x:Name="ImageFrame" Grid.Row="1" BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}"
-                Stroke="{AppThemeBinding Light=#EAE7F0, Dark=#3C3947}" StrokeThickness="1"
-                StrokeShape="RoundRectangle 20" Padding="8" IsVisible="{Binding HasPhoto}">
+                StrokeShape="RoundRectangle 18" Padding="4" IsVisible="{Binding HasPhoto}">
             <Grid x:Name="ImageViewport" Grid.RowDefinitions="*,Auto" RowSpacing="4">
                 <Image x:Name="PhotoImage" Source="{Binding CurrentImage}" Aspect="AspectFit" InputTransparent="False" />
                 <AbsoluteLayout x:Name="Overlay" Grid.Row="0" InputTransparent="False">
                     <Border x:Name="Selection" Stroke="#35B779" StrokeThickness="3" BackgroundColor="#3035B779"
                             Padding="0" IsVisible="True">
-                        <Grid RowDefinitions="*,56">
-                            <Border x:Name="MoveSurface" Grid.Row="0" BackgroundColor="Transparent" Padding="0"
-                                    InputTransparent="False" />
-                            <Grid x:Name="ResizeSurface" Grid.Row="1" BackgroundColor="Transparent"
-                                  HorizontalOptions="Fill" VerticalOptions="Fill">
-                                <Border WidthRequest="64" HeightRequest="8" Margin="0,0,8,8"
+                        <Grid>
+                            <Border x:Name="MoveSurface" BackgroundColor="Transparent" Padding="0"
+                                    HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="False" />
+                            <Border x:Name="ResizeSurface" WidthRequest="28" HeightRequest="28"
+                                    BackgroundColor="Transparent" Padding="0"
+                                    HorizontalOptions="End" VerticalOptions="End" InputTransparent="False">
+                                <Border WidthRequest="14" HeightRequest="14" Margin="4"
                                         HorizontalOptions="End" VerticalOptions="End"
-                                        BackgroundColor="#35B779" StrokeThickness="0" StrokeShape="RoundRectangle 3" />
-                            </Grid>
+                                        BackgroundColor="#35B779" Stroke="#FFFFFF" StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 7" />
+                            </Border>
                         </Grid>
                     </Border>
                 </AbsoluteLayout>
@@ -56,17 +41,22 @@
             </Grid>
         </Border>
 
-        <VerticalStackLayout Grid.Row="2" Spacing="8">
+        <VerticalStackLayout Grid.Row="1" Spacing="8">
             <Grid IsVisible="{Binding ShowPhotoChoices}" ColumnDefinitions="*,*" ColumnSpacing="8">
-                <Button Text="{Binding CameraActionText}" ImageSource="ic_camera.png"
+                <Button Text="{Binding CameraActionText}" ImageSource="ic_camera.svg"
                         Command="{Binding ChoosePhotoCommand}" Style="{StaticResource PrimaryActionButton}" />
-                <Button Grid.Column="1" Text="{Binding ChooseGalleryPhotoText}" ImageSource="ic_gallery.png"
+                <Button Grid.Column="1" Text="{Binding ChooseGalleryPhotoText}" ImageSource="ic_gallery.svg"
                         Command="{Binding ChooseGalleryPhotoCommand}" Style="{StaticResource SecondaryActionButton}" />
             </Grid>
 
-            <Button IsVisible="{Binding HasPhoto}" Text="{Binding CameraActionText}" ImageSource="ic_camera.png"
-                    Command="{Binding ChoosePhotoCommand}" Style="{StaticResource SecondaryActionButton}" />
-            <Button IsVisible="{Binding HasPhoto}" Text="{Binding RecognizeText}" ImageSource="ic_meter.png"
+            <Grid IsVisible="{Binding HasPhoto}" ColumnDefinitions="*,*" ColumnSpacing="8">
+                <Button Text="{Binding CameraActionText}" ImageSource="ic_camera.svg"
+                        Command="{Binding ChoosePhotoCommand}" Style="{StaticResource SecondaryActionButton}" Padding="8,4" FontSize="13" />
+                <Button Grid.Column="1" Text="{Binding AutoSelectReadingAreaText}" ImageSource="ic_find_digits.svg"
+                        Command="{Binding FindReadingAreaCommand}" IsEnabled="{Binding CanRecognize}"
+                        Style="{StaticResource SecondaryActionButton}" Padding="8,4" FontSize="13" />
+            </Grid>
+            <Button IsVisible="{Binding HasPhoto}" Text="{Binding RecognizeText}" ImageSource="ic_meter.svg"
                     Command="{Binding RecognizeReadingCommand}" IsEnabled="{Binding CanRecognize}"
                     Style="{StaticResource PrimaryActionButton}" />
 
@@ -77,18 +67,21 @@
             </HorizontalStackLayout>
 
             <VerticalStackLayout IsVisible="{Binding IsRecognitionVisible}" Spacing="6">
-                <Label Text="{Binding RecognitionSummaryText}" FontSize="13" LineBreakMode="WordWrap"
-                       TextColor="{AppThemeBinding Light=#4D4858, Dark=#D2CEDA}" />
                 <Entry Text="{Binding ReadingValue, Mode=TwoWay}" Placeholder="{Binding RecognizeText}"
                        Keyboard="Numeric" ReturnType="Done" ClearButtonVisibility="WhileEditing"
                        BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}"
                        TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" />
-                <Button Text="{Binding SaveReadingText}"
-                        Command="{Binding SaveReadingCommand}" IsEnabled="{Binding CanSaveReading}"
-                        Style="{StaticResource PrimaryActionButton}" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Button ImageSource="ic_save.svg" SemanticProperties.Description="{Binding SaveReadingText}"
+                            Command="{Binding SaveReadingCommand}" IsEnabled="{Binding CanSaveReading}"
+                            Style="{StaticResource PrimaryActionButton}" HeightRequest="48" />
+                    <Button Grid.Column="1" ImageSource="ic_back.svg" SemanticProperties.Description="{Binding CancelText}"
+                            Command="{Binding CancelCommand}" Style="{StaticResource SecondaryActionButton}" HeightRequest="48" />
+                </Grid>
             </VerticalStackLayout>
 
-            <Button Text="{Binding CancelText}" Command="{Binding CancelCommand}" Style="{StaticResource LinkActionButton}" />
+            <Button IsVisible="{Binding IsRecognitionNotVisible}"
+                    Text="{Binding CancelText}" Command="{Binding CancelCommand}" Style="{StaticResource LinkActionButton}" />
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

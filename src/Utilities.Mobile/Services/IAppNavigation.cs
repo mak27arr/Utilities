@@ -7,7 +7,7 @@ public interface IAppNavigation
     Task OpenAddressAsync(Guid addressId);
     Task OpenNewAddressAsync();
     Task OpenMeterAsync(Guid meterId);
-    Task OpenMeterForManualReadingAsync(Guid meterId);
+    Task OpenManualReadingAsync(Guid meterId);
     Task OpenMeterSettingsAsync(Guid meterId);
     Task OpenMeterIdentifiersAsync(Guid meterId);
     Task OpenMeterReplacementAsync(Guid meterId);
