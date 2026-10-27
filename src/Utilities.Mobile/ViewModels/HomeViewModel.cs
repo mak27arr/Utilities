@@ -59,6 +59,7 @@ public sealed class HomeViewModel : ViewModelBase
     private string _emptyState = AppText.Get("NoAddresses");
     public string EmptyState { get => _emptyState; private set => SetProperty(ref _emptyState, value); }
     public string LocalOnlyText => AppText.Get("LocalOnly");
+    public string AppNameText => AppText.Get("Utilities");
     public string AddAddressText => AppText.Get("AddAddress");
     public string SettingsText => AppText.Get("Settings");
     public string YourAddressesText => AppText.Get("YourAddresses");

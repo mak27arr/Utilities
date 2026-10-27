@@ -4,7 +4,6 @@
              xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
              x:Class="Utilities.Mobile.RecentlyDeletedPage"
              x:DataType="viewModels:RecentlyDeletedViewModel"
-             Title="Recently deleted"
              BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
     <ScrollView>
         <VerticalStackLayout Padding="22,18,22,28" Spacing="14">

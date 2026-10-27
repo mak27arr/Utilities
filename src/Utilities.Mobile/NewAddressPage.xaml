@@ -4,7 +4,6 @@
              xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
              x:Class="Utilities.Mobile.NewAddressPage"
              x:DataType="viewModels:NewAddressViewModel"
-             Title="New address"
              BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="20">

@@ -4,7 +4,6 @@
              xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
              x:Class="Utilities.Mobile.ServiceTypesPage"
              x:DataType="viewModels:ServiceTypesViewModel"
-             Title="Service types"
              BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
     <ScrollView>
         <VerticalStackLayout Padding="22,18,22,28" Spacing="16">

@@ -4,7 +4,6 @@
              xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
              x:Class="Utilities.Mobile.PhotoCropPage"
              x:DataType="viewModels:PhotoCropViewModel"
-             Title="Reading area"
              BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
     <Grid Padding="8" RowDefinitions="*,Auto" RowSpacing="8">
         <Border x:Name="ImageFrame" Grid.Row="0" BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}"

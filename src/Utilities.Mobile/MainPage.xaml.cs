@@ -31,6 +31,7 @@ public partial class MainPage : ContentPage
         _dialogs = dialogs;
         _logger = logger;
         BindingContext = viewModel;
+        Title = AppText.Get("Utilities");
         HandlerChanged += (_, _) => AttachFirstDrawListener();
         Loaded += (_, _) =>
         {

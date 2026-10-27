@@ -4,7 +4,6 @@
              xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
              x:Class="Utilities.Mobile.ReminderEditorPage"
              x:DataType="viewModels:ReminderEditorViewModel"
-             Title="Reminder settings"
              BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16">

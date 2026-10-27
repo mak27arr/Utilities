@@ -4,7 +4,7 @@
              xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
              x:Class="Utilities.Mobile.AddressDetailPage"
              x:DataType="viewModels:AddressDetailViewModel"
-             Title="Address">
+             >
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="10">
             <Label Text="{Binding Address.Name}" FontSize="28" FontAttributes="Bold" />

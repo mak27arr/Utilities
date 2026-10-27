@@ -10,6 +10,7 @@ using AndroidX.Core.Content;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Utilities.Core.Infrastructure.Abstractions;
+using Utilities.Mobile.Services;
 
 public sealed class AndroidLocalReminderScheduler : ILocalReminderScheduler
 {
@@ -85,8 +86,6 @@ public sealed class AndroidLocalReminderScheduler : ILocalReminderScheduler
         intent.SetAction(ReminderBroadcastReceiver.FireAction);
         intent.SetData(Android.Net.Uri.Parse($"utilities://reminder/{reminder.Id:N}"));
         intent.PutExtra(ReminderBroadcastReceiver.IdExtra, reminder.Id.ToString("N"));
-        intent.PutExtra(ReminderBroadcastReceiver.TitleExtra, reminder.Title);
-        intent.PutExtra(ReminderBroadcastReceiver.MessageExtra, reminder.Message);
         intent.PutExtra(ReminderBroadcastReceiver.AtExtra, reminder.At.ToUnixTimeMilliseconds());
         return PendingIntent.GetBroadcast(context, 0, intent, PendingIntentFlags.UpdateCurrent | PendingIntentFlags.Immutable)!;
     }
@@ -168,8 +167,6 @@ public sealed class ReminderBroadcastReceiver : BroadcastReceiver
     internal const string FireFollowUpAction = "com.utilities.meterapp.action.FIRE_REMINDER_FOLLOW_UP";
     internal const string DismissFollowUpAction = "com.utilities.meterapp.action.DISMISS_REMINDER_FOLLOW_UP";
     internal const string IdExtra = "reminder_id";
-    internal const string TitleExtra = "reminder_title";
-    internal const string MessageExtra = "reminder_message";
     internal const string AtExtra = "reminder_at";
     internal const string CycleAtExtra = "reminder_cycle_at";
     internal const string ChannelId = "local_reminders";
@@ -244,8 +241,15 @@ public sealed class ReminderBroadcastReceiver : BroadcastReceiver
                 logger?.LogWarning("Reminder {ReminderId} fired but app/channel notifications are disabled. App enabled {AppNotificationsEnabled}, channel importance {ChannelImportance}.", id, manager?.AreNotificationsEnabled(), channel?.Importance);
             }
 
-            var title = intent.GetStringExtra(TitleExtra) ?? AppText.Get(settings.Kind == Utilities.Core.Domain.Models.ReminderKind.Payment ? "PaymentReminder" : "ReadingReminder");
-            var message = intent.GetStringExtra(MessageExtra) ?? AppText.Get(settings.Kind == Utilities.Core.Domain.Models.ReminderKind.Payment ? "PaymentReminderMessage" : "ReadingReminderMessage");
+            var isPayment = settings.Kind == Utilities.Core.Domain.Models.ReminderKind.Payment;
+            var ownerName = settings.OwnerType == Utilities.Core.Domain.Models.ReminderOwnerType.Meter
+                ? (await application.GetMeterAsync(settings.OwnerId))?.Name
+                : (await application.GetSubscriptionAsync(settings.OwnerId))?.Name;
+            var localizedOwnerName = ownerName is null ? null : ServiceTypePresentation.DisplayName(ownerName);
+            var title = AppText.Get(isPayment ? "PaymentReminder" : "ReadingReminder");
+            var message = string.IsNullOrWhiteSpace(localizedOwnerName)
+                ? AppText.Get(isPayment ? "PaymentReminderMessage" : "ReadingReminderMessage")
+                : AppText.Get("ReminderNamedMessage", localizedOwnerName);
             var cycleAt = intent.HasExtra(AtExtra)
                 ? DateTimeOffset.FromUnixTimeMilliseconds(intent.GetLongExtra(AtExtra, 0))
                 : DateTimeOffset.UtcNow;
@@ -345,7 +349,7 @@ public sealed class ReminderBroadcastReceiver : BroadcastReceiver
                 var title = AppText.Get("ReadingReminder");
                 var meter = await application.GetMeterAsync(settings.OwnerId);
                 var message = meter?.Name is { Length: > 0 } name
-                    ? AppText.Get("ReminderNamedMessage", name)
+                    ? AppText.Get("ReminderNamedMessage", ServiceTypePresentation.DisplayName(name))
                     : AppText.Get("ReadingReminderMessage");
                 var builder = Build.VERSION.SdkInt >= BuildVersionCodes.O
                     ? new Notification.Builder(context, ChannelId)

@@ -14,7 +14,7 @@ public static class AppText
 
     public static void SetLanguage(string language)
     {
-        var normalized = language.Equals("uk", StringComparison.OrdinalIgnoreCase) ? "uk" : "en";
+        var normalized = language.StartsWith("uk", StringComparison.OrdinalIgnoreCase) ? "uk" : "en";
         _culture = CultureInfo.GetCultureInfo(normalized);
         CultureInfo.DefaultThreadCurrentCulture = _culture;
         CultureInfo.DefaultThreadCurrentUICulture = _culture;

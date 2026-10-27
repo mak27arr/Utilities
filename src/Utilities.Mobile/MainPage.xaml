@@ -4,7 +4,6 @@
              xmlns:viewModels="clr-namespace:Utilities.Mobile.ViewModels"
              x:Class="Utilities.Mobile.MainPage"
              x:DataType="viewModels:HomeViewModel"
-             Title="Utilities"
              BackgroundColor="{AppThemeBinding Light=#F7F6FA, Dark=#17151E}">
     <ScrollView>
         <VerticalStackLayout Padding="22,18,22,28" Spacing="22">
@@ -14,7 +13,7 @@
                         <Image Source="ic_address.png" />
                     </Border>
                     <VerticalStackLayout Spacing="1" VerticalOptions="Center">
-                        <Label Text="Utilities" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#332664, Dark=#D5CAFA}" />
+                        <Label Text="{Binding AppNameText}" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#332664, Dark=#D5CAFA}" />
                         <Label Text="{Binding LocalOnlyText}" FontSize="11" LineBreakMode="TailTruncation" MaxLines="1" TextColor="{AppThemeBinding Light=#777282, Dark=#B6B1C0}" />
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
