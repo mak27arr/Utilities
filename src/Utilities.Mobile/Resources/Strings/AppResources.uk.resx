@@ -160,6 +160,7 @@
   <data name="ReminderNamedMessage" xml:space="preserve"><value>Нагадування: {0}</value></data>
   <data name="ReminderChannel" xml:space="preserve"><value>Локальні нагадування</value></data>
   <data name="ReminderChannelDescription" xml:space="preserve"><value>Нагадування про показання й оплату</value></data>
+  <data name="ReminderNotNeeded" xml:space="preserve"><value>Не потрібно</value></data>
   <data name="ReminderDateTime" xml:space="preserve"><value>Дата й час нагадування</value></data>
   <data name="ReminderDayOfMonthLabel" xml:space="preserve"><value>Число місяця</value></data>
   <data name="ReminderTimeLabel" xml:space="preserve"><value>Час нагадування</value></data>

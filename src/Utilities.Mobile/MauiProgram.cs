@@ -32,6 +32,9 @@ public static class MauiProgram
         StartupTiming.LogDuration("MauiProgram.LoadPreferencesAndResources", preferencesTimer);
 #if !DEBUG
         builder.Logging.AddFilter<LocalFileLoggerProvider>(null, LogLevel.Warning);
+        builder.Logging.AddFilter<LocalFileLoggerProvider>("Utilities.Reminders", LogLevel.Information);
+        builder.Logging.AddFilter<LocalFileLoggerProvider>("Utilities.Mobile.Infrastructure.Reminders", LogLevel.Information);
+        builder.Logging.AddFilter<LocalFileLoggerProvider>("Utilities.Mobile.ViewModels.ReminderEditorViewModel", LogLevel.Information);
 #endif
         builder
             .UseMauiApp<App>()
@@ -59,8 +62,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<IReadingRecognizer>(services =>
             services.GetRequiredService<MlKitReadingRecognizer>());
         builder.Services.AddSingleton<MlKitReadingAreaSuggester>();
+        builder.Services.AddSingleton<YoloReadingAreaSuggester>();
         builder.Services.AddSingleton<IReadingAreaSuggester>(services =>
-            services.GetRequiredService<MlKitReadingAreaSuggester>());
+            services.GetRequiredService<YoloReadingAreaSuggester>());
         builder.Services.AddSingleton<IUserDialogs, MauiUserDialogs>();
         builder.Services.AddScoped<IAppNavigation, MauiAppNavigation>();
         builder.Services.AddTransient<HomeViewModel>();

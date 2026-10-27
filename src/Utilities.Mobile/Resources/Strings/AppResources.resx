@@ -160,6 +160,7 @@
   <data name="ReminderNamedMessage" xml:space="preserve"><value>Reminder for {0}</value></data>
   <data name="ReminderChannel" xml:space="preserve"><value>Local reminders</value></data>
   <data name="ReminderChannelDescription" xml:space="preserve"><value>Reading submission and payment reminders</value></data>
+  <data name="ReminderNotNeeded" xml:space="preserve"><value>Not needed</value></data>
   <data name="ReminderDateTime" xml:space="preserve"><value>Reminder date and time</value></data>
   <data name="ReminderDayOfMonthLabel" xml:space="preserve"><value>Day of month</value></data>
   <data name="ReminderTimeLabel" xml:space="preserve"><value>Reminder time</value></data>

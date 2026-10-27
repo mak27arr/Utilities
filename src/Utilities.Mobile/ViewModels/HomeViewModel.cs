@@ -14,7 +14,7 @@ public sealed class HomeViewModel : ViewModelBase
     private readonly IUserDialogs _dialogs;
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IAddressListCache _addressCache;
-    private bool _initialized;
+    private Task? _initializationTask;
 
     public HomeViewModel(UtilitiesApplicationService application, IAppNavigation navigation, IUserDialogs dialogs, ILogger<HomeViewModel> logger, IAddressListCache addressCache)
     {
@@ -23,13 +23,22 @@ public sealed class HomeViewModel : ViewModelBase
         _dialogs = dialogs;
         _logger = logger;
         _addressCache = addressCache;
-        AddAddressCommand = new Command(async () => await _navigation.OpenNewAddressAsync());
-        OpenSettingsCommand = new Command(async () => await _navigation.OpenSettingsAsync());
+        AddAddressCommand = new Command(async () =>
+        {
+            await EnsureInitializedAsync();
+            await _navigation.OpenNewAddressAsync();
+        });
+        OpenSettingsCommand = new Command(async () =>
+        {
+            await EnsureInitializedAsync();
+            await _navigation.OpenSettingsAsync();
+        });
         OpenAddressCommand = new Command<AddressListItem>(async address =>
         {
             if (address is null) return;
             try
             {
+                await EnsureInitializedAsync();
                 _logger.LogInformation("Opening address {AddressId} from the home list.", address.Id);
                 await _navigation.OpenAddressAsync(address.Id);
             }
@@ -75,16 +84,11 @@ public sealed class HomeViewModel : ViewModelBase
                 foreach (var address in cachedAddresses)
                     Addresses.Add(new AddressListItem(address.Id, address.Name, OpenAddressCommand));
                 StartupTiming.LogDuration("HomeViewModel.PopulateCachedAddresses", populateTimer, $"added {Addresses.Count} addresses");
+                StartInitialization(cancellationToken);
             }
             else
             {
-                if (!_initialized)
-                {
-                    var initializeTimer = Stopwatch.StartNew();
-                    await _application.InitializeAsync(cancellationToken);
-                    StartupTiming.LogDuration("HomeViewModel.Application.InitializeAsync", initializeTimer);
-                    _initialized = true;
-                }
+                await EnsureInitializedAsync(cancellationToken);
                 var addresses = await _application.GetAddressesAsync(cancellationToken);
                 Addresses.Clear();
                 foreach (var address in addresses)
@@ -105,6 +109,32 @@ public sealed class HomeViewModel : ViewModelBase
     }
 
     public bool HasAddresses => Addresses.Count > 0;
+
+    public async Task EnsureInitializedAsync(CancellationToken cancellationToken = default)
+    {
+        if (_initializationTask is null)
+            StartInitialization(cancellationToken);
+        await _initializationTask!;
+    }
+
+    private void StartInitialization(CancellationToken cancellationToken)
+    {
+        if (_initializationTask is not null) return;
+        var initializeTimer = Stopwatch.StartNew();
+        _initializationTask = InitializeAndLogAsync(initializeTimer, cancellationToken);
+    }
+
+    private async Task InitializeAndLogAsync(Stopwatch timer, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _application.InitializeAsync(cancellationToken);
+        }
+        finally
+        {
+            StartupTiming.LogDuration("HomeViewModel.Application.InitializeAsync", timer);
+        }
+    }
 
 }
 

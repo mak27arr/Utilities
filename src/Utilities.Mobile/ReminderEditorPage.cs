@@ -3,6 +3,7 @@ namespace Utilities.Mobile;
 using Utilities.Core.Application.UseCases;
 using Utilities.Core.Domain.Models;
 using Utilities.Core.Infrastructure.Abstractions;
+using Microsoft.Extensions.Logging;
 using Utilities.Mobile.Infrastructure.Reminders;
 using Utilities.Mobile.Services;
 using Utilities.Mobile.ViewModels;
@@ -14,10 +15,10 @@ public partial class ReminderEditorPage : ContentPage
 
     public ReminderEditorPage(UtilitiesApplicationService application, ILocalReminderScheduler scheduler,
         INotificationPermissionService permissions, IUserDialogs dialogs, IAppNavigation navigation,
-        ReminderOwnerType ownerType, Guid ownerId, string ownerName, ReminderKind kind)
+        ReminderOwnerType ownerType, Guid ownerId, string ownerName, ReminderKind kind, ILogger<ReminderEditorViewModel> logger)
     {
         InitializeComponent();
-        _viewModel = new ReminderEditorViewModel(application, scheduler, permissions, dialogs, navigation, ownerType, ownerId, ownerName, kind);
+        _viewModel = new ReminderEditorViewModel(application, scheduler, permissions, dialogs, navigation, ownerType, ownerId, ownerName, kind, logger);
         _dialogs = dialogs;
         BindingContext = _viewModel;
         Title = AppText.Get("ReminderSettings");

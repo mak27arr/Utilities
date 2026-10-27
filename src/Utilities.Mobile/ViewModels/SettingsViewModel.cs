@@ -90,7 +90,10 @@ public sealed class SettingsViewModel : ViewModelBase
     public async Task ClearAllDataAsync(CancellationToken token = default)
     {
         foreach (var reminder in await _application.GetEnabledRemindersAsync(token))
+        {
             await _scheduler.CancelAsync(reminder.Id, token);
+            await _scheduler.CancelFollowUpAsync(reminder.Id, token);
+        }
         await _application.ClearAllDataAsync(token);
         await _addressCache.SaveAsync([], token);
     }

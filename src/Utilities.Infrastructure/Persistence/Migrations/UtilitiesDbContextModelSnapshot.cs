@@ -218,6 +218,15 @@ namespace Utilities.Infrastructure.Persistence.Migrations
                     b.Property<int?>("CalendarDayOfMonth")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long?>("FollowUpCycleAt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("FollowUpNextAt")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FollowUpStatus")
+                        .HasColumnType("INTEGER");
+
                     b.Property<long>("CreatedAt")
                         .HasColumnType("INTEGER");
 

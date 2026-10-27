@@ -2,6 +2,7 @@ namespace Utilities.Core.Domain.Models;
 
 public enum ReminderOwnerType { Meter, Subscription }
 public enum ReminderKind { ReadingSubmission, Payment }
+public enum ReminderFollowUpStatus { None, Active, Completed, Dismissed }
 
 public sealed class ReminderSettings : SoftDeletableEntity
 {
@@ -26,14 +27,52 @@ public sealed class ReminderSettings : SoftDeletableEntity
     public int? RepeatIntervalDays { get; private set; }
     public string TimeZoneId { get; private set; } = TimeZoneInfo.Local.Id;
     public int? CalendarDayOfMonth { get; private set; }
+    public DateTimeOffset? FollowUpCycleAt { get; private set; }
+    public DateTimeOffset? FollowUpNextAt { get; private set; }
+    public ReminderFollowUpStatus FollowUpStatus { get; private set; }
 
-    public void Configure(bool enabled, DateTimeOffset? nextReminderAt, int? repeatIntervalDays, string? timeZoneId = null, int? calendarDayOfMonth = null)
+    public void Configure(bool enabled, DateTimeOffset? nextReminderAt, int? repeatIntervalDays, string? timeZoneId = null, int? calendarDayOfMonth = null, bool resetFollowUp = true)
     {
         if (repeatIntervalDays is < 0) throw new ArgumentOutOfRangeException(nameof(repeatIntervalDays));
         if (calendarDayOfMonth is < 1 or > 31) throw new ArgumentOutOfRangeException(nameof(calendarDayOfMonth));
         if (enabled && !nextReminderAt.HasValue) throw new ArgumentException("An enabled reminder needs a date and time.", nameof(nextReminderAt));
         if (Kind == ReminderKind.ReadingSubmission && OwnerType == ReminderOwnerType.Subscription)
             throw new InvalidOperationException("Subscriptions support payment reminders only.");
-        IsEnabled = enabled; NextReminderAt = nextReminderAt; RepeatIntervalDays = repeatIntervalDays; TimeZoneId = timeZoneId ?? TimeZoneId; CalendarDayOfMonth = calendarDayOfMonth ?? CalendarDayOfMonth; Touch();
+        IsEnabled = enabled; NextReminderAt = nextReminderAt; RepeatIntervalDays = repeatIntervalDays; TimeZoneId = timeZoneId ?? TimeZoneId; CalendarDayOfMonth = calendarDayOfMonth ?? CalendarDayOfMonth;
+        if (resetFollowUp)
+        {
+            FollowUpCycleAt = null;
+            FollowUpNextAt = null;
+            FollowUpStatus = ReminderFollowUpStatus.None;
+        }
+        Touch();
+    }
+
+    public bool BeginFollowUp(DateTimeOffset cycleAt, DateTimeOffset nextAt)
+    {
+        if (Kind != ReminderKind.ReadingSubmission || !IsEnabled) return false;
+        if (FollowUpCycleAt == cycleAt && FollowUpStatus != ReminderFollowUpStatus.None) return false;
+        FollowUpCycleAt = cycleAt;
+        FollowUpNextAt = nextAt;
+        FollowUpStatus = ReminderFollowUpStatus.Active;
+        Touch();
+        return true;
+    }
+
+    public bool AdvanceFollowUp(DateTimeOffset cycleAt, DateTimeOffset nextAt)
+    {
+        if (FollowUpCycleAt != cycleAt || FollowUpStatus != ReminderFollowUpStatus.Active) return false;
+        FollowUpNextAt = nextAt;
+        Touch();
+        return true;
+    }
+
+    public bool StopFollowUp(DateTimeOffset cycleAt, bool dismissed)
+    {
+        if (FollowUpCycleAt != cycleAt || FollowUpStatus != ReminderFollowUpStatus.Active) return false;
+        FollowUpNextAt = null;
+        FollowUpStatus = dismissed ? ReminderFollowUpStatus.Dismissed : ReminderFollowUpStatus.Completed;
+        Touch();
+        return true;
     }
 }

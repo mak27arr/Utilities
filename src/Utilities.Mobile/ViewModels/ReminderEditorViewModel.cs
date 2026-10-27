@@ -1,6 +1,7 @@
 namespace Utilities.Mobile.ViewModels;
 
 using Microsoft.Maui.Controls;
+using Microsoft.Extensions.Logging;
 using Utilities.Core.Application.UseCases;
 using Utilities.Core.BusinessLogic;
 using Utilities.Core.Domain.Models;
@@ -15,6 +16,7 @@ public sealed class ReminderEditorViewModel : ViewModelBase
     private readonly INotificationPermissionService _permissions;
     private readonly IUserDialogs _dialogs;
     private readonly IAppNavigation _navigation;
+    private readonly ILogger<ReminderEditorViewModel> _logger;
     private readonly ReminderOwnerType _ownerType;
     private readonly Guid _ownerId;
     private readonly string _ownerName;
@@ -27,13 +29,15 @@ public sealed class ReminderEditorViewModel : ViewModelBase
 
     public ReminderEditorViewModel(UtilitiesApplicationService application, ILocalReminderScheduler scheduler,
         INotificationPermissionService permissions, IUserDialogs dialogs, IAppNavigation navigation,
-        ReminderOwnerType ownerType, Guid ownerId, string ownerName, ReminderKind kind)
+        ReminderOwnerType ownerType, Guid ownerId, string ownerName, ReminderKind kind,
+        ILogger<ReminderEditorViewModel> logger)
     {
         _application = application;
         _scheduler = scheduler;
         _permissions = permissions;
         _dialogs = dialogs;
         _navigation = navigation;
+        _logger = logger;
         _ownerType = ownerType;
         _ownerId = ownerId;
         _ownerName = ownerName;
@@ -72,6 +76,8 @@ public sealed class ReminderEditorViewModel : ViewModelBase
     {
         var current = (await _application.GetRemindersAsync(_ownerId, token)).SingleOrDefault(item => item.OwnerType == _ownerType && item.Kind == _kind);
         _existingSchedule = current;
+        _logger.LogInformation("Loaded reminder editor for {OwnerType} {OwnerId}, kind {ReminderKind}. Existing reminder {ReminderId}, enabled {IsEnabled}, next at {NextReminderAt}, repeat interval days {RepeatIntervalDays}.",
+            _ownerType, _ownerId, _kind, current?.Id, current?.IsEnabled, current?.NextReminderAt, current?.RepeatIntervalDays);
         if (current is null) return;
         IsEnabled = current.IsEnabled;
         if (current.NextReminderAt is { } at)
@@ -86,12 +92,15 @@ public sealed class ReminderEditorViewModel : ViewModelBase
     {
         if (IsEnabled && !await _permissions.IsGrantedAsync())
         {
+            _logger.LogWarning("Notification permission is missing while saving enabled {ReminderKind} reminder for {OwnerType} {OwnerId}.", _kind, _ownerType, _ownerId);
             await _dialogs.AlertAsync(AppText.Get("NotificationPermission"), AppText.Get("NotificationPermissionInfo"), AppText.Get("Continue"));
             if (!await _permissions.RequestAsync())
             {
+                _logger.LogWarning("User denied notification permission; reminder settings were not saved for {OwnerType} {OwnerId}, kind {ReminderKind}.", _ownerType, _ownerId, _kind);
                 await _dialogs.AlertAsync(AppText.Get("NotificationPermission"), AppText.Get("NotificationsDenied"), AppText.Get("Continue"));
                 return;
             }
+            _logger.LogInformation("Notification permission was granted during reminder setup.");
         }
 
         var interval = RepeatIndex switch { 1 => 1, 2 => 7, 3 => 14, 4 => 30, 5 => 0, 6 => 90, 7 => 365, _ => (int?)null };
@@ -99,12 +108,15 @@ public sealed class ReminderEditorViewModel : ViewModelBase
             DateTimeOffset.Now, _existingSchedule);
         if (IsEnabled && at <= DateTimeOffset.Now)
         {
+            _logger.LogWarning("Reminder setup rejected because computed date {ReminderAt} is not in the future.", at);
             await _dialogs.AlertAsync(AppText.Get("ReminderSettings"), AppText.Get("ReminderMustBeFuture"), AppText.Get("OK"));
             return;
         }
         try
         {
             var reminder = await _application.ConfigureReminderAsync(_ownerType, _ownerId, _kind, IsEnabled, at, interval, TimeZoneInfo.Local.Id, DayOfMonth, token);
+            _logger.LogInformation("Saved reminder {ReminderId}: enabled {IsEnabled}, next at {ReminderAt}, repeat interval days {RepeatIntervalDays}, time zone {TimeZoneId}.", reminder.Id, reminder.IsEnabled, reminder.NextReminderAt, reminder.RepeatIntervalDays, reminder.TimeZoneId);
+            await _scheduler.CancelFollowUpAsync(reminder.Id, token);
             if (reminder.IsEnabled)
             {
                 var title = AppText.Get(_kind == ReminderKind.Payment ? "PaymentReminder" : "ReadingReminder");
@@ -113,6 +125,10 @@ public sealed class ReminderEditorViewModel : ViewModelBase
             else await _scheduler.CancelAsync(reminder.Id, token);
             await _navigation.GoBackAsync();
         }
-        catch (Exception exception) { await _dialogs.ReportErrorAsync(AppText.Get("ReminderSettings"), exception); }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Failed to save reminder settings for {OwnerType} {OwnerId}, kind {ReminderKind}.", _ownerType, _ownerId, _kind);
+            await _dialogs.ReportErrorAsync(AppText.Get("ReminderSettings"), exception);
+        }
     }
 }

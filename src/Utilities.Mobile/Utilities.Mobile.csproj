@@ -52,6 +52,7 @@
 		<ProjectReference Include="..\Utilities.Infrastructure\Utilities.Infrastructure.csproj" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
+		<PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.30.0" />
 		<PackageReference Include="Xamarin.Google.MLKit.TextRecognition" Version="116.0.1.9" />
 		<PackageReference Include="Xamarin.AndroidX.Fragment" Version="1.9.0" />
 		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.9.0" />

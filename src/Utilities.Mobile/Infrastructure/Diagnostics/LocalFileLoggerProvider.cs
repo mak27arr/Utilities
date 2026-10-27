@@ -79,7 +79,11 @@ public sealed class LocalFileLoggerProvider : ILoggerProvider
 #if DEBUG
             return logLevel >= LogLevel.Information;
 #else
-            return logLevel >= LogLevel.Warning;
+            return category.StartsWith("Utilities.Reminders", StringComparison.Ordinal) ||
+                category.StartsWith("Utilities.Mobile.Infrastructure.Reminders", StringComparison.Ordinal) ||
+                category == "Utilities.Mobile.ViewModels.ReminderEditorViewModel"
+                ? logLevel >= LogLevel.Information
+                : logLevel >= LogLevel.Warning;
 #endif
         }
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception,

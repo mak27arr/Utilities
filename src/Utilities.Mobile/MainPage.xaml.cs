@@ -106,6 +106,7 @@ public partial class MainPage : ContentPage
         try
         {
             _logger.LogInformation("Starting background local reminder synchronization.");
+            await _viewModel.EnsureInitializedAsync();
             using var scope = _scopeFactory.CreateScope();
             await scope.ServiceProvider.GetRequiredService<IReminderSynchronizer>().SynchronizeAsync();
             _logger.LogInformation("Background local reminder synchronization completed.");

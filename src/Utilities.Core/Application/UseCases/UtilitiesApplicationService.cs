@@ -11,7 +11,7 @@ public sealed class ReadingReviewRequiredException : Exception
     public ReadingReviewRequiredException() : base("The reading is lower than the previous reading and requires confirmation.") { }
 }
 
-public sealed class UtilitiesApplicationService(IUtilitiesStore store, IReadingRecognizer readingRecognizer)
+public sealed class UtilitiesApplicationService(IUtilitiesStore store, IReadingRecognizer readingRecognizer, ILocalReminderScheduler? reminderScheduler = null)
 {
     private readonly MeterReadingApplicationService readingWorkflows = new(store, readingRecognizer);
 
@@ -39,7 +39,7 @@ public sealed class UtilitiesApplicationService(IUtilitiesStore store, IReadingR
         store.ListAsync<ReminderSettings>(includeDeleted: includeDeleted, cancellationToken: token);
     public Task<ReminderSettings?> GetReminderAsync(Guid id, CancellationToken token = default) => store.FindAsync<ReminderSettings>(id, cancellationToken: token);
 
-    public async Task<ReminderSettings> ConfigureReminderAsync(ReminderOwnerType ownerType, Guid ownerId, ReminderKind kind, bool enabled, DateTimeOffset? nextReminderAt, int? repeatIntervalDays, string? timeZoneId = null, int? calendarDayOfMonth = null, CancellationToken token = default)
+    public async Task<ReminderSettings> ConfigureReminderAsync(ReminderOwnerType ownerType, Guid ownerId, ReminderKind kind, bool enabled, DateTimeOffset? nextReminderAt, int? repeatIntervalDays, string? timeZoneId = null, int? calendarDayOfMonth = null, CancellationToken token = default, bool resetFollowUp = true)
     {
         if (ownerType == ReminderOwnerType.Meter) _ = await Required<Meter>(ownerId, token);
         else _ = await Required<Subscription>(ownerId, token);
@@ -49,9 +49,48 @@ public sealed class UtilitiesApplicationService(IUtilitiesStore store, IReadingR
             existing = new ReminderSettings(ownerType, ownerId, kind, enabled, nextReminderAt, repeatIntervalDays, timeZoneId, calendarDayOfMonth);
             await store.AddAsync(existing, token);
         }
-        else existing.Configure(enabled, nextReminderAt, repeatIntervalDays, timeZoneId, calendarDayOfMonth);
+        else existing.Configure(enabled, nextReminderAt, repeatIntervalDays, timeZoneId, calendarDayOfMonth, resetFollowUp);
         await store.SaveChangesAsync(token);
         return existing;
+    }
+
+    public async Task<bool> BeginReadingReminderFollowUpAsync(Guid reminderId, DateTimeOffset cycleAt, DateTimeOffset nextAt, CancellationToken token = default)
+    {
+        var reminder = await Required<ReminderSettings>(reminderId, token);
+        if (!reminder.BeginFollowUp(cycleAt, nextAt)) return false;
+        await store.SaveChangesAsync(token);
+        return true;
+    }
+
+    public async Task<bool> AdvanceReadingReminderFollowUpAsync(Guid reminderId, DateTimeOffset cycleAt, DateTimeOffset nextAt, CancellationToken token = default)
+    {
+        var reminder = await Required<ReminderSettings>(reminderId, token);
+        if (!reminder.AdvanceFollowUp(cycleAt, nextAt)) return false;
+        await store.SaveChangesAsync(token);
+        return true;
+    }
+
+    public async Task<bool> StopReadingReminderFollowUpAsync(Guid reminderId, DateTimeOffset cycleAt, bool dismissed, CancellationToken token = default)
+    {
+        var reminder = await Required<ReminderSettings>(reminderId, token);
+        if (!reminder.StopFollowUp(cycleAt, dismissed)) return false;
+        await store.SaveChangesAsync(token);
+        await (reminderScheduler?.CancelFollowUpAsync(reminderId, token) ?? Task.CompletedTask);
+        return true;
+    }
+
+    private async Task CompleteReadingReminderFollowUpsAsync(Guid meterId, CancellationToken token)
+    {
+        var reminders = await store.ListAsync<ReminderSettings>(meterId, cancellationToken: token);
+        var active = reminders.Where(item => item.OwnerType == ReminderOwnerType.Meter && item.Kind == ReminderKind.ReadingSubmission && item.FollowUpStatus == ReminderFollowUpStatus.Active).ToArray();
+        foreach (var reminder in active)
+            reminder.StopFollowUp(reminder.FollowUpCycleAt!.Value, dismissed: false);
+        if (active.Length > 0)
+        {
+            await store.SaveChangesAsync(token);
+            foreach (var reminder in active)
+                await (reminderScheduler?.CancelFollowUpAsync(reminder.Id, token) ?? Task.CompletedTask);
+        }
     }
 
     public async Task<Address> CreateAddressAsync(string name, string? fullAddress, CancellationToken token = default)
@@ -185,19 +224,35 @@ public sealed class UtilitiesApplicationService(IUtilitiesStore store, IReadingR
     public Task<ReadingRecognitionResult> RecognizeReadingAsync(Guid meterId, ReadOnlyMemory<byte> croppedImage, CancellationToken token = default) =>
         readingWorkflows.RecognizeReadingAsync(meterId, croppedImage, token);
 
-    public Task UpdateReadingAsync(Guid readingId, double value, DateTimeOffset measuredAt, bool confirmLowerReading = false, CancellationToken token = default) =>
-        readingWorkflows.UpdateReadingAsync(readingId, value, measuredAt, confirmLowerReading, token);
+    public async Task UpdateReadingAsync(Guid readingId, double value, DateTimeOffset measuredAt, bool confirmLowerReading = false, CancellationToken token = default)
+    {
+        var reading = await Required<Reading>(readingId, token);
+        await readingWorkflows.UpdateReadingAsync(readingId, value, measuredAt, confirmLowerReading, token);
+        await CompleteReadingReminderFollowUpsAsync(reading.MeterId, token);
+    }
 
-    public Task<Reading> AddReadingAsync(Guid meterId, double value, DateTimeOffset measuredAt, bool confirmLowerReading = false,
-        CancellationToken token = default, string? recognizedText = null) =>
-        readingWorkflows.AddReadingAsync(meterId, value, measuredAt, confirmLowerReading, token, recognizedText);
+    public async Task<Reading> AddReadingAsync(Guid meterId, double value, DateTimeOffset measuredAt, bool confirmLowerReading = false,
+        CancellationToken token = default, string? recognizedText = null)
+    {
+        var reading = await readingWorkflows.AddReadingAsync(meterId, value, measuredAt, confirmLowerReading, token, recognizedText);
+        await CompleteReadingReminderFollowUpsAsync(meterId, token);
+        return reading;
+    }
 
-    public Task<Reading> AddReadingWithAreaAsync(Guid meterId, double value, DateTimeOffset measuredAt,
-        NormalizedReadingArea area, bool confirmLowerReading = false, CancellationToken token = default, string? recognizedText = null) =>
-        readingWorkflows.AddReadingWithAreaAsync(meterId, value, measuredAt, area, confirmLowerReading, token, recognizedText);
+    public async Task<Reading> AddReadingWithAreaAsync(Guid meterId, double value, DateTimeOffset measuredAt,
+        NormalizedReadingArea area, bool confirmLowerReading = false, CancellationToken token = default, string? recognizedText = null)
+    {
+        var reading = await readingWorkflows.AddReadingWithAreaAsync(meterId, value, measuredAt, area, confirmLowerReading, token, recognizedText);
+        await CompleteReadingReminderFollowUpsAsync(meterId, token);
+        return reading;
+    }
 
-    public Task<IReadOnlyList<Reading>> ImportReadingsAsync(Guid meterId, IReadOnlyList<ImportedMeterReading> imported, CancellationToken token = default) =>
-        readingWorkflows.ImportReadingsAsync(meterId, imported, token);
+    public async Task<IReadOnlyList<Reading>> ImportReadingsAsync(Guid meterId, IReadOnlyList<ImportedMeterReading> imported, CancellationToken token = default)
+    {
+        var readings = await readingWorkflows.ImportReadingsAsync(meterId, imported, token);
+        await CompleteReadingReminderFollowUpsAsync(meterId, token);
+        return readings;
+    }
 
     public Task<Meter> ReplaceMeterAsync(Guid oldMeterId, double finalReading, double initialReading, DateTimeOffset replacedAt,
         bool confirmLowerReading = false, CancellationToken token = default) =>

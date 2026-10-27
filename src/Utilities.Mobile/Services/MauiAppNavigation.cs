@@ -40,7 +40,7 @@ public sealed class MauiAppNavigation(
         services.GetRequiredService<IReminderSynchronizer>(), addressCache));
     public Task OpenSettingsAsync() => PushScopedAsync(services => new SettingsPage(Application(services), reminders, dialogs, this, preferences, appearance, diagnostics, addressCache));
     public Task OpenReminderEditorAsync(ReminderOwnerType ownerType, Guid ownerId, string ownerName, ReminderKind kind) =>
-        PushScopedAsync(services => new ReminderEditorPage(Application(services), reminders, permissions, dialogs, this, ownerType, ownerId, ownerName, kind));
+        PushScopedAsync(services => new ReminderEditorPage(Application(services), reminders, permissions, dialogs, this, ownerType, ownerId, ownerName, kind, loggerFactory.CreateLogger<ReminderEditorViewModel>()));
     public Task OpenPhotoCropAsync(Guid meterId) => PushScopedAsync(services => new PhotoCropPage(Application(services), meterId,
         photos, cameraPermission, dialogs, this, services.GetRequiredService<IReadingAreaSuggester>()));
     public Task GoBackAsync() => CurrentNavigation.PopAsync();

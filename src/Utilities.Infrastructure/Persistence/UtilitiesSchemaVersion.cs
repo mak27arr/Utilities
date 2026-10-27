@@ -6,5 +6,5 @@ namespace Utilities.Infrastructure.Persistence;
 /// </summary>
 public static class UtilitiesSchemaVersion
 {
-    public const int Current = 8;
+    public const int Current = 9;
 }
