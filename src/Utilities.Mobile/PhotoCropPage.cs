@@ -19,7 +19,7 @@ public partial class PhotoCropPage : ContentPage
     private const double MinPhotoScale = 1;
     private const double MaxPhotoScale = 15;
     private const double MinReadingAreaWidthAtBaseZoom = 0.08;
-    private const double MinReadingAreaHeightAtBaseZoom = 0.12;
+    private const double MinReadingAreaHeightAtBaseZoom = 0.04;
     private double _photoScale = 1;
     private double _photoOffsetX;
     private double _photoOffsetY;

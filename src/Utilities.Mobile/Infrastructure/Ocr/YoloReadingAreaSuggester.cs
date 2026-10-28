@@ -19,6 +19,10 @@ public sealed class YoloReadingAreaSuggester(MlKitReadingAreaSuggester fallback)
     private string? _inputName;
     private bool _disposed;
 
+    public Task<double?> EstimateRotationCorrectionDegreesAsync(string imagePath,
+        CancellationToken cancellationToken = default) =>
+        fallback.EstimateRotationCorrectionDegreesAsync(imagePath, cancellationToken);
+
     public async Task<NormalizedReadingArea?> SuggestAsync(string imagePath, double rotationDegrees,
         CancellationToken cancellationToken = default)
     {

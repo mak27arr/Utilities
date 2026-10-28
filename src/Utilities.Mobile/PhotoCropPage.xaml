@@ -51,13 +51,10 @@
             <Grid IsVisible="{Binding HasPhoto}" ColumnDefinitions="*,*" ColumnSpacing="8">
                 <Button Text="{Binding CameraActionText}" ImageSource="ic_camera.svg"
                         Command="{Binding ChoosePhotoCommand}" Style="{StaticResource SecondaryActionButton}" Padding="8,4" FontSize="13" />
-                <Button Grid.Column="1" Text="{Binding AutoSelectReadingAreaText}" ImageSource="ic_find_digits.svg"
-                        Command="{Binding FindReadingAreaCommand}" IsEnabled="{Binding CanRecognize}"
-                        Style="{StaticResource SecondaryActionButton}" Padding="8,4" FontSize="13" />
+                <Button Grid.Column="1" Text="{Binding RecognizeText}" ImageSource="ic_meter.svg"
+                        Command="{Binding RecognizeReadingCommand}" IsEnabled="{Binding CanRecognize}"
+                        Style="{StaticResource PrimaryActionButton}" Padding="8,4" FontSize="13" />
             </Grid>
-            <Button IsVisible="{Binding HasPhoto}" Text="{Binding RecognizeText}" ImageSource="ic_meter.svg"
-                    Command="{Binding RecognizeReadingCommand}" IsEnabled="{Binding CanRecognize}"
-                    Style="{StaticResource PrimaryActionButton}" />
 
             <HorizontalStackLayout IsVisible="{Binding IsWorking}" Spacing="10" HorizontalOptions="Center">
                 <ActivityIndicator IsRunning="{Binding IsWorking}" Color="#6238D5" VerticalOptions="Center" />
@@ -71,11 +68,11 @@
                        BackgroundColor="{AppThemeBinding Light=White, Dark=#252330}"
                        TextColor="{AppThemeBinding Light=#272333, Dark=#F4F1FA}" />
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                    <Button ImageSource="ic_save.svg" SemanticProperties.Description="{Binding SaveReadingText}"
+                    <Button ImageSource="ic_back.svg" SemanticProperties.Description="{Binding CancelText}"
+                            Command="{Binding CancelCommand}" Style="{StaticResource SecondaryActionButton}" HeightRequest="48" />
+                    <Button Grid.Column="1" ImageSource="ic_save.svg" SemanticProperties.Description="{Binding SaveReadingText}"
                             Command="{Binding SaveReadingCommand}" IsEnabled="{Binding CanSaveReading}"
                             Style="{StaticResource PrimaryActionButton}" HeightRequest="48" />
-                    <Button Grid.Column="1" ImageSource="ic_back.svg" SemanticProperties.Description="{Binding CancelText}"
-                            Command="{Binding CancelCommand}" Style="{StaticResource SecondaryActionButton}" HeightRequest="48" />
                 </Grid>
             </VerticalStackLayout>
 

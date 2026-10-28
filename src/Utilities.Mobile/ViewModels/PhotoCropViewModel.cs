@@ -179,6 +179,20 @@ public sealed class PhotoCropViewModel : ViewModelBase
             SetArea(await LoadAreaAsync(token));
             CurrentImage = ImageSource.FromFile(selected.FilePath);
             NotifyState();
+            double? rotationCorrection;
+            try
+            {
+                rotationCorrection = await _areaSuggester.EstimateRotationCorrectionDegreesAsync(selected.FilePath, token);
+            }
+            catch (OperationCanceledException) { throw; }
+            catch (Exception exception)
+            {
+                System.Diagnostics.Debug.WriteLine($"Could not estimate meter photo rotation: {exception}");
+                rotationCorrection = null;
+            }
+
+            if (rotationCorrection.HasValue)
+                RotationDegrees = rotationCorrection.Value;
             await FindReadingAreaAsync(showNoCandidate: false, token);
         }
         catch (Exception exception)
