@@ -65,11 +65,12 @@ public sealed class ReminderEditorViewModel : ViewModelBase
     public string WeeklyText => AppText.Get("Weekly");
     public string TwoWeeksText => AppText.Get("EveryTwoWeeks");
     public string ThirtyDaysText => AppText.Get("EveryThirtyDays");
+    public string FourWeeksText => AppText.Get("EveryFourWeeks");
     public string MonthlyText => AppText.Get("Monthly");
     public string QuarterlyText => AppText.Get("Quarterly");
     public string YearlyText => AppText.Get("Yearly");
-    public bool IsCalendarRepeat => RepeatIndex >= 5;
-    public IReadOnlyList<string> RepeatOptions => [NeverText, DailyText, WeeklyText, TwoWeeksText, ThirtyDaysText, MonthlyText, QuarterlyText, YearlyText];
+    public bool IsCalendarRepeat => RepeatIndex >= 6;
+    public IReadOnlyList<string> RepeatOptions => [NeverText, DailyText, WeeklyText, TwoWeeksText, ThirtyDaysText, FourWeeksText, MonthlyText, QuarterlyText, YearlyText];
     public IReadOnlyList<int> DaysOfMonth { get; } = Enumerable.Range(1, 31).ToArray();
 
     public async Task LoadAsync(CancellationToken token = default)
@@ -85,7 +86,7 @@ public sealed class ReminderEditorViewModel : ViewModelBase
             ReminderTime = at.LocalDateTime.TimeOfDay;
             DayOfMonth = current.CalendarDayOfMonth ?? at.LocalDateTime.Day;
         }
-        RepeatIndex = current.RepeatIntervalDays switch { 1 => 1, 7 => 2, 14 => 3, 30 => 4, 0 => 5, 90 => 6, 365 => 7, _ => 0 };
+        RepeatIndex = current.RepeatIntervalDays switch { 1 => 1, 7 => 2, 14 => 3, 30 => 4, 28 => 5, 0 => 6, 90 => 7, 365 => 8, _ => 0 };
     }
 
     private async Task SaveAsync(CancellationToken token = default)
@@ -103,7 +104,7 @@ public sealed class ReminderEditorViewModel : ViewModelBase
             _logger.LogInformation("Notification permission was granted during reminder setup.");
         }
 
-        var interval = RepeatIndex switch { 1 => 1, 2 => 7, 3 => 14, 4 => 30, 5 => 0, 6 => 90, 7 => 365, _ => (int?)null };
+        var interval = RepeatIndex switch { 1 => 1, 2 => 7, 3 => 14, 4 => 30, 5 => 28, 6 => 0, 7 => 90, 8 => 365, _ => (int?)null };
         var at = ReminderScheduleRules.GetNextConfiguredAt(DayOfMonth, ReminderTime, interval, TimeZoneInfo.Local.Id,
             DateTimeOffset.Now, _existingSchedule);
         if (IsEnabled && at <= DateTimeOffset.Now)

@@ -171,6 +171,7 @@
   <data name="Weekly" xml:space="preserve"><value>Щотижня</value></data>
   <data name="EveryTwoWeeks" xml:space="preserve"><value>Раз на 2 тижні</value></data>
   <data name="EveryThirtyDays" xml:space="preserve"><value>Раз на 30 днів</value></data>
+  <data name="EveryFourWeeks" xml:space="preserve"><value>Кожні 4 тижні</value></data>
   <data name="Monthly" xml:space="preserve"><value>Щомісяця</value></data>
   <data name="Quarterly" xml:space="preserve"><value>Щокварталу</value></data>
   <data name="Yearly" xml:space="preserve"><value>Щороку</value></data>

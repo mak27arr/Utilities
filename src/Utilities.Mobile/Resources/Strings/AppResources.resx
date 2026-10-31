@@ -171,6 +171,7 @@
   <data name="Weekly" xml:space="preserve"><value>Weekly</value></data>
   <data name="EveryTwoWeeks" xml:space="preserve"><value>Every 2 weeks</value></data>
   <data name="EveryThirtyDays" xml:space="preserve"><value>Every 30 days</value></data>
+  <data name="EveryFourWeeks" xml:space="preserve"><value>Every 4 weeks</value></data>
   <data name="Monthly" xml:space="preserve"><value>Monthly</value></data>
   <data name="Quarterly" xml:space="preserve"><value>Quarterly</value></data>
   <data name="Yearly" xml:space="preserve"><value>Yearly</value></data>
