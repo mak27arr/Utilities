@@ -1,6 +1,7 @@
 # Build output
 **/bin/
 **/obj/
+artifacts/android-arm64/
 .vs/
 
 # IDE and user-specific files

@@ -1,0 +1,105 @@
+name: Android ARM64 Release AOT APK
+
+on:
+  schedule:
+    # GitHub Actions schedules use UTC. Run once each day at 04:15 UTC.
+    - cron: "15 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: android-arm64-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check-for-new-commits:
+    name: Check for a new master commit
+    runs-on: ubuntu-latest
+    outputs:
+      should_build: ${{ steps.compare.outputs.should_build }}
+    steps:
+      - name: Compare master with the last successful scheduled build
+        id: compare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CURRENT_SHA: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+        shell: bash
+        run: |
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo "should_build=true" >> "$GITHUB_OUTPUT"
+            echo "Manual run: building the selected commit."
+            exit 0
+          fi
+
+          last_successful_sha="$(gh api \
+            --method GET \
+            "repos/${GITHUB_REPOSITORY}/actions/workflows/android-arm64.yml/runs" \
+            -f branch=master \
+            -f status=success \
+            -f per_page=1 \
+            --jq '.workflow_runs[0].head_sha // empty')"
+
+          if [[ "$CURRENT_SHA" != "$last_successful_sha" ]]; then
+            echo "should_build=true" >> "$GITHUB_OUTPUT"
+            echo "New master commit detected: $CURRENT_SHA"
+          else
+            echo "should_build=false" >> "$GITHUB_OUTPUT"
+            echo "No commits since the last successful build."
+          fi
+
+  tests:
+    name: Run tests
+    needs: check-for-new-commits
+    if: needs.check-for-new-commits.outputs.should_build == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install .NET 10 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Run core tests
+        run: dotnet test tests/Utilities.Core.Tests/Utilities.Core.Tests.csproj --configuration Release
+
+  build-apk:
+    name: Build ARM64 Release AOT APK
+    needs: [check-for-new-commits, tests]
+    if: needs.check-for-new-commits.outputs.should_build == 'true'
+    runs-on: windows-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install .NET 10 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install .NET MAUI Android workload
+        run: dotnet workload install maui-android
+
+      - name: Build Release AOT APK
+        shell: pwsh
+        run: >-
+          dotnet publish src/Utilities.Mobile/Utilities.Mobile.csproj
+          --configuration Release
+          --framework net10.0-android
+          --runtime android-arm64
+          --property:PublishProfile=AndroidArm64ReleaseAot
+          --property:ApplicationVersion=${{ github.run_number }}
+          --property:ApplicationDisplayVersion=1.0.${{ github.run_number }}
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Utilities-android-arm64-release-aot-${{ github.run_number }}
+          path: artifacts/android-arm64-release-aot/*-Signed.apk
+          if-no-files-found: error
+          retention-days: 30

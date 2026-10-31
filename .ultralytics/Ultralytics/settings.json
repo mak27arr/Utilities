@@ -1,0 +1,19 @@
+{
+  "settings_version": "0.0.8",
+  "datasets_dir": "D:\\repo\\datasets",
+  "weights_dir": "D:\\repo\\Utilities\\weights",
+  "runs_dir": "D:\\repo\\Utilities\\runs",
+  "uuid": "2b2c4384483e291ef8b93fb49136a691a3ab177dc157c2663370923930c27107",
+  "sync": true,
+  "api_key": "",
+  "openai_api_key": "",
+  "clearml": true,
+  "comet": true,
+  "dvc": true,
+  "mlflow": true,
+  "raytune": true,
+  "tensorboard": false,
+  "wandb": false,
+  "vscode_msg": true,
+  "openvino_msg": false
+}
